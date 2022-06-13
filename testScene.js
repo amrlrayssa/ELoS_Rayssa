@@ -172,12 +172,13 @@ async function readParsedCode(parsedCode)
     }
     else
     {
-        console.log("Código inválido:")
+        let console = document.getElementById("console-printing")
+        console.innerHTML += "Código Inválido:<br>"
         for(let i = 0; i < lineObjs.length;i++)
         {
             if(!lineObjs[i].valid)
             {
-                console.log(`${lineObjs[i].code} linha:${i+1}`)
+                console.innerHTML += `${lineObjs[i].code} linha:${i+1}<br>`
             }
         }
     }
@@ -191,6 +192,11 @@ execBtn.addEventListener("click",function(){
 const resetBtn = document.getElementById("reset")
 resetBtn.addEventListener("click",function(){
     cube.position.set(0.0,2.0,0.0)
+})
+
+const clsConsoleBtn = document.getElementById("clsConsole")
+clsConsoleBtn.addEventListener("click",function(){
+    document.getElementById("console-printing").innerHTML = null
 })
 
 resizeCanvasToDisplaySize()

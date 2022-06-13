@@ -18,16 +18,35 @@
     <body>
         <div class="container-fluid">
             <div class="row ">
-                <div class="col-6 vh-100">
-                    <canvas id="sceneView" style="width: 100%; height: 100%;"></canvas>
+                <div class="col-6">
+                    <div class="row">
+                        <div class="col-12 vh-50 mb-2">
+                            <canvas id="sceneView" style="width: 100%; height: 100%;"></canvas>
+                        </div>
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title">Console</h4>
+                                </div>
+                                <div class="card-body">
+                                    <code id="console-printing">
+
+                                    </code>
+                                </div>
+                                <div class="card-footer d-flex flex-row-reverse">
+                                    <button id="clsConsole" type="button" class="btn btn-secondary">Limpar Console</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-6">
                     <h1>Área de Interação</h1>
                     <div class="form row">
-                        <div class="col-12 mb-1">
+                        <div class="col-12 mb-2">
                             <div class="card">
                                 <div class="card-header">
-                                    <h2 class="card-title">Fase de testes - Funções disponíveis:</h2>
+                                    <h4 class="card-title">Fase de testes - Funções disponíveis:</h4>
                                 </div>
                                 <div class="card-body">
                                     <code>
@@ -41,9 +60,9 @@
                         </div>
                         <div class="col-12">
                             <label for="codeArea" class="form-label">
-                                <h3>
+                                <h4>
                                     Digite seu código aqui
-                                </h3>
+                                </h4>
                             </label>
                             <textarea name="codeArea" id="codeToExecute" cols="30" rows="10" class="form-control"></textarea>
                         </div>
