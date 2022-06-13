@@ -5,6 +5,7 @@
         <title>ELoS - Cena de Teste</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="stylesheet" href="packages/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="packages/codemirror/lib/codemirror.css">
         <script async src="packages/es-module-shims/es-module-shims.js"></script>
         <script type="importmap">
             {
@@ -41,7 +42,6 @@
                     </div>
                 </div>
                 <div class="col-6">
-                    <h1>Área de Interação</h1>
                     <div class="form row">
                         <div class="col-12 mb-2">
                             <div class="card">
@@ -78,5 +78,12 @@
         <script type="module" src="testScene.js"></script>
         <script src="packages/bootstrap/js/bootstrap.min.js"></script>
         <script src="packages/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="packages/codemirror/lib/codemirror.js"></script>
+        <script>
+            var codeArea = document.getElementById("codeToExecute")
+            var editor = CodeMirror.fromTextArea(codeArea,{
+                lineNumbers: true
+            })
+        </script>
     </body>
 </html>

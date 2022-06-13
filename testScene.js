@@ -108,7 +108,7 @@ function andarEsquerda(amount)
 function parseCode()
 {
     let valid = false
-    let code  = document.getElementById("codeToExecute").value
+    let code  = editor.doc.getValue()
     let lines = code.split('\n')
     let lineObjs = []
 
@@ -117,7 +117,7 @@ function parseCode()
         let validLine = false
         for(let j = 0; j < functionFilter.length;j++)
         {
-            validLine = functionFilter[j].test(lines[i].normalize())
+            validLine = functionFilter[j].test(lines[i].replace(/^\s+/g,''))
             if(validLine)
             {
                 break
