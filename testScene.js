@@ -57,18 +57,22 @@ mainLight.position.set(2,1,1)
 const controls = new OrbitControls(camera, renderer.domElement)
 
 const planeGeometry = new THREE.PlaneGeometry(20,20,10,10)
+const grid = new THREE.GridHelper(20,10,"rgb(0,0,0)","rgb(0,0,0)")
+grid.rotateX(90 * (Math.PI/180))
+grid.translateY(0.01)
 const planeMaterial = new THREE.MeshLambertMaterial({color: "rgb(200,200,200)", side: THREE.DoubleSide})
 const plane = new THREE.Mesh(planeGeometry,planeMaterial)
+plane.add(grid)
 plane.receiveShadow = true
 plane.matrixAutoUpdate = false
 plane.matrix.identity()
-plane.matrix.multiply(mat4.makeTranslation(0.0,-0.1,0.0))
+plane.matrix.multiply(mat4.makeTranslation(0.0,0.0,0.0))
 plane.matrix.multiply(mat4.makeRotationX(-90 * (Math.PI/180)))
 
-const cubeGeometry = new THREE.BoxGeometry(4,4,4)
+const cubeGeometry = new THREE.BoxGeometry(2,2,2)
 const cubeMaterial = new THREE.MeshLambertMaterial({color: "rgb(255,0,0)"})
 const cube = new THREE.Mesh(cubeGeometry, cubeMaterial)
-cube.position.set(0.0,2.0,0.0)
+cube.position.set(1.0,1.0,1.0)
 
 scene.add(ambientLight)
 scene.add(mainLight)
@@ -264,7 +268,7 @@ execBtn.addEventListener("click",function(){
 
 const resetBtn = document.getElementById("reset")
 resetBtn.addEventListener("click",function(){
-    cube.position.set(0.0,2.0,0.0)
+    cube.position.set(0.0,1.0,0.0)
 })
 
 const clsConsoleBtn = document.getElementById("clsConsole")
