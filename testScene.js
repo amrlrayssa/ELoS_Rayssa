@@ -191,47 +191,54 @@ function parseCode(code)
     {
         let validLine = false
         let lineType
-        for(let j = 0;j < functionFilter.length;j++)
+        if(lines[i].trim() != "")
         {
-            validLine = functionFilter[j].filter.test(lines[i].trim())
+            for(let j = 0;j < functionFilter.length;j++)
+            {
+                validLine = functionFilter[j].filter.test(lines[i].trim())
+                if(validLine)
+                {
+                    lineType = functionFilter[j].type   
+                    break
+                }
+            }
             if(validLine)
             {
-                lineType = functionFilter[j].type   
-                break
-            }
-        }
-        if(validLine)
-        {
-            if(lineType === "sequential")
-            {
-                let lineParsed = "await " + lines[i].trim() + "\n"
-                codeParsed += lineParsed
-            }
-            else if(lineType === 'blockValidation')
-            {
-                if(blockValidation(lines,i))
+                if(lineType === "sequential")
                 {
-                    let lineParsed = lines[i].trim() + "\n"
-                    codeParsed += lineParsed      
+                    let lineParsed = "await " + lines[i].trim() + "\n"
+                    codeParsed += lineParsed
+                }
+                else if(lineType === 'blockValidation')
+                {
+                    if(blockValidation(lines,i))
+                    {
+                        let lineParsed = lines[i].trim() + "\n"
+                        codeParsed += lineParsed      
+                    }
+                    else
+                    {
+                        printErrorOnConsole(`${lines[i]} (Bloco é aberto mas nunca é fechado)`,i+1)
+                        valid = false
+                        break
+                    }
                 }
                 else
                 {
-                    printErrorOnConsole(`${lines[i]} (Bloco é aberto mas nunca é fechado)`,i+1)
-                    valid = false
-                    break
+                    let lineParsed = lines[i].trim() + "\n"
+                    codeParsed += lineParsed   
                 }
             }
             else
             {
-                let lineParsed = lines[i].trim() + "\n"
-                codeParsed += lineParsed   
+                printErrorOnConsole(lines[i],i+1)
+                valid = false
+                break
             }
         }
         else
         {
-            printErrorOnConsole(lines[i],i+1)
-            valid = false
-            break
+            continue
         }
     }
 
