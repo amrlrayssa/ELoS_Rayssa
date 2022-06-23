@@ -11,11 +11,11 @@ const functionFilter = [
         type: 'sequential'
     },
     {
-        filter: new RegExp('^andarEsquerda\\(\\d+\\)$'),
+        filter: new RegExp('^girarEsquerda\\(\\)$'),
         type: 'sequential'
     },
     {
-        filter: new RegExp('^andarDireita\\(\\d+\\)$'),
+        filter: new RegExp('^girarDireita\\(\\)$'),
         type: 'sequential'
     },
     {
@@ -69,10 +69,13 @@ plane.matrix.identity()
 plane.matrix.multiply(mat4.makeTranslation(0.0,0.0,0.0))
 plane.matrix.multiply(mat4.makeRotationX(-90 * (Math.PI/180)))
 
-const cubeGeometry = new THREE.BoxGeometry(2,2,2)
-const cubeMaterial = new THREE.MeshLambertMaterial({color: "rgb(255,0,0)"})
-const cube = new THREE.Mesh(cubeGeometry, cubeMaterial)
-cube.position.set(1.0,1.0,1.0)
+const coneGeometry = new THREE.ConeGeometry(1,2)
+const coneMaterial = new THREE.MeshLambertMaterial({color: "rgb(255,0,0)"})
+const cone = new THREE.Mesh(coneGeometry, coneMaterial)
+cone.rotateX(90 * (Math.PI/180))
+const cube = new THREE.Object3D()
+cube.add(cone)
+cube.position.set(-9.0,1.0,-9.0)
 
 scene.add(ambientLight)
 scene.add(mainLight)
@@ -104,7 +107,9 @@ function resizeCanvasToDisplaySize()
 
 function andarFrente(amount)
 {
-    let newPosition = new THREE.Vector3(cube.position.x,cube.position.y,cube.position.z + amount)
+    let objectCopy = cube.clone()
+    objectCopy.translateZ(2*amount)
+    let newPosition = objectCopy.position
     let requestID
     return new Promise(function(resolve){
         function translateCube()
@@ -112,12 +117,12 @@ function andarFrente(amount)
             if(cube.position.x.toFixed(2) != newPosition.x.toFixed(2)||cube.position.y.toFixed(2) != newPosition.y.toFixed(2)||cube.position.z.toFixed(2) != newPosition.z.toFixed(2))
             {
                 cube.position.lerp(newPosition,0.05)
-                console.log(cube.position)
                 requestID = requestAnimationFrame(translateCube)
             }
             else
             {
                 cancelAnimationFrame(requestID)
+                objectCopy.clear()
                 resolve()
             }
         }
@@ -128,7 +133,9 @@ function andarFrente(amount)
 
 function andarTras(amount)
 {
-    let newPosition = new THREE.Vector3(cube.position.x,cube.position.y,cube.position.z - amount)
+    let objectCopy = cube.clone()
+    objectCopy.translateZ(-2*amount)
+    let newPosition = objectCopy.position
     let requestID
     return new Promise(function(resolve){
         function translateCube()
@@ -136,12 +143,12 @@ function andarTras(amount)
             if(cube.position.x.toFixed(2) != newPosition.x.toFixed(2)||cube.position.y.toFixed(2) != newPosition.y.toFixed(2)||cube.position.z.toFixed(2) != newPosition.z.toFixed(2))
             {
                 cube.position.lerp(newPosition,0.05)
-                console.log(cube.position)
                 requestID = requestAnimationFrame(translateCube)
             }
             else
             {
                 cancelAnimationFrame(requestID)
+                objectCopy.clear()
                 resolve()
             }
         }
@@ -150,51 +157,57 @@ function andarTras(amount)
     })
 }
 
-function andarDireita(amount)
+function girarDireita()
 {
-    let newPosition = new THREE.Vector3(cube.position.x + amount,cube.position.y,cube.position.z)
+    let objectCopy = cube.clone()
+    objectCopy.rotateY(90 * (Math.PI/180))
+    let newPosition = new THREE.Quaternion()
+    newPosition.setFromEuler(objectCopy.rotation)
     let requestID
     return new Promise(function(resolve){
-        function translateCube()
+        function rotateCube()
         {
-            if(cube.position.x.toFixed(2) != newPosition.x.toFixed(2)||cube.position.y.toFixed(2) != newPosition.y.toFixed(2)||cube.position.z.toFixed(2) != newPosition.z.toFixed(2))
+            if(!cube.quaternion.equals(newPosition))
             {
-                cube.position.lerp(newPosition,0.05)
-                console.log(cube.position)
-                requestID = requestAnimationFrame(translateCube)
+                cube.quaternion.rotateTowards(newPosition,1 * (Math.PI/180))
+                requestID = requestAnimationFrame(rotateCube)
             }
             else
             {
                 cancelAnimationFrame(requestID)
+                objectCopy.clear()
                 resolve()
             }
         }
-        
-        requestID = requestAnimationFrame(translateCube)
+
+        requestID = requestAnimationFrame(rotateCube)
     })
 }
 
-function andarEsquerda(amount)
+function girarEsquerda()
 {
-    let newPosition = new THREE.Vector3(cube.position.x - amount,cube.position.y,cube.position.z)
+    let objectCopy = cube.clone()
+    objectCopy.rotateY(-90 * (Math.PI/180))
+    let newPosition = new THREE.Quaternion()
+    newPosition.setFromEuler(objectCopy.rotation.clone())
     let requestID
     return new Promise(function(resolve){
-        function translateCube()
+        function rotateCube()
         {
-            if(cube.position.x.toFixed(2) != newPosition.x.toFixed(2)||cube.position.y.toFixed(2) != newPosition.y.toFixed(2)||cube.position.z.toFixed(2) != newPosition.z.toFixed(2))
+            if(!cube.quaternion.equals(newPosition))
             {
-                cube.position.lerp(newPosition,0.05)
-                console.log(cube.position)
-                requestID = requestAnimationFrame(translateCube)
+                cube.quaternion.rotateTowards(newPosition,1 * (Math.PI/180))
+                requestID = requestAnimationFrame(rotateCube)
             }
             else
             {
                 cancelAnimationFrame(requestID)
+                objectCopy.clear()
                 resolve()
             }
         }
-        
-        requestID = requestAnimationFrame(translateCube)
+
+        requestID = requestAnimationFrame(rotateCube)
     })
 }
 
@@ -317,7 +330,8 @@ execBtn.addEventListener("click",async function(){
 
 const resetBtn = document.getElementById("reset")
 resetBtn.addEventListener("click",function(){
-    cube.position.set(1.0,1.0,1.0)
+    cube.position.set(-9.0,1.0,-9.0)
+    cube.rotation.set(0,0,0)
 })
 
 const clsConsoleBtn = document.getElementById("clsConsole")
