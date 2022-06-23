@@ -27,8 +27,16 @@ const functionFilter = [
         type: 'blockValidation'
     },
     {
+        filter: new RegExp('^contemEsfera\\(\\)$'),
+        type: 'normal'
+    },
+    {
         filter: new RegExp('^{$'),
         type: 'blockValidation'
+    },
+    {
+        filter: new RegExp('^removeEsfera\\(\\)$'),
+        type: 'normal'
     },
     {
         filter: new RegExp('^}$'),
@@ -77,9 +85,15 @@ const cube = new THREE.Object3D()
 cube.add(cone)
 cube.position.set(-9.0,1.0,-9.0)
 
+const sphereGeometry = new THREE.SphereGeometry(1)
+const sphereMaterial = new THREE.MeshLambertMaterial({color: "rgb(0,0,255)"})
+const sphere = new THREE.Mesh(sphereGeometry,sphereMaterial)
+sphere.position.set(5.0,1.0,3.0)
+
 scene.add(ambientLight)
 scene.add(mainLight)
 scene.add(plane)
+scene.add(sphere)
 scene.add(cube)
 
 function animate() {
@@ -122,7 +136,8 @@ function andarFrente(amount)
             else
             {
                 cancelAnimationFrame(requestID)
-                objectCopy.clear()
+                objectCopy.children[0].geometry.dispose()
+                objectCopy.children[0].material.dispose()
                 resolve()
             }
         }
@@ -148,7 +163,8 @@ function andarTras(amount)
             else
             {
                 cancelAnimationFrame(requestID)
-                objectCopy.clear()
+                objectCopy.children[0].geometry.dispose()
+                objectCopy.children[0].material.dispose()
                 resolve()
             }
         }
@@ -175,7 +191,8 @@ function girarDireita()
             else
             {
                 cancelAnimationFrame(requestID)
-                objectCopy.clear()
+                objectCopy.children[0].geometry.dispose()
+                objectCopy.children[0].material.dispose()
                 resolve()
             }
         }
@@ -202,13 +219,54 @@ function girarEsquerda()
             else
             {
                 cancelAnimationFrame(requestID)
-                objectCopy.clear()
+                objectCopy.children[0].geometry.dispose()
+                objectCopy.children[0].material.dispose()
                 resolve()
             }
         }
 
         requestID = requestAnimationFrame(rotateCube)
     })
+}
+
+function checkCollision(object1,object2)
+{
+    object1.geometry.computeBoundingBox()
+    object2.geometry.computeBoundingBox()
+
+    object1.updateMatrixWorld()
+    object2.updateMatrixWorld()
+
+    let obj1Box = object1.geometry.boundingBox.clone()
+    obj1Box.applyMatrix4(object1.matrixWorld)
+    let obj2Box = object2.geometry.boundingBox.clone()
+    obj2Box.applyMatrix4(object2.matrixWorld)
+
+    return obj2Box.intersectsBox(obj1Box)
+}
+
+function contemEsfera()
+{
+    let result = checkCollision(cube.children[0],sphere)
+    
+    if(!result)
+    {
+        printOnConsole("Esfera não encontrada")
+    }
+
+    return result
+}
+
+function removeEsfera()
+{
+    sphere.visible = false
+    printOnConsole("Esfera removida")
+}
+
+function printOnConsole(content)
+{
+    let consoleToPrint = document.getElementById("console-printing")
+    consoleToPrint.innerHTML += `${content}<br>`   
 }
 
 function printErrorOnConsole(content,line)
@@ -332,6 +390,7 @@ const resetBtn = document.getElementById("reset")
 resetBtn.addEventListener("click",function(){
     cube.position.set(-9.0,1.0,-9.0)
     cube.rotation.set(0,0,0)
+    sphere.visible = true
 })
 
 const clsConsoleBtn = document.getElementById("clsConsole")
