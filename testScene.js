@@ -102,54 +102,99 @@ function resizeCanvasToDisplaySize()
     }
 }
 
-function translateCube(initPos,finalPos)
-{
-    if(initPos.x.toFixed(0) != finalPos.x.toFixed(0) || initPos.y.toFixed(0) != finalPos.y.toFixed(0) || initPos.z.toFixed(0) != finalPos.z.toFixed(0))
-    {
-        cube.position.lerp(finalPos,0.05);
-        requestAnimationFrame(function(){
-            translateCube(cube.position,finalPos)
-        })
-    }
-}
-
 function andarFrente(amount)
 {
+    let newPosition = new THREE.Vector3(cube.position.x,cube.position.y,cube.position.z + amount)
+    let requestID
     return new Promise(function(resolve){
-        translateCube(cube.position,new THREE.Vector3(cube.position.x,cube.position.y,cube.position.z + amount));
-        setTimeout(function(){
-            return resolve()
-        },1000 + 10 * amount)
+        function translateCube()
+        {
+            if(cube.position.x.toFixed(2) != newPosition.x.toFixed(2)||cube.position.y.toFixed(2) != newPosition.y.toFixed(2)||cube.position.z.toFixed(2) != newPosition.z.toFixed(2))
+            {
+                cube.position.lerp(newPosition,0.05)
+                console.log(cube.position)
+                requestID = requestAnimationFrame(translateCube)
+            }
+            else
+            {
+                cancelAnimationFrame(requestID)
+                resolve()
+            }
+        }
+        
+        requestID = requestAnimationFrame(translateCube)
     })
 }
 
 function andarTras(amount)
 {
+    let newPosition = new THREE.Vector3(cube.position.x,cube.position.y,cube.position.z - amount)
+    let requestID
     return new Promise(function(resolve){
-        translateCube(cube.position,new THREE.Vector3(cube.position.x,cube.position.y,cube.position.z - amount));
-        setTimeout(function(){
-            resolve()
-        },1000 + 10 * amount)
+        function translateCube()
+        {
+            if(cube.position.x.toFixed(2) != newPosition.x.toFixed(2)||cube.position.y.toFixed(2) != newPosition.y.toFixed(2)||cube.position.z.toFixed(2) != newPosition.z.toFixed(2))
+            {
+                cube.position.lerp(newPosition,0.05)
+                console.log(cube.position)
+                requestID = requestAnimationFrame(translateCube)
+            }
+            else
+            {
+                cancelAnimationFrame(requestID)
+                resolve()
+            }
+        }
+        
+        requestID = requestAnimationFrame(translateCube)
     })
 }
 
 function andarDireita(amount)
 {
+    let newPosition = new THREE.Vector3(cube.position.x + amount,cube.position.y,cube.position.z)
+    let requestID
     return new Promise(function(resolve){
-        translateCube(cube.position,new THREE.Vector3(cube.position.x + amount,cube.position.y,cube.position.z));
-        setTimeout(function(){
-            resolve()
-        },1000 + 10 * amount)
+        function translateCube()
+        {
+            if(cube.position.x.toFixed(2) != newPosition.x.toFixed(2)||cube.position.y.toFixed(2) != newPosition.y.toFixed(2)||cube.position.z.toFixed(2) != newPosition.z.toFixed(2))
+            {
+                cube.position.lerp(newPosition,0.05)
+                console.log(cube.position)
+                requestID = requestAnimationFrame(translateCube)
+            }
+            else
+            {
+                cancelAnimationFrame(requestID)
+                resolve()
+            }
+        }
+        
+        requestID = requestAnimationFrame(translateCube)
     })
 }
 
 function andarEsquerda(amount)
 {
+    let newPosition = new THREE.Vector3(cube.position.x - amount,cube.position.y,cube.position.z)
+    let requestID
     return new Promise(function(resolve){
-        translateCube(cube.position,new THREE.Vector3(cube.position.x - amount,cube.position.y,cube.position.z));
-        setTimeout(function(){
-            resolve()
-        },1000 + 10 * amount)
+        function translateCube()
+        {
+            if(cube.position.x.toFixed(2) != newPosition.x.toFixed(2)||cube.position.y.toFixed(2) != newPosition.y.toFixed(2)||cube.position.z.toFixed(2) != newPosition.z.toFixed(2))
+            {
+                cube.position.lerp(newPosition,0.05)
+                console.log(cube.position)
+                requestID = requestAnimationFrame(translateCube)
+            }
+            else
+            {
+                cancelAnimationFrame(requestID)
+                resolve()
+            }
+        }
+        
+        requestID = requestAnimationFrame(translateCube)
     })
 }
 
@@ -258,17 +303,21 @@ function parseCode(code)
 }
 
 const execBtn = document.getElementById("execute")
-execBtn.addEventListener("click",function(){
+execBtn.addEventListener("click",async function(){
     let codeParsed = parseCode(editor.doc.getValue())
     if(codeParsed != null)
     {
-        eval(codeParsed)
+        document.getElementById("execute").disabled = true
+        document.getElementById("reset").disabled = true
+        await eval(codeParsed)
+        document.getElementById("execute").disabled = false
+        document.getElementById("reset").disabled = false
     }
 })
 
 const resetBtn = document.getElementById("reset")
 resetBtn.addEventListener("click",function(){
-    cube.position.set(0.0,1.0,0.0)
+    cube.position.set(1.0,1.0,1.0)
 })
 
 const clsConsoleBtn = document.getElementById("clsConsole")
