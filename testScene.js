@@ -176,7 +176,7 @@ function andarTras(amount)
 function girarDireita()
 {
     let objectCopy = cube.clone()
-    objectCopy.rotateY(90 * (Math.PI/180))
+    objectCopy.rotateY(-90 * (Math.PI/180))
     let newPosition = new THREE.Quaternion()
     newPosition.setFromEuler(objectCopy.rotation)
     let requestID
@@ -204,7 +204,7 @@ function girarDireita()
 function girarEsquerda()
 {
     let objectCopy = cube.clone()
-    objectCopy.rotateY(-90 * (Math.PI/180))
+    objectCopy.rotateY(90 * (Math.PI/180))
     let newPosition = new THREE.Quaternion()
     newPosition.setFromEuler(objectCopy.rotation.clone())
     let requestID
