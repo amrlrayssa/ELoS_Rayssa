@@ -1,6 +1,8 @@
 import * as THREE from 'three'
 import { OrbitControls } from './packages/three/examples/jsm/controls/OrbitControls.js'
 
+var cancelExecution = false
+
 const functionFilter = [
     {
         filter: new RegExp('^andarFrente\\(\\d+\\)$'),
@@ -128,7 +130,7 @@ function andarFrente(amount)
     return new Promise(function(resolve){
         function translateCube()
         {
-            if(cube.position.x.toFixed(2) != newPosition.x.toFixed(2)||cube.position.y.toFixed(2) != newPosition.y.toFixed(2)||cube.position.z.toFixed(2) != newPosition.z.toFixed(2))
+            if((cube.position.x.toFixed(2) != newPosition.x.toFixed(2)||cube.position.y.toFixed(2) != newPosition.y.toFixed(2)||cube.position.z.toFixed(2) != newPosition.z.toFixed(2)) && !cancelExecution)
             {
                 cube.position.lerp(newPosition,0.05)
                 requestID = requestAnimationFrame(translateCube)
@@ -155,7 +157,7 @@ function andarTras(amount)
     return new Promise(function(resolve){
         function translateCube()
         {
-            if(cube.position.x.toFixed(2) != newPosition.x.toFixed(2)||cube.position.y.toFixed(2) != newPosition.y.toFixed(2)||cube.position.z.toFixed(2) != newPosition.z.toFixed(2))
+            if((cube.position.x.toFixed(2) != newPosition.x.toFixed(2)||cube.position.y.toFixed(2) != newPosition.y.toFixed(2)||cube.position.z.toFixed(2) != newPosition.z.toFixed(2)) && !cancelExecution)
             {
                 cube.position.lerp(newPosition,0.05)
                 requestID = requestAnimationFrame(translateCube)
@@ -183,7 +185,7 @@ function girarDireita()
     return new Promise(function(resolve){
         function rotateCube()
         {
-            if(!cube.quaternion.equals(newPosition))
+            if(!cube.quaternion.equals(newPosition) && !cancelExecution)
             {
                 cube.quaternion.rotateTowards(newPosition,1 * (Math.PI/180))
                 requestID = requestAnimationFrame(rotateCube)
@@ -211,7 +213,7 @@ function girarEsquerda()
     return new Promise(function(resolve){
         function rotateCube()
         {
-            if(!cube.quaternion.equals(newPosition))
+            if(!cube.quaternion.equals(newPosition) && !cancelExecution)
             {
                 cube.quaternion.rotateTowards(newPosition,1 * (Math.PI/180))
                 requestID = requestAnimationFrame(rotateCube)
@@ -247,6 +249,10 @@ function checkCollision(object1,object2)
 
 function contemEsfera()
 {
+    if(cancelExecution)
+    {
+        return
+    }
     let result = checkCollision(cube.children[0],sphere)
     
     if(!result)
@@ -259,6 +265,10 @@ function contemEsfera()
 
 function removeEsfera()
 {
+    if(cancelExecution)
+    {
+        return
+    }
     sphere.visible = false
     printOnConsole("Esfera removida")
 }
@@ -373,24 +383,32 @@ function parseCode(code)
     }
 }
 
+function resetLevel()
+{
+    cube.position.set(-9.0,1.0,-9.0)
+    cube.rotation.set(0,0,0)
+    sphere.visible = true
+}
+
 const execBtn = document.getElementById("execute")
 execBtn.addEventListener("click",async function(){
     let codeParsed = parseCode(editor.doc.getValue())
+    cancelExecution = false
     if(codeParsed != null)
     {
+        resetLevel()
         document.getElementById("execute").disabled = true
-        document.getElementById("reset").disabled = true
+        //document.getElementById("reset").disabled = true
         await eval(codeParsed)
         document.getElementById("execute").disabled = false
-        document.getElementById("reset").disabled = false
+        //document.getElementById("reset").disabled = false
     }
 })
 
 const resetBtn = document.getElementById("reset")
 resetBtn.addEventListener("click",function(){
-    cube.position.set(-9.0,1.0,-9.0)
-    cube.rotation.set(0,0,0)
-    sphere.visible = true
+    cancelExecution = true
+    resetLevel()
 })
 
 const clsConsoleBtn = document.getElementById("clsConsole")
