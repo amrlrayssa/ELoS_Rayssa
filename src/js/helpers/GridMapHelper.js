@@ -10,6 +10,9 @@ export class GridMapHelper {
         this.planeColor = planeColor
         this.initialX = (divisions - 1) * -1
         this.initialZ = (divisions - 1) * -1
+        this.endX = divisions - 1
+        this.endZ = divisions - 1
+        this.obstacles = []
     }
     
     createGridPlane()
@@ -44,13 +47,13 @@ export class GridMapHelper {
 
     getXCoordFromGlobalPosition(x)
     {
-        let coord = (Math.round(x) - this.initialX)/this.getMultiplier()
+        let coord = Math.round((Math.round(x) - this.initialX)/this.getMultiplier())
         return coord
     }
 
     getZCoordFromGlobalPosition(z)
     {
-        let coord = (Math.round(z) - this.initialZ)/this.getMultiplier()
+        let coord = Math.round((Math.round(z) - this.initialZ)/this.getMultiplier())
         return coord   
     }
 
@@ -58,4 +61,91 @@ export class GridMapHelper {
     {
         return 2
     }
+
+    borderXOfMap(x)
+    {
+        if(this.getXCoordFromGlobalPosition(x) >= 0 && this.getXCoordFromGlobalPosition(x) <= this.getXCoordFromGlobalPosition(this.endX))
+        {
+            return false
+        }
+        else
+        {
+            return true
+        }
+    }
+
+    borderZOfMap(z)
+    {
+        if(this.getXCoordFromGlobalPosition(z) >= 0 && this.getXCoordFromGlobalPosition(z) <= this.getXCoordFromGlobalPosition(this.endZ))
+        {
+            return false
+        }
+        else
+        {
+            return true
+        }   
+    }
+
+    borderMapCollision(position)
+    {
+        if(this.borderXOfMap(position.x)||this.borderZOfMap(position.z))
+        {
+            return true
+        }
+        else
+        {
+            return false
+        }
+    }
+
+    addObstacle(minX,maxX,minZ,maxZ)
+    {
+        this.obstacles.push(
+            {
+                minX: minX,
+                maxX: maxX,
+                minZ: minZ,
+                maxZ: maxZ
+            }
+        )
+    }
+
+    obstacleCollision(position,obstacle)
+    {
+        let positionXCoord = this.getXCoordFromGlobalPosition(position.x)
+        let positionZCoord = this.getZCoordFromGlobalPosition(position.z)
+
+        console.log([positionXCoord,positionZCoord])
+        if((positionXCoord < obstacle.minX || positionZCoord < obstacle.minZ) || (positionXCoord > obstacle.maxX || positionZCoord > obstacle.maxZ))
+        {
+            return false
+        }
+        else
+        {
+            return true
+        }
+    }
+
+    collisionTests(position)
+    {
+        if(!this.borderMapCollision(position))
+        {
+            let result
+            for(let i = 0;i < this.obstacles.length;i++)
+            {
+                result = this.obstacleCollision(position,this.obstacles[i])
+                if(result)
+                {
+                    return result
+                }
+            }
+            
+            return result
+        }
+        else
+        {
+            return true
+        }
+    }
+
 }
