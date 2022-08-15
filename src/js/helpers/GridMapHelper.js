@@ -13,6 +13,7 @@ export class GridMapHelper {
         this.endX = divisions - 1
         this.endZ = divisions - 1
         this.obstacles = []
+        this.traps = []
     }
     
     createGridPlane()
@@ -45,15 +46,39 @@ export class GridMapHelper {
         return pos
     }
 
-    getXCoordFromGlobalPosition(x)
+    getXCoordFromGlobalPosition(x,mode = 0)
     {
-        let coord = Math.round((Math.round(x) - this.initialX)/this.getMultiplier())
+        let coord
+        if(mode == 1)
+        {
+            coord = Math.floor((Math.floor(x) - this.initialX)/this.getMultiplier())
+        }
+        else if(mode == 2)
+        {
+            coord = Math.ceil((Math.ceil(x) - this.initialX)/this.getMultiplier())   
+        }
+        else
+        {
+            coord = Math.round((Math.round(x) - this.initialX)/this.getMultiplier())    
+        }
         return coord
     }
 
-    getZCoordFromGlobalPosition(z)
+    getZCoordFromGlobalPosition(z,mode = 0)
     {
-        let coord = Math.round((Math.round(z) - this.initialZ)/this.getMultiplier())
+        let coord
+        if(mode == 1)
+        {
+            coord = Math.floor((Math.floor(z) - this.initialZ)/this.getMultiplier())
+        }
+        else if(mode == 2)
+        {
+            coord = Math.ceil((Math.ceil(z) - this.initialZ)/this.getMultiplier())   
+        }
+        else
+        {
+            coord = Math.round((Math.round(z) - this.initialZ)/this.getMultiplier())
+        }
         return coord   
     }
 
@@ -62,9 +87,9 @@ export class GridMapHelper {
         return 2
     }
 
-    borderXOfMap(x)
+    borderXOfMap(x,mode)
     {
-        if(this.getXCoordFromGlobalPosition(x) >= 0 && this.getXCoordFromGlobalPosition(x) <= this.getXCoordFromGlobalPosition(this.endX))
+        if(this.getXCoordFromGlobalPosition(x,mode) >= 0 && this.getXCoordFromGlobalPosition(x,mode) <= this.getXCoordFromGlobalPosition(this.endX))
         {
             return false
         }
@@ -74,9 +99,9 @@ export class GridMapHelper {
         }
     }
 
-    borderZOfMap(z)
+    borderZOfMap(z,mode)
     {
-        if(this.getXCoordFromGlobalPosition(z) >= 0 && this.getXCoordFromGlobalPosition(z) <= this.getXCoordFromGlobalPosition(this.endZ))
+        if(this.getXCoordFromGlobalPosition(z,mode) >= 0 && this.getXCoordFromGlobalPosition(z,mode) <= this.getXCoordFromGlobalPosition(this.endZ))
         {
             return false
         }
@@ -86,9 +111,11 @@ export class GridMapHelper {
         }   
     }
 
-    borderMapCollision(position)
+    borderMapCollision(position,newPosition)
     {
-        if(this.borderXOfMap(position.x)||this.borderZOfMap(position.z))
+        let modeX = position.x >= newPosition.x ? 1 : 2
+        let modeZ = position.z >= newPosition.z ? 1 : 2
+        if(this.borderXOfMap(position.x,modeX)||this.borderZOfMap(position.z,modeZ))
         {
             return true
         }
@@ -110,13 +137,43 @@ export class GridMapHelper {
         )
     }
 
-    obstacleCollision(position,obstacle)
+    obstacleCollision(position,newPosition,obstacle)
     {
         let positionXCoord = this.getXCoordFromGlobalPosition(position.x)
         let positionZCoord = this.getZCoordFromGlobalPosition(position.z)
+        let newPositionXCoord = this.getXCoordFromGlobalPosition(newPosition.x)
+        let newPositionZCoord = this.getZCoordFromGlobalPosition(newPosition.z)
 
-        console.log([positionXCoord,positionZCoord])
-        if((positionXCoord < obstacle.minX || positionZCoord < obstacle.minZ) || (positionXCoord > obstacle.maxX || positionZCoord > obstacle.maxZ))
+        let nextPosX
+        let nextPosZ
+
+        if(positionXCoord < newPositionXCoord)
+        {
+            nextPosX = positionXCoord + 1
+        }
+        else if(positionXCoord > newPositionXCoord)
+        {
+            nextPosX = positionXCoord - 1
+        }
+        else
+        {
+            nextPosX = positionXCoord
+        }
+
+        if(positionZCoord < newPositionZCoord)
+        {
+            nextPosZ = positionZCoord + 1
+        }
+        else if(positionZCoord > newPositionZCoord)
+        {
+            nextPosZ = positionZCoord - 1
+        }
+        else
+        {
+            nextPosZ = positionZCoord
+        }
+
+        if((nextPosX < obstacle.minX || nextPosZ < obstacle.minZ) || (nextPosX > obstacle.maxX || nextPosZ > obstacle.maxZ))
         {
             return false
         }
@@ -126,14 +183,39 @@ export class GridMapHelper {
         }
     }
 
-    collisionTests(position)
+    addTrap(x,z)
     {
-        if(!this.borderMapCollision(position))
+        this.traps.push({
+            x:x,
+            z:z
+        })
+    }
+
+    trapCollision(position)
+    {
+        for(let i = 0;i < this.traps.length;i++)
         {
-            let result
+            if(this.getXCoordFromGlobalPosition(position.x) == this.traps[i].x && this.getZCoordFromGlobalPosition(position.z) == this.traps[i].z)
+            {
+                return true
+            }
+            else
+            {
+                continue
+            }
+        }
+
+        return false
+    }
+
+    collisionTests(position,newPosition)
+    {
+        if(!this.borderMapCollision(position,newPosition))
+        {
+            let result = false
             for(let i = 0;i < this.obstacles.length;i++)
             {
-                result = this.obstacleCollision(position,this.obstacles[i])
+                result = this.obstacleCollision(position,newPosition,this.obstacles[i])
                 if(result)
                 {
                     return result
