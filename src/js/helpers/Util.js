@@ -25,12 +25,12 @@ export var sceneProperties = {
     cancelExecution: false
 }
 
-export function leanMovement(object,direction = true)
+export function leanMovement(object,direction = true,positionMultiplier = 1)
 {
     let objCopy = object.clone()
     if(direction)
     {
-        objCopy.rotation.set(degreeToRadians(15),0,0)
+        objCopy.rotation.set(degreeToRadians(15*positionMultiplier),0,0)
     }
     else
     {
@@ -104,6 +104,7 @@ export function translateActorBackward(actor,amount,gridMapHelper,scenePropertie
     let newPosition = objectCopy.position
     let requestID
     let alpha = 0.01
+    leanMovement(actor.getObjectByName('eve'),true,-1)
     return new Promise(function(resolve){
         function translateActor()
         {
@@ -127,6 +128,7 @@ export function translateActorBackward(actor,amount,gridMapHelper,scenePropertie
                     printOnConsole("Você caiu na armadilha.")
                     sceneProperties.cancelExecution = true   
                 }
+                leanMovement(actor.getObjectByName('eve'),false)
                 cancelAnimationFrame(requestID)
                 resolve()
             }
