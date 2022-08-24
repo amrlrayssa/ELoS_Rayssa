@@ -1,24 +1,23 @@
 {
-  "name": "tcccg",
+  "name": "project_elos",
   "version": "1.0.0",
   "description": "",
   "scripts": {
     "start": "parcel src/html/**/*.html --open",
-    "build": "parcel build src/html/**/*.html --no-source-maps --public-url https://ferrarirod.github.io/TccCG/",
-    "deploy": "gh-pages -d dist",
-    "bldndply": "rd /s /q dist && npm run build && npm run deploy"
+    "build": "parcel build src/html/**/*.html --no-source-maps --public-url https://AVRGroup.github.io/ELoS/",
+    "deploy": "gh-pages -d dist"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ferrarirod/TccCG.git"
+    "url": "git+https://github.com/AVRGroup/ELoS.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/ferrarirod/TccCG/issues"
+    "url": "https://github.com/AVRGroup/ELoS/issues"
   },
-  "homepage": "https://ferrarirod.github.io/TccCG/",
+  "homepage": "https://AVRGroup.github.io/ELoS/",
   "devDependencies": {
     "@parcel/transformer-sass": "^2.6.2",
     "gh-pages": "^4.0.0",
