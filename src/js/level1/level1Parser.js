@@ -16,7 +16,7 @@ const functionFilter = [
         type: 'sequential'
     },
     {
-        filter: new RegExp('^colherCristal(\\s+)?\\((\\s+)?\\)(\\s+)?(;)?$'),
+        filter: new RegExp('^coletarCristal(\\s+)?\\((\\s+)?\\)(\\s+)?(;)?$'),
         type: 'normal'
     }
 ]

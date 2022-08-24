@@ -118,7 +118,7 @@ function checkCollision(object1,object2)
     }
 }
 
-function colherCristal()
+function coletarCristal()
 {
     if(sceneProperties.cancelExecution)
     {
@@ -128,16 +128,21 @@ function colherCristal()
     if(checkCollision(actor,objective1))
     {
         objective1.visible = false
-        printOnConsole("Cristal colhido.")
+        printOnConsole("Cristal coletado.")
     }
     else if(checkCollision(actor,objective2))
     {
         objective2.visible = false
-        printOnConsole("Cristal colhido.")
+        printOnConsole("Cristal coletado.")
     }
     else
     {
         printOnConsole("Robô não está sobre o cristal.")
+    }
+
+    if(!objective1.visible && !objective2.visible)
+    {
+        printOnConsole("Todos os cristais coletados com sucesso!")
     }
 }
 
