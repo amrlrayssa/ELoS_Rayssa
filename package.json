@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "start": "parcel src/html/**/*.html --open",
+    "start": "parcel src/html/**/*.html --no-source-maps --open",
     "build": "parcel build src/html/**/*.html --no-source-maps --public-url https://AVRGroup.github.io/ELoS/",
     "deploy": "gh-pages -d dist"
   },

@@ -22,7 +22,8 @@ export function resizeCanvasToDisplaySize(renderer,camera)
 }
 
 export var sceneProperties = {
-    cancelExecution: false
+    cancelExecution: false,
+    phaseTimer: new THREE.Clock(false)
 }
 
 export function leanMovement(object,direction = true,positionMultiplier = 1)
@@ -289,4 +290,50 @@ export function loadOBJFile(objectToAdd,path,modelName,texture,scale)
         normalizeAndRescale(object,scale)
         objectToAdd.add(object)
     })
+}
+
+export function checkPhaseContinuity(currentPhasePath)
+{
+    let phasePath = window.sessionStorage.getItem('phasePath')
+    if(phasePath != null)
+    {
+        if(phasePath != currentPhasePath)
+        {
+            document.location.href = phasePath.substring(phasePath.indexOf('.') + 1)
+        }
+    }
+    else
+    {
+        document.location.href = '/'   
+    }
+}
+
+export function getTotalTime(time)
+{
+    let initialTime = parseFloat(window.sessionStorage.getItem('elapsedTime'))
+    let totalTime = initialTime + time
+
+    return totalTime
+}
+
+export function setTimeForNextPhase(nextPhasePath,time,finalPhase = false)
+{
+    if(!finalPhase)
+    {
+        window.sessionStorage.setItem('phasePath',nextPhasePath)
+        window.sessionStorage.setItem('elapsedTime',time)
+    }
+    else
+    {
+        window.sessionStorage.clear()
+    }
+}
+
+export function displayTime(time)
+{
+    let timerDisplay = document.getElementById("timer")
+    let hour = Math.floor(time / 3600)
+    let min = Math.floor(time / 60)
+    let seg = Math.floor(time % 60)
+    timerDisplay.innerText = `Tempo: ${hour < 10 ? '0' + hour : hour}:${(min < 10 ? '0' + min : min)}:${(seg < 10 ? '0' + seg : seg)}`
 }

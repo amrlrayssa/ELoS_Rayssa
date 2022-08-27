@@ -12,7 +12,11 @@ import
     translateActorFoward,
     printOnConsole,
     loadGLBFile,
-    loadOBJFile
+    loadOBJFile,
+    getTotalTime,
+    displayTime,
+    checkPhaseContinuity,
+    setTimeForNextPhase
 } from '../../helpers/Util'
 import {editor,readOnlyState} from '../../components/global/editor'
 import { parseCode } from '../level1Parser'
@@ -81,6 +85,8 @@ function animate() {
     requestAnimationFrame(animate)
     controls.update()
     renderer.render(scene, camera)
+    let time = getTotalTime(sceneProperties.phaseTimer.getElapsedTime())
+    displayTime(time)
 }
 
 async function andarFrente(amount)
@@ -169,6 +175,7 @@ execBtn.addEventListener("click",async function(){
             document.getElementById('winMessage').classList.remove('invisible')
             document.getElementById('advanceBtn').classList.remove('invisible')
             document.getElementById("reset").disabled = true
+            sceneProperties.phaseTimer.stop()
         }
         else
         {
@@ -188,5 +195,14 @@ clsConsoleBtn.addEventListener("click",function(){
     document.getElementById("console-printing").innerHTML = null
 })
 
+const advanceBtn = document.getElementById('advanceBtn')
+advanceBtn.addEventListener('click',function(e){
+    e.preventDefault()
+    setTimeForNextPhase('./level1/phase7/',getTotalTime(sceneProperties.phaseTimer.getElapsedTime()))
+    window.location.href = advanceBtn.href
+})
+
+checkPhaseContinuity('./level1/phase6/')
 resizeCanvasToDisplaySize(renderer,camera)
+sceneProperties.phaseTimer.start()
 animate()
