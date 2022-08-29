@@ -299,12 +299,12 @@ export function checkPhaseContinuity(currentPhasePath)
     {
         if(phasePath != currentPhasePath)
         {
-            document.location.href = phasePath.substring(phasePath.indexOf('.') + 1)
+            document.location.href = '../..' + phasePath.substring(phasePath.indexOf('.') + 1)
         }
     }
     else
     {
-        document.location.href = '/'   
+        document.location.href = '../../'   
     }
 }
 
