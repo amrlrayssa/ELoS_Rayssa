@@ -179,11 +179,11 @@ clsConsoleBtn.addEventListener("click",function(){
 const advanceBtn = document.getElementById('advanceBtn')
 advanceBtn.addEventListener('click',function(e){
     e.preventDefault()
-    setTimeForNextPhase('./level1/phase2/',getTotalTime(sceneProperties.phaseTimer.getElapsedTime()))
+    setTimeForNextPhase('/level1/phase2/',getTotalTime(sceneProperties.phaseTimer.getElapsedTime()))
     window.location.href = advanceBtn.href
 })
 
-checkPhaseContinuity('./level1/phase1/')
+checkPhaseContinuity('/level1/phase1/')
 resizeCanvasToDisplaySize(renderer,camera)
 sceneProperties.phaseTimer.start()
 animate()
