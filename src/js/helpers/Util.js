@@ -1,13 +1,24 @@
 import * as THREE from 'three'
 import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader'
 import {OBJLoader} from 'three/examples/jsm/loaders/OBJLoader'
+import { GridMapHelper } from './GridMapHelper'
 
+/**
+ * Convert an angle from degree to radian.
+ * @param {number} angle 
+ * @returns {number}
+ */
 export function degreeToRadians(angle)
 {
     let radianAngle = angle * (Math.PI/180) 
     return radianAngle
 }
 
+/**
+ * A function that resize the renderer and the camera's aspect to the canvas current size.
+ * @param {THREE.WebGLRenderer} renderer - Scene's renderer
+ * @param {THREE.PerspectiveCamera} camera - Scene's camera
+ */
 export function resizeCanvasToDisplaySize(renderer,camera)
 {
     let canvas = renderer.domElement;
@@ -21,11 +32,23 @@ export function resizeCanvasToDisplaySize(renderer,camera)
     }
 }
 
+/**
+ * An Object containing the general properties of a phase scene.
+ * @namespace
+ * @property {boolean} [cancelExecution=false] - Use this to verify if the user's code needs to be terminated before the end of the execution. Default is false.
+ * @property {THREE.Clock} phaseTimer - The timer used specifically for a phase. Needs to be started.
+ */
 export var sceneProperties = {
     cancelExecution: false,
     phaseTimer: new THREE.Clock(false)
 }
 
+/**
+ * A function to execute a lean movement to a indicated direction.
+ * @param {THREE.Object3D} object - Object you want to execute the lean movement.
+ * @param {boolean} [direction=true] - Change it's default value if you want the object to return to the origin rotation instead to lean. Default is true.
+ * @param {number} [positionMultiplier=1] - Change the multiplier of the lean movement to reduce or increase the lean, the base value is 15 degrees. Change the default value to a negative one makes the Object leans backwards. Default is 1. 
+ */
 export function leanMovement(object,direction = true,positionMultiplier = 1)
 {
     let objCopy = object.clone()
@@ -57,6 +80,16 @@ export function leanMovement(object,direction = true,positionMultiplier = 1)
     requestID = requestAnimationFrame(rotate)   
 }
 
+
+/**
+ * A function to translate the actor in a positive direction.
+ * @param {THREE.Object3D} actor - Object that will execute the translation.
+ * @param {number} amount - Amount of grid square the object will translate.
+ * @param {GridMapHelper} gridMapHelper - Phase's gridMapHelper object to detect collisions, traps and determine global positions.
+ * @param {Object} sceneProperties - Phase's sceneProperties to determine if the execution needs to be terminated.
+ * @param {boolean} sceneProperties.cancelExecution - Use this to verify if the user's code needs to be terminated before the end of the execution. Default is false.
+ * @returns {Promise}
+ */
 export function translateActorFoward(actor,amount,gridMapHelper,sceneProperties)
 {
     let objectCopy = actor.clone()
@@ -98,6 +131,15 @@ export function translateActorFoward(actor,amount,gridMapHelper,sceneProperties)
     })
 }
 
+/**
+ * A function to translate the actor in a negative direction.
+ * @param {THREE.Object3D} actor - Object that will execute the translation.
+ * @param {number} amount - Amount of grid square the object will translate.
+ * @param {GridMapHelper} gridMapHelper - Phase's gridMapHelper object to detect collisions, traps and determine global positions.
+ * @param {Object} sceneProperties - Phase's sceneProperties to determine if the execution needs to be terminated.
+ * @param {boolean} sceneProperties.cancelExecution - Use this to verify if the user's code needs to be terminated before the end of the execution. Default is false.
+ * @returns {Promise}
+ */
 export function translateActorBackward(actor,amount,gridMapHelper,sceneProperties)
 {
     let objectCopy = actor.clone()
@@ -139,6 +181,13 @@ export function translateActorBackward(actor,amount,gridMapHelper,scenePropertie
     })
 }
 
+/**
+ * Rotate actor in -90 degrees.
+ * @param {THREE.Object3D} actor 
+ * @param {Object} sceneProperties - Phase's sceneProperties to determine if the execution needs to be terminated.
+ * @param {boolean} sceneProperties.cancelExecution - Use this to verify if the user's code needs to be terminated before the end of the execution. Default is false. 
+ * @returns {Promise}
+ */
 export function rotateActorRight(actor,sceneProperties)
 {
     let objectCopy = actor.clone()
@@ -165,6 +214,13 @@ export function rotateActorRight(actor,sceneProperties)
     })
 }
 
+/**
+ * Rotate actor in 90 degrees.
+ * @param {THREE.Object3D} actor 
+ * @param {Object} sceneProperties - Phase's sceneProperties to determine if the execution needs to be terminated.
+ * @param {boolean} sceneProperties.cancelExecution - Use this to verify if the user's code needs to be terminated before the end of the execution. Default is false. 
+ * @returns {Promise}
+ */
 export function rotateActorLeft(actor,sceneProperties)
 {
     let objectCopy = actor.clone()
@@ -191,12 +247,24 @@ export function rotateActorLeft(actor,sceneProperties)
     })
 }
 
+/**
+ * Prints something in the phase's console. This function will only work if the console HTML tag has the id "console-printing".
+ * @example
+ * <div id="console-printing">
+ * </div>
+ * @param {string} content - The content you want to print.
+ */
 export function printOnConsole(content)
 {
     let consoleToPrint = document.getElementById("console-printing")
     consoleToPrint.innerHTML += `${content}<br>`
 }
 
+/**
+ * Get the maximum size of a Mesh.
+ * @param {THREE.Object3D} object - Object you want to get it's max size.
+ * @returns {number}
+ */
 export function getMaxSize(object)
 {
     let maxSize
@@ -229,12 +297,27 @@ export function getMaxSize(object)
     return maxSize
 }
 
+/**
+ * Normalize object's default scale to the scene's measurements and rescale to a desired size.
+ * @param {THREE.Object3D} object - Object to nomarlize and rescale.
+ * @param {THREE.Vector3} newScale - Desired new scale.
+ */
 export function normalizeAndRescale(object,newScale)
 {
     let scale = getMaxSize(object)
     object.scale.set(newScale * 1.0/scale, newScale * 1.0/scale, newScale * 1.0/scale)
 }
 
+/**
+ * Load a Mesh from a .glb File and a attach it to a Object3D.
+ * @param {THREE.Object3D} objectToAdd - Object that will add the Mesh
+ * @param {string} path - The file path. Right now we are using Parsel.js to bundle this project, so for the bundler import the file to the build you need to generate a relative URL in the js file you called this function.
+ * @example 
+ * var p = new URL('./relativePathtoTheFile',import.meta.url).toString()
+ * loadGLBFile(obj,p,model,scale)
+ * @param {string} modelName - The name the model will be called, this name can be used to get the Mesh loaded inside Object3D that attach it.
+ * @param {number} scale - The size you want the model to have.
+ */
 export function loadGLBFile(objectToAdd,path,modelName,scale)
 {
     let loader = new GLTFLoader()
@@ -259,6 +342,20 @@ export function loadGLBFile(objectToAdd,path,modelName,scale)
     })
 }
 
+/**
+ * Load a Mesh from a .obj File and a attach it to a Object3D.
+ * @param {THREE.Object3D} objectToAdd - Object that will add the Mesh
+ * @param {string} path - The file path. Right now we are using Parsel.js to bundle this project, so for the bundler import the file to the build you need to generate a relative URL in the js file you called this function.
+ * @example 
+ * var fp = new URL('./relativePathtoTheFile',import.meta.url).toString()
+ * loadOBJFile(obj,fp,model,tp,scale)
+ * @param {string} modelName - The name the model will be called, this name can be used to get the Mesh loaded inside Object3D that attach it.
+ * @param {string} texture - The texture file path. Right now we are using Parsel.js to bundle this project, so for the bundler import the file to the build you need to generate a relative URL in the js file you called this function.
+ * @example 
+ * var tp = new URL('./relativePathtoTheFile',import.meta.url).toString()
+ * loadOBJFile(obj,fp,model,tp,scale)
+ * @param {number} scale - The size you want the model to have.
+ */
 export function loadOBJFile(objectToAdd,path,modelName,texture,scale)
 {
     let objLoader = new OBJLoader()
@@ -292,6 +389,12 @@ export function loadOBJFile(objectToAdd,path,modelName,texture,scale)
     })
 }
 
+/**
+ * Check if the user is in the right phase based on what was stored in the browser's session storage.If it's not, the function will redirect the user to the address that was stored in the session storage or the index page.
+ * @param {string} currentPhasePath - The path of the current phase, don't need the hole path, just subdirectory part.
+ * @example
+ * checkPhaseContinuity('/level1/phase1/')
+ */
 export function checkPhaseContinuity(currentPhasePath)
 {
     let phasePath = window.sessionStorage.getItem('phasePath')
@@ -308,6 +411,11 @@ export function checkPhaseContinuity(currentPhasePath)
     }
 }
 
+/**
+ * Returns the total time the user spent in the previous phases plus the current phase.
+ * @param {number} time - The time spent in the current phase to be summed to previous times.
+ * @returns {number}
+ */
 export function getTotalTime(time)
 {
     let initialTime = parseFloat(window.sessionStorage.getItem('elapsedTime'))
@@ -316,6 +424,14 @@ export function getTotalTime(time)
     return totalTime
 }
 
+/**
+ * Sets on the browser's session storage the next phase path, the total time spent until this phase. If it's the final phase, the function will clear the session storage.
+ * @param {string} nextPhasePath - The path of the next phase, doesn't need the hole path, just subdirectory part.
+ * @example
+ * setTimeForNextPhase('/level1/phase2/',getTotalTime(timer.getElapsedTime()))
+ * @param {number} time - The total time spent until this phase.
+ * @param {boolean} [finalPhase=false] - Change it's default value if it's final phase of this level, it will make the function clear the session storage. Default is false.
+ */
 export function setTimeForNextPhase(nextPhasePath,time,finalPhase = false)
 {
     if(!finalPhase)
@@ -329,6 +445,13 @@ export function setTimeForNextPhase(nextPhasePath,time,finalPhase = false)
     }
 }
 
+/**
+ * Display and update the timer in the format HH:MM:SS on the "timer" tag in the phase HTML file. This function will only work if there is a HTML tag in the phase that has a "timer" id.
+ * @example
+ * <div id="timer">
+ * </div>
+ * @param {number} time - The time that will be displayed.
+ */
 export function displayTime(time)
 {
     let timerDisplay = document.getElementById("timer")

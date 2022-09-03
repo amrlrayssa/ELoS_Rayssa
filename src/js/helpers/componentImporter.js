@@ -1,3 +1,10 @@
+/**
+ * Replaces a script tag with a content of a html file. This fuction doesn't load scripts
+ * 
+ * @param {string} url - Path where the component is.
+ * @param {string} nodeId - ID of the script tag that will be replaced. 
+ */
+
 function importComponent(url,nodeId)
 {
     let xhr = new XMLHttpRequest()
