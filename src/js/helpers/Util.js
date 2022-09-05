@@ -300,7 +300,7 @@ export function getMaxSize(object)
 /**
  * Normalize object's default scale to the scene's measurements and rescale to a desired size.
  * @param {THREE.Object3D} object - Object to nomarlize and rescale.
- * @param {THREE.Vector3} newScale - Desired new scale.
+ * @param {number} newScale - Desired new scale.
  */
 export function normalizeAndRescale(object,newScale)
 {
