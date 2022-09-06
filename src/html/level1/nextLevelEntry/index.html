@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../../scss/styles.scss">
+    <title>ELoS</title>
+</head>
+<body>
+    <div class="vh-100 position-relative">
+        <div class="position-absolute top-50 start-50 translate-middle">
+            <h3>Para avançar para o Nível 2, informe:</h3>
+            <form id="dataLog">
+                <div class="mb-2">
+                    <label for="name" class="form-label"><b>Nome:</b></label>
+                    <input type="text" name="name" id="name" class="form-control">
+                </div>
+                <div class="mb-2">
+                    <label for="age" class="form-label"><b>Idade:</b></label>
+                    <input type="number" name="age" id="age" class="form-control">
+                </div>
+                <button id="subBtn" class="btn btn-primary" type="submit">Avançar</button>
+            </form>
+        </div>
+    </div>
+    <script type="module" src="../../../js/packages/bootstrap.js"></script>
+    <script type="module" src="../../../js/level1/nextLevelEntry/saveLog.js"></script>
+</body>
+</html>

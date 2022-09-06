@@ -441,6 +441,7 @@ export function setTimeForNextPhase(nextPhasePath,time,finalPhase = false)
     }
     else
     {
+        window.localStorage.setItem("levelTotalTime",time)
         window.sessionStorage.clear()
     }
 }

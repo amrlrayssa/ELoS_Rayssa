@@ -242,10 +242,12 @@ clsConsoleBtn.addEventListener("click",function(){
 const advanceBtn = document.getElementById('advanceBtn')
 advanceBtn.addEventListener('click',function(e){
     e.preventDefault()
+    alert("Parabéns, você terminou o primeiro nível do Projeto ELoS!")
     setTimeForNextPhase('/',getTotalTime(sceneProperties.phaseTimer.getElapsedTime()),true)
-    window.location.href = advanceBtn.href
+    window.open(advanceBtn.href,"_blank")
 })
 
 checkPhaseContinuity('/level1/phase8/')
 resizeCanvasToDisplaySize(renderer,camera)
+sceneProperties.phaseTimer.start()
 animate()
