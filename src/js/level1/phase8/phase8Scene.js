@@ -20,6 +20,9 @@ import
 } from '../../helpers/Util'
 import {editor,readOnlyState} from '../../components/global/editor'
 import { parseCode } from '../level1Parser'
+import { Modal } from 'bootstrap'
+
+const logModal = new Modal(document.getElementById('logModal'))
 
 const scene = new THREE.Scene()
 
@@ -242,9 +245,9 @@ clsConsoleBtn.addEventListener("click",function(){
 const advanceBtn = document.getElementById('advanceBtn')
 advanceBtn.addEventListener('click',function(e){
     e.preventDefault()
-    alert("Parabéns, você terminou o primeiro nível do Projeto ELoS!")
     setTimeForNextPhase('/',getTotalTime(sceneProperties.phaseTimer.getElapsedTime()),true)
-    window.open(advanceBtn.href,"_blank")
+    alert("Parabéns, você terminou o primeiro nível do Projeto ELoS!")
+    logModal.show()
 })
 
 checkPhaseContinuity('/level1/phase8/')

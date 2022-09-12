@@ -46,6 +46,32 @@
                     </div>
                 </div>
             </div>
+            <div class="modal fade" id="logModal" tabindex="-1" aria-labelledby="logModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="logModalLabel">Para avançar para o Nível 2, informe:</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="dataLog">
+                            <div class="mb-2">
+                                <label for="name" class="form-label"><b>Nome:</b></label>
+                                <input type="text" name="name" id="name" class="form-control">
+                            </div>
+                            <div class="mb-2">
+                                <label for="age" class="form-label"><b>Idade:</b></label>
+                                <input type="number" name="age" id="age" class="form-control">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                        <button id="subBtn" type="button" class="btn btn-primary">Avançar</button>
+                    </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <script type="module" src="../../../js/packages/bootstrap.js"></script>
         <script type="module" src="../../../js/level1/phase8/phase8Scene.js" defer></script>

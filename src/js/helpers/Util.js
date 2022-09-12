@@ -397,18 +397,18 @@ export function loadOBJFile(objectToAdd,path,modelName,texture,scale)
  */
 export function checkPhaseContinuity(currentPhasePath)
 {
-    let phasePath = window.sessionStorage.getItem('phasePath')
-    if(phasePath != null)
-    {
-        if(phasePath != currentPhasePath)
-        {
-            document.location.href = '../..' + phasePath
-        }
-    }
-    else
-    {
-        document.location.href = '../../'   
-    }
+    //let phasePath = window.sessionStorage.getItem('phasePath')
+    //if(phasePath != null)
+    //{
+    //    if(phasePath != currentPhasePath)
+    //    {
+    //        document.location.href = '../..' + phasePath
+    //    }
+    //}
+    //else
+    //{
+    //    document.location.href = '../../'   
+    //}
 }
 
 /**
@@ -441,8 +441,9 @@ export function setTimeForNextPhase(nextPhasePath,time,finalPhase = false)
     }
     else
     {
-        window.localStorage.setItem("levelTotalTime",time)
-        window.sessionStorage.clear()
+        window.sessionStorage.setItem("levelTotalTime",time)
+        window.sessionStorage.removeItem('phasePath')
+        window.sessionStorage.removeItem('elapsedTime')
     }
 }
 
