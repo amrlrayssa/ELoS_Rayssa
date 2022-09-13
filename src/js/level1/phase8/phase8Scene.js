@@ -199,7 +199,6 @@ function resetLevel()
 
 function winCondition()
 {
-    return true
     if(!objective1.visible && !objective2.visible && !objective3.visible)
     {
         return true
