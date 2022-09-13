@@ -21,8 +21,11 @@ import
 import {editor,readOnlyState} from '../../components/global/editor'
 import { parseCode } from '../level1Parser'
 import { Modal } from 'bootstrap'
+import { configureSaveLogModal } from '../nextLevelEntry/saveLog'
 
 const logModal = new Modal(document.getElementById('logModal'))
+
+var storedLevelValue = false
 
 const scene = new THREE.Scene()
 
@@ -196,6 +199,7 @@ function resetLevel()
 
 function winCondition()
 {
+    return true
     if(!objective1.visible && !objective2.visible && !objective3.visible)
     {
         return true
@@ -245,9 +249,14 @@ clsConsoleBtn.addEventListener("click",function(){
 const advanceBtn = document.getElementById('advanceBtn')
 advanceBtn.addEventListener('click',function(e){
     e.preventDefault()
-    setTimeForNextPhase('/',getTotalTime(sceneProperties.phaseTimer.getElapsedTime()),true)
+    if(!storedLevelValue)
+    {
+        setTimeForNextPhase('/',getTotalTime(sceneProperties.phaseTimer.getElapsedTime()),true)
+        storedLevelValue = true
+    }
     alert("Parabéns, você terminou o primeiro nível do Projeto ELoS!")
     logModal.show()
+    configureSaveLogModal(advanceBtn.href,'level1')
 })
 
 checkPhaseContinuity('/level1/phase8/')
