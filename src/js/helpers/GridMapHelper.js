@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import { degreeToRadians } from './Util'
+import { degreeToRadians, printOnConsole } from './Util'
 
 /**
  * Class that creates and manages a NxN Gridded Square Plane, defining dimension, colors and obstacles.
@@ -245,7 +245,6 @@ export class GridMapHelper {
 
         let nextPosX
         let nextPosZ
-
         if(positionXCoord < newPositionXCoord)
         {
             nextPosX = positionXCoord + 1
@@ -327,21 +326,28 @@ export class GridMapHelper {
     {
         if(!this.borderMapCollision(position,newPosition))
         {
-            let result = false
             for(let i = 0;i < this.obstacles.length;i++)
             {
-                result = this.obstacleCollision(position,newPosition,this.obstacles[i])
-                if(result)
+                if(this.obstacleCollision(position,newPosition,this.obstacles[i]))
                 {
-                    return result
+                    let newPositionUpdate = new THREE.Vector3(this.getGlobalXPositionFromCoord(this.getXCoordFromGlobalPosition(position.x)),newPosition.y,this.getGlobalZPositionFromCoord(this.getZCoordFromGlobalPosition(position.z)))
+                    printOnConsole("Não há como prosseguir por esse caminho.")
+                    return newPositionUpdate
+                }
+                else
+                {
+                    continue
                 }
             }
             
-            return result
+            return newPosition
         }
         else
         {
-            return true
+            console.log([this.getXCoordFromGlobalPosition(position.x),this.getZCoordFromGlobalPosition(position.z)])
+            let newPositionUpdate = new THREE.Vector3(this.getGlobalXPositionFromCoord(this.getXCoordFromGlobalPosition(position.x)),newPosition.y,this.getGlobalZPositionFromCoord(this.getZCoordFromGlobalPosition(position.z)))
+            printOnConsole("Não há como prosseguir por esse caminho.")
+            return newPositionUpdate   
         }
     }
 

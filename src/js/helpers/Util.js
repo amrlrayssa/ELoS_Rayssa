@@ -73,7 +73,6 @@ export function leanMovement(object,direction = true,positionMultiplier = 1)
         else
         {
             cancelAnimationFrame(requestID)
-            resolve()
         }
     }
     requestID = requestAnimationFrame(rotate)   
@@ -100,9 +99,9 @@ export function translateActorFoward(actor,amount,gridMapHelper,sceneProperties)
     return new Promise(function(resolve){
         function translateActor()
         {
-            let collision = gridMapHelper.collisionTests(actor.position,newPosition)
+            newPosition = gridMapHelper.collisionTests(actor.position,newPosition)
             let trap = gridMapHelper.trapCollision(actor.position)
-            if((actor.position.x.toFixed(2) != newPosition.x.toFixed(2)||actor.position.z.toFixed(2) != newPosition.z.toFixed(2)) && !sceneProperties.cancelExecution && !collision && !trap)
+            if((actor.position.x.toFixed(2) != newPosition.x.toFixed(2)||actor.position.z.toFixed(2) != newPosition.z.toFixed(2)) && !sceneProperties.cancelExecution && !trap)
             {
                 actor.position.lerp(newPosition,alpha)
                 alpha += 0.001
@@ -110,12 +109,7 @@ export function translateActorFoward(actor,amount,gridMapHelper,sceneProperties)
             }
             else
             {
-                if(collision && !sceneProperties.cancelExecution)
-                {
-                    printOnConsole("Não há como prosseguir por esse caminho.")
-                    sceneProperties.cancelExecution = true
-                }
-                else if(trap && !sceneProperties.cancelExecution)
+                if(trap && !sceneProperties.cancelExecution)
                 {
                     printOnConsole("Você caiu na armadilha.")
                     sceneProperties.cancelExecution = true   
