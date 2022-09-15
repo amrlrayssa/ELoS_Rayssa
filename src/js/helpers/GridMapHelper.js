@@ -35,7 +35,7 @@ export class GridMapHelper {
 
         let grid = new THREE.GridHelper(this.getMultiplier()*this.divisions,this.divisions,this.divisionsColor,this.divisionsColor)
         grid.rotateX(degreeToRadians(90))
-        grid.translateY(0.01)
+        grid.translateY(0.02)
 
         let planeMaterial = new THREE.MeshLambertMaterial({color: this.planeColor, side: THREE.DoubleSide})
 
