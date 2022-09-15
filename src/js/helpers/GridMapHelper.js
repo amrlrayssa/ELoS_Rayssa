@@ -60,7 +60,7 @@ export class GridMapHelper {
 
     /**
      * Get the global Z position of the scene based on the grid coordinate.
-     * @param {number} zcoord 
+     * @param {number} zcoord - Z coordinate of the grid
      * @returns {number}
      */
     getGlobalZPositionFromCoord(zcoord)
