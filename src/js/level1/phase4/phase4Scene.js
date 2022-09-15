@@ -48,7 +48,6 @@ const actor = new THREE.Object3D()
 loadGLBFile(actor,actorModelPath,"eve",2.0)
 actor.position.set(gridMapHelper.getGlobalXPositionFromCoord(0),1.0,gridMapHelper.getGlobalZPositionFromCoord(5))
 actor.rotateY(degreeToRadians(90))
-console.log(actor.rotation)
 
 const objective = new THREE.Object3D()
 var crystalModelPath = new URL('../../../assets/models/crystal.obj',import.meta.url).toString()

@@ -62,7 +62,6 @@ export function leanMovement(object,direction = true,positionMultiplier = 1)
     }
     let newPosition = new THREE.Quaternion()
     newPosition.setFromEuler(objCopy.rotation)
-    console.log(objCopy.rotation)
     let requestID
     function rotate()
     {
