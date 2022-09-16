@@ -1,4 +1,4 @@
-import { saveLog } from "../../packages/logSaver"
+import { saveLog } from "../../helpers/logSaver"
 
 /**
  * A function to configure the modal to save the logs on our drive. The modal has to be implemented in the HTML file and has to have the exact tags below for this function to work.
@@ -28,8 +28,13 @@ export function configureSaveLogModal(redirectPath,level)
             if((name != null && name != '') && (age != null && age!= ''))
             {
                 subBtn.disabled = true
-                let data = `${name},${age},${hour < 10 ? '0' + hour : hour}:${(min < 10 ? '0' + min : min)}:${(seg < 10 ? '0' + seg : seg)};`
-                let success = await saveLog(data,`/${level}/`)
+                let data = [
+                    ['entry.1024803259',level],
+                    ['entry.1819434138',name],
+                    ['entry.224960797',age],
+                    ['entry.294513867',`${hour < 10 ? '0' + hour : hour}:${(min < 10 ? '0' + min : min)}:${(seg < 10 ? '0' + seg : seg)}`]
+                ]
+                let success = await saveLog(data)
                 if(success)
                 {
                     window.location.href = redirectPath
