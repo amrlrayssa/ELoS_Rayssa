@@ -27,22 +27,29 @@ export function configureSaveLogModal(redirectPath,level)
             let age = document.getElementById('age').value
             if((name != null && name != '') && (age != null && age!= ''))
             {
-                subBtn.disabled = true
-                let data = [
-                    ['entry.1024803259',level],
-                    ['entry.1819434138',name],
-                    ['entry.224960797',age],
-                    ['entry.294513867',`${hour < 10 ? '0' + hour : hour}:${(min < 10 ? '0' + min : min)}:${(seg < 10 ? '0' + seg : seg)}`]
-                ]
-                let success = await saveLog(data)
-                if(success)
+                if(parseFloat(age) >= 1)
                 {
-                    window.location.href = redirectPath
+                    subBtn.disabled = true
+                    let data = [
+                        ['entry.1024803259',level],
+                        ['entry.1819434138',name],
+                        ['entry.224960797',age],
+                        ['entry.294513867',`${hour < 10 ? '0' + hour : hour}:${(min < 10 ? '0' + min : min)}:${(seg < 10 ? '0' + seg : seg)}`]
+                    ]
+                    let success = await saveLog(data)
+                    if(success)
+                    {
+                        window.location.href = redirectPath
+                    }
+                    else
+                    {
+                        alert("Ops! Algo deu errado!")
+                        subBtn.disabled = false
+                    }
                 }
                 else
                 {
-                    alert("Ops! Algo deu errado!")
-                    subBtn.disabled = false
+                    alert("Valor da idade incorreto.")
                 }
             }
             else

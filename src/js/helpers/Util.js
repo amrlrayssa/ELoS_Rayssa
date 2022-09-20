@@ -5,7 +5,7 @@ import { GridMapHelper } from './GridMapHelper'
 
 /**
  * Convert an angle from degree to radian.
- * @param {number} angle 
+ * @param {number} angle - The angle you wish to convert
  * @returns {number}
  */
 export function degreeToRadians(angle)

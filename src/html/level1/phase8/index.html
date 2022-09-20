@@ -22,24 +22,24 @@
                     <div class="position-absolute bottom-0">
                         <h3 id="timer" class="text-white">Tempo:</h3>
                     </div>
-                    <script async id="sceneArea">
+                    <script id="sceneArea">
                         importComponent('../../components/global/sceneArea.html','sceneArea')
                     </script>
                 </div>
                 <div class="col-6">
                     <div class="row">
                         <div class="col-12 mt-2 mb-2">
-                            <script async id="availableFunctions">
+                            <script id="availableFunctions">
                                 importComponent('../../components/level1/availableFunctions.html','availableFunctions')
                             </script>
                         </div>
                         <div class="col-12 mb-2">
-                            <script async id="codeArea">
+                            <script id="codeArea">
                                 importComponent('../../components/global/codeArea.html','codeArea')
                             </script>
                         </div>
                         <div class="col-12">
-                            <script async id="console">
+                            <script id="console">
                                 importComponent('../../components/global/console.html','console')
                             </script>
                         </div>
@@ -61,7 +61,7 @@
                                 </div>
                                 <div class="mb-2">
                                     <label for="age" class="form-label"><b>Idade:</b></label>
-                                    <input type="number" name="age" id="age" class="form-control">
+                                    <input type="number" name="age" id="age" class="form-control" min="1" step="1">
                                 </div>
                             </form>
                         </div>
@@ -74,6 +74,6 @@
             </div>
         </div>
         <script type="module" src="../../../js/packages/bootstrap.js"></script>
-        <script type="module" src="../../../js/level1/phase8/phase8Scene.js" defer></script>
+        <script type="module" src="../../../js/level1/phase8/phase8Scene.js" async="false" defer="false"></script>
     </body>
 </html>

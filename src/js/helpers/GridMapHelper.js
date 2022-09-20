@@ -331,7 +331,7 @@ export class GridMapHelper {
                 if(this.obstacleCollision(position,newPosition,this.obstacles[i]))
                 {
                     let newPositionUpdate = new THREE.Vector3(this.getGlobalXPositionFromCoord(this.getXCoordFromGlobalPosition(position.x)),newPosition.y,this.getGlobalZPositionFromCoord(this.getZCoordFromGlobalPosition(position.z)))
-                    printOnConsole("Não há como prosseguir por esse caminho.")
+                    printOnConsole("Aviso: Não é possível avançar mais por este caminho, seguindo para o próximo comando.")
                     return newPositionUpdate
                 }
                 else
@@ -344,9 +344,8 @@ export class GridMapHelper {
         }
         else
         {
-            console.log([this.getXCoordFromGlobalPosition(position.x),this.getZCoordFromGlobalPosition(position.z)])
             let newPositionUpdate = new THREE.Vector3(this.getGlobalXPositionFromCoord(this.getXCoordFromGlobalPosition(position.x)),newPosition.y,this.getGlobalZPositionFromCoord(this.getZCoordFromGlobalPosition(position.z)))
-            printOnConsole("Não há como prosseguir por esse caminho.")
+            printOnConsole("Aviso: Não é possível avançar mais por este caminho, seguindo para o próximo comando.")
             return newPositionUpdate   
         }
     }
