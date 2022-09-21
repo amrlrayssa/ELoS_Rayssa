@@ -1,3 +1,5 @@
+import { printErrorOnConsole } from "../helpers/Util";
+
 /**
  * An array of objects with the regex of the available functions for the user and the type of treatment the parser will do to the functions.
  * Types: "sequential" stands for functions that has can't be executed synchronously with other functions;
@@ -25,20 +27,6 @@ const functionFilter = [
         type: 'normal'
     }
 ]
-
-/**
- * This function will print an error message on the phase console, indicating the code and line. This function will only work on a HTML tag that has "console-printing" id.
- * @example
- * <div id="console-printing">
- * </div>
- * @param {string} content - The line content that the error ocurred.
- * @param {number} line - The line number that the error ocurred.
- */
-function printErrorOnConsole(content,line)
-{
-    let consoleToPrint = document.getElementById("console-printing")
-    consoleToPrint.innerHTML += `Código Inválido:<br> ${content} linha: ${line}<br>`
-}
 
 /**
  * Parses the code typed by the user. If it's valid, returns a processed string with the code ready to be executed. If not, returns null.  

@@ -249,6 +249,20 @@ export function printOnConsole(content)
 }
 
 /**
+ * This function will print an error message on the phase console, indicating the code and line. This function will only work on a HTML tag that has "console-printing" id.
+ * @example
+ * <div id="console-printing">
+ * </div>
+ * @param {string} content - The line content that the error ocurred.
+ * @param {number} line - The line number that the error ocurred.
+ */
+ export function printErrorOnConsole(content,line)
+ {
+     let consoleToPrint = document.getElementById("console-printing")
+     consoleToPrint.innerHTML += `Código Inválido:<br> ${content} linha: ${line}<br>`
+ }
+
+/**
  * Get the maximum size of a Mesh.
  * @param {THREE.Object3D} object - Object you want to get it's max size.
  * @returns {number}
