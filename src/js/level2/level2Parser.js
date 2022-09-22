@@ -83,6 +83,58 @@ function closeBlockValidation(lines,index)
 
 /**
  * 
+ * @param {Array<string>} lines 
+ * @param {number} index 
+ * @returns {boolean}
+ */
+function elseValidation(lines,index)
+{
+    let valid = false
+    let completeCommonIf = new RegExp('^se(\s+)?\((\s+)?.+\)(\s+)?.+(\s+)?$')
+    let commonIf = new RegExp('^se(\\s+)?\\((\\s+)?.+\\)$')
+    let completeblockIf = new RegExp('^se(\\s+)?\\((\\s+)?.+\\)(\\s+)?{[\\S\\s]*?}$')
+    let blockIf = new RegExp('^se(\\s+)?\\((\\s+)?.+\\)(\\s+)?{$')
+
+    let start = null
+    for(let i = index - 1; i >= 0;i--)
+    {
+        if(commonIf.test(lines[i].trim()) || blockIf.test(lines[i].trim()))
+        {
+            start = i
+            break
+        }
+        else
+        {
+            continue
+        }   
+    }
+
+    if(start != null)
+    {
+        let codeTillElse = ""
+        for(let i = start; i < index;i++)
+        {
+            codeTillElse += lines[i].trim()
+        }
+
+        if(completeCommonIf.test(codeTillElse) || completeblockIf.test(codeTillElse))
+        {
+            valid = true
+            return valid
+        }
+        else
+        {
+            return valid
+        }
+    }
+    else
+    {
+        return valid
+    }
+}
+
+/**
+ * 
  * @param {string} code 
  * @returns {string | null}
  */
