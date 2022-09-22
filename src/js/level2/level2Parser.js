@@ -11,7 +11,7 @@ const functionFilter = [
     },
     {
         filter: new RegExp('^}$'),
-        type: "normal"
+        type: "closeBlockValidation"
     },
     {
         filter: new RegExp('^{$'),
@@ -46,6 +46,31 @@ function blockValidation(lines,index)
         else if(lines[i].includes('{'))
         {
             ignoreClosure++
+        }
+        else
+        {
+            continue
+        }
+    }
+
+    return valid
+}
+
+/**
+ * 
+ * @param {Array<string>} lines 
+ * @param {number} index 
+ * @returns {boolean}
+ */
+function closeBlockValidation(lines,index)
+{
+    let valid = false
+    for(let i = index - 1; i >= 0;i--)
+    {
+        if(lines[i].includes('{'))
+        {
+            valid = true
+            break
         }
         else
         {
@@ -95,7 +120,7 @@ export function parseCode(code)
                 else if(lineType === 'conditional&&blockValidation')
                 {
                     let validConditional = false
-                    if(blockValidation(lines[i],i))
+                    if(blockValidation(lines,i))
                     {
                         if(/* Method to validated what is inside the '()', this conditional always go false while we don't know what conditions will be necessary*/ false)
                         {
@@ -140,7 +165,7 @@ export function parseCode(code)
                 }
                 else if(lineType === "blockValidation")
                 {
-                    if(blockValidation(lines[i],i))
+                    if(blockValidation(lines,i))
                     {
                         let lineParsed = `${lines[i].trim()}\n`
                         codeParsed += lineParsed   
@@ -150,6 +175,20 @@ export function parseCode(code)
                         printErrorOnConsole(`${lines[i]} (Bloco é aberto mas nunca é fechado)`,i+1)
                         valid = false
                         break
+                    }
+                }
+                else if (lineType === "closeBlockValidation")
+                {
+                    if(closeBlockValidation(lines,i))
+                    {
+                        let lineParsed = `${lines[i].trim()}\n`
+                        codeParsed += lineParsed
+                    }
+                    else
+                    {
+                        printErrorOnConsole(`${lines[i]} (Bloco é fechado mas nunca é aberto)`,i+1)
+                        valid = false
+                        break   
                     }
                 }
                 else
