@@ -10,6 +10,14 @@ const functionFilter = [
         type: 'conditional&&blockValidation'
     },
     {
+        filter: new RegExp('^senao$'),
+        type: 'elseValidation'
+    },
+    {
+        filter: new RegExp('^senao(\\s+){$'),
+        type: 'elseValidation&&blockValidation'
+    },
+    {
         filter: new RegExp('^}$'),
         type: "closeBlockValidation"
     },
@@ -114,7 +122,7 @@ function elseValidation(lines,index)
         let codeTillElse = ""
         for(let i = start; i < index;i++)
         {
-            codeTillElse += lines[i].trim()
+            codeTillElse += `${lines[i].trim()}\n`
         }
 
         if(completeCommonIf.test(codeTillElse) || completeblockIf.test(codeTillElse))
@@ -211,6 +219,50 @@ export function parseCode(code)
                     else
                     {
                         printErrorOnConsole(`${lines[i]} (Condição inválida)`,i+1)
+                        valid = false
+                        break
+                    }
+                }
+                else if(lineType === 'elseValidation')
+                {
+                    if(elseValidation(lines,i))
+                    {
+                        let lineParsed = 'else\n'
+                        codeParsed += lineParsed
+                    }
+                    else
+                    {
+                        printErrorOnConsole(`${lines[i]} (Condição inválida)`,i+1)
+                        valid = false
+                        break
+                    }
+                }
+                else if(lineType === 'elseValidation&&blockValidation')
+                {
+                    let validElse = false
+                    if(blockValidation(lines,i))
+                    {
+                        if(elseValidation(lines,i))
+                        {
+                            validElse = true
+                        }
+                        else
+                        {
+                            printErrorOnConsole(`${lines[i]} (Condição inválida)`,i+1)
+                        }
+                    }
+                    else
+                    {
+                        printErrorOnConsole(`${lines[i]} (Bloco é aberto mas nunca é fechado)`,i+1)
+                    }
+
+                    if(validElse)
+                    {
+                        let lineParsed = 'else{\n'
+                        codeParsed += lineParsed
+                    }
+                    else
+                    {
                         valid = false
                         break
                     }
