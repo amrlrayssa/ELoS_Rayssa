@@ -1,4 +1,4 @@
-import { printErrorOnConsole } from "../helpers/Util";
+import { printErrorOnConsole, printOnConsole } from "../helpers/Util";
 
 const functionFilter = [
     {
@@ -26,6 +26,36 @@ const functionFilter = [
         type: "blockValidation"
     }
 ]
+
+const conditionalParameters = [
+    new RegExp('true')
+]
+
+/**
+ * 
+ * @param {string} line 
+ * @param {number} index 
+ * @returns {boolean}
+ */
+function ifValidation(line)
+{
+    let trimLine = line.trim()
+    let condition = line.substring(trimLine.indexOf('(') + 1,trimLine.lastIndexOf(')') - 1)
+
+    for(let i = 0; i < conditionalParameters.length; i++)
+    {
+        if(conditionalParameters[i].test(condition.trim()))
+        {
+            return true
+        }
+        else
+        {
+            continue
+        }
+    }
+
+    return false
+}
 
 /**
  * 
@@ -144,9 +174,10 @@ function elseValidation(lines,index)
 /**
  * 
  * @param {string} code 
+ * @param {number} [limit=0]
  * @returns {string | null}
  */
-export function parseCode(code)
+export function parseCode(code,limit = 0)
 {
     let codeParsed = "async function runCode(){\n"
     let lines = code.split('\n')
@@ -182,7 +213,7 @@ export function parseCode(code)
                     let validConditional = false
                     if(blockValidation(lines,i))
                     {
-                        if(/* Method to validated what is inside the '()', this conditional always go false while we don't know what conditions will be necessary*/ false)
+                        if(ifValidation(lines[i]))
                         {
                             validConditional = true          
                         }
@@ -210,7 +241,7 @@ export function parseCode(code)
                 }
                 else if(lineType === 'conditional')
                 {
-                    if(/* Method to validated what is inside the '()', this conditional always go false while we don't know what conditions will be necessary*/ false)
+                    if(ifValidation(lines[i]))
                     {
                         let line = lines[i].trim()
                         let lineParsed = `if${line.substring(line.indexOf('('))}\n`
@@ -307,6 +338,13 @@ export function parseCode(code)
                 valid = false
                 break
             }
+
+            if(limit > 0 && totalCommands > limit)
+            {
+                printOnConsole(`O código tem mais linhas do que o robô pode processar. Tente rescrever seu código em ${limit} linhas ou menos.`)
+                valid = false
+                break
+            }
         }
         else
         {
@@ -316,7 +354,7 @@ export function parseCode(code)
 
     if(valid)
     {
-        codeParsed += "}\nrundCode()"
+        codeParsed += "}\nrunCode()"
         return codeParsed
     }
     else
