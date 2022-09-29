@@ -2,6 +2,10 @@ import { printErrorOnConsole, printOnConsole } from "../helpers/Util";
 
 const functionFilter = [
     {
+        filter: new RegExp('^andarFrente(\\s+)?\\((\\s+)?\\d+(\\s+)?\\)(\\s+)?(;)?$'),
+        type: 'sequential'
+    },
+    {
         filter: new RegExp('^se(\\s+)?\\((\\s+)?.+\\)$'),
         type: 'conditional'
     },
@@ -14,7 +18,7 @@ const functionFilter = [
         type: 'elseValidation'
     },
     {
-        filter: new RegExp('^senao(\\s+){$'),
+        filter: new RegExp('^senao(\\s+)?{$'),
         type: 'elseValidation&&blockValidation'
     },
     {
@@ -40,8 +44,7 @@ const conditionalParameters = [
 function ifValidation(line)
 {
     let trimLine = line.trim()
-    let condition = line.substring(trimLine.indexOf('(') + 1,trimLine.lastIndexOf(')') - 1)
-
+    let condition = line.substring(trimLine.indexOf('(') + 1,trimLine.lastIndexOf(')'))
     for(let i = 0; i < conditionalParameters.length; i++)
     {
         if(conditionalParameters[i].test(condition.trim()))
@@ -128,9 +131,9 @@ function closeBlockValidation(lines,index)
 function elseValidation(lines,index)
 {
     let valid = false
-    let completeCommonIf = new RegExp('^se(\s+)?\((\s+)?.+\)(\s+)?.+(\s+)?$')
+    let completeCommonIf = new RegExp('^se(\\s+)?\\((\\s+)?.+\\)(\\s+)?.+(\\s+)?$')
     let commonIf = new RegExp('^se(\\s+)?\\((\\s+)?.+\\)$')
-    let completeblockIf = new RegExp('^se(\\s+)?\\((\\s+)?.+\\)(\\s+)?{[\\S\\s]*?}$')
+    let completeblockIf = new RegExp('^se(\\s+)?\\((\\s+)?.+\\)(\\s+)?{[^]*?}$')
     let blockIf = new RegExp('^se(\\s+)?\\((\\s+)?.+\\)(\\s+)?{$')
 
     let start = null
@@ -152,10 +155,9 @@ function elseValidation(lines,index)
         let codeTillElse = ""
         for(let i = start; i < index;i++)
         {
-            codeTillElse += `${lines[i].trim()}\n`
+            codeTillElse += `${lines[i].trim()}`
         }
-
-        if(completeCommonIf.test(codeTillElse) || completeblockIf.test(codeTillElse))
+        if(completeCommonIf.test(codeTillElse.trim()) || completeblockIf.test(codeTillElse.trim()))
         {
             valid = true
             return valid
@@ -194,6 +196,7 @@ export function parseCode(code,limit = 0)
                 if(validLine)
                 {
                     lineType = functionFilter[j].type
+                    break
                 }
                 else
                 {

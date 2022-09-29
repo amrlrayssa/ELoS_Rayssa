@@ -2,7 +2,7 @@
 <html lang="pt-BR">
     <head>
         <meta charset="utf-8" />
-        <title>ELoS - Fase de Testes</title>
+        <title>ELoS - Nível 1</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="stylesheet" href="../../scss/styles.scss">
         <script src="../../js/helpers/componentImporter.js"></script>
@@ -12,31 +12,31 @@
             <div class="row">
                 <div class="col-6 vh-100">
                     <div class="position-absolute">
-                        <h2 class="bg-warning">Fase de Testes - Nível de Testes</h2>
+                        <h2 class="bg-warning">Nível de Testes - Fase de Testes</h2>
                         <p class="bg-info">
-                            Faça o cone chegar a esfera, após isso, remova a esfera.
+                            Faça o robô chegar ao cristal, após isso, o recolha.
                         </p>
-                        <h2 id="winMessage" class="bg-success invisible">Nível Concluído</h2>
-                        <a id="advanceBtn" class="btn btn-primary invisible" href="./">Avançar</a>
+                        <h2 id="winMessage" class="bg-success invisible">Fase Concluída</h2>
+                        <a id="advanceBtn" class="btn btn-primary invisible" href="../tests/index.html">Avançar</a>
                     </div>
-                    <script async id="sceneArea">
+                    <script id="sceneArea">
                         importComponent('../components/global/sceneArea.html','sceneArea')
                     </script>
                 </div>
                 <div class="col-6">
                     <div class="row">
                         <div class="col-12 mt-2 mb-2">
-                            <script async id="availableFunctions">
-                                importComponent('../components/phase1/level1/availableFunctions.html','availableFunctions')
+                            <script id="availableFunctions">
+                                importComponent('../components/level1/availableFunctions.html','availableFunctions')
                             </script>
                         </div>
                         <div class="col-12 mb-2">
-                            <script async id="codeArea">
+                            <script id="codeArea">
                                 importComponent('../components/global/codeArea.html','codeArea')
                             </script>
                         </div>
                         <div class="col-12">
-                            <script async id="console">
+                            <script id="console">
                                 importComponent('../components/global/console.html','console')
                             </script>
                         </div>
@@ -45,6 +45,6 @@
             </div>
         </div>
         <script type="module" src="../../js/packages/bootstrap.js"></script>
-        <script type="module" src="../../js/tests/testScene.js" defer></script>
+        <script type="module" src="../../js/tests/testScene.js" async="false" defer="false"></script>
     </body>
 </html>
