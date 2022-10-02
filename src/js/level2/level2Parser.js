@@ -6,6 +6,22 @@ const functionFilter = [
         type: 'sequential'
     },
     {
+        filter: new RegExp('^andarTras(\\s+)?\\((\\s+)?\\d+(\\s+)?\\)(\\s+)?(;)?$'),
+        type: 'sequential'
+    },
+    {
+        filter: new RegExp('^girarEsquerda(\\s+)?\\((\\s+)?\\)(\\s+)?(;)?$'),
+        type: 'sequential'
+    },
+    {
+        filter: new RegExp('^girarDireita(\\s+)?\\((\\s+)?\\)(\\s+)?(;)?$'),
+        type: 'sequential'
+    },
+    {
+        filter: new RegExp('^coletarCristal(\\s+)?\\((\\s+)?\\)(\\s+)?(;)?$'),
+        type: 'normal'
+    },
+    {
         filter: new RegExp('^se(\\s+)?\\((\\s+)?.+\\)$'),
         type: 'conditional'
     },
@@ -32,7 +48,8 @@ const functionFilter = [
 ]
 
 const conditionalParameters = [
-    new RegExp('true')
+    new RegExp('true'),
+    new RegExp('false')
 ]
 
 /**
@@ -184,6 +201,7 @@ export function parseCode(code,limit = 0)
     let codeParsed = "async function runCode(){\n"
     let lines = code.split('\n')
     let valid = true
+    let totalCommands = 0
     for(let i = 0; i < lines.length;i++)
     {
         let validLine = false
@@ -210,6 +228,7 @@ export function parseCode(code,limit = 0)
                 {
                     let lineParsed = `await ${lines[i].trim()}\n`
                     codeParsed += lineParsed
+                    totalCommands++
                 }
                 else if(lineType === 'conditional&&blockValidation')
                 {
@@ -235,6 +254,7 @@ export function parseCode(code,limit = 0)
                         let line = lines[i].trim()
                         let lineParsed = `if${line.substring(line.indexOf('('))}\n`
                         codeParsed += lineParsed   
+                        totalCommands++
                     }
                     else
                     {
@@ -249,6 +269,7 @@ export function parseCode(code,limit = 0)
                         let line = lines[i].trim()
                         let lineParsed = `if${line.substring(line.indexOf('('))}\n`
                         codeParsed += lineParsed          
+                        totalCommands++
                     }
                     else
                     {
@@ -263,6 +284,7 @@ export function parseCode(code,limit = 0)
                     {
                         let lineParsed = 'else\n'
                         codeParsed += lineParsed
+                        totalCommands++
                     }
                     else
                     {
@@ -294,6 +316,7 @@ export function parseCode(code,limit = 0)
                     {
                         let lineParsed = 'else{\n'
                         codeParsed += lineParsed
+                        totalCommands++
                     }
                     else
                     {
@@ -307,6 +330,7 @@ export function parseCode(code,limit = 0)
                     {
                         let lineParsed = `${lines[i].trim()}\n`
                         codeParsed += lineParsed   
+                        totalCommands++
                     }
                     else
                     {
@@ -321,6 +345,7 @@ export function parseCode(code,limit = 0)
                     {
                         let lineParsed = `${lines[i].trim()}\n`
                         codeParsed += lineParsed
+                        totalCommands++
                     }
                     else
                     {
@@ -333,6 +358,7 @@ export function parseCode(code,limit = 0)
                 {
                     let lineParsed = `${lines[i].trim()}\n`
                     codeParsed += lineParsed
+                    totalCommands++
                 }
             }
             else
