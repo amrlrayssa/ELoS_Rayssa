@@ -1,4 +1,4 @@
-const FORM_ACCESS = 'https://docs.google.com/forms/d/e/1FAIpQLSfmjz18LA6e5D3miUTHwSCF_kqlvb4J8w7r9kroEIMpF238uA/formResponse'
+const FORM_ACCESS = 'https://docs.google.com/forms/d/e/1FAIpQLSeTbA3iFSmgcNeCaFKuXEKQ0mOBg74mow2ISXzESXOI4afhOQ/formResponse'
 
 /**
  * Send a log with the help of a embeded GF, it normally shows a CORS errors, but it sends the data anyway

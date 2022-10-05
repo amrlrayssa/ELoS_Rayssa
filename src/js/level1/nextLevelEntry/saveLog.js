@@ -31,10 +31,10 @@ export function configureSaveLogModal(redirectPath,level)
                 {
                     subBtn.disabled = true
                     let data = [
-                        ['entry.1024803259',level],
-                        ['entry.1819434138',name],
-                        ['entry.224960797',age],
-                        ['entry.294513867',`${hour < 10 ? '0' + hour : hour}:${(min < 10 ? '0' + min : min)}:${(seg < 10 ? '0' + seg : seg)}`]
+                        ['entry.1867777838',level],
+                        ['entry.746491928',name],
+                        ['entry.1029337756',age],
+                        ['entry.2140863999',`${hour < 10 ? '0' + hour : hour}:${(min < 10 ? '0' + min : min)}:${(seg < 10 ? '0' + seg : seg)}`]
                     ]
                     let success = await saveLog(data)
                     if(success)
