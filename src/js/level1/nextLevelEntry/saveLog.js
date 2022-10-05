@@ -19,7 +19,7 @@ export function configureSaveLogModal(redirectPath,level)
     {
         let totalTime = parseFloat(window.sessionStorage.getItem('levelTotalTime'))
         let hour = Math.floor(totalTime / 3600)
-        let min = Math.floor(totalTime / 60)
+        let min = Math.floor(totalTime / 60) % 60
         let seg = Math.floor(totalTime % 60)
         var subBtn = document.getElementById("subBtn")
         subBtn.addEventListener('click',async function(e){

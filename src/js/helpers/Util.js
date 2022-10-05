@@ -460,7 +460,7 @@ export function displayTime(time)
 {
     let timerDisplay = document.getElementById("timer")
     let hour = Math.floor(time / 3600)
-    let min = Math.floor(time / 60)
+    let min = Math.floor(time / 60) % 60
     let seg = Math.floor(time % 60)
     timerDisplay.innerText = `Tempo: ${hour < 10 ? '0' + hour : hour}:${(min < 10 ? '0' + min : min)}:${(seg < 10 ? '0' + seg : seg)}`
 }
