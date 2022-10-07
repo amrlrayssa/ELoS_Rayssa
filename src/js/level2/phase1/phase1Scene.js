@@ -61,6 +61,14 @@ box2.position.set(gridMapHelper.getGlobalXPositionFromCoord(4.5),0.5,gridMapHelp
 gridMapHelper.addObstacle(0,9,4,4)
 gridMapHelper.addObstacle(0,9,6,6)
 
+const trapGeometry = new THREE.BoxGeometry(2,1,2)
+const trapMaterial = new THREE.MeshLambertMaterial({color: "rgb(255,0,0)"})
+const trap = new THREE.Mesh(trapGeometry,trapMaterial)
+trap.position.set(gridMapHelper.getGlobalXPositionFromCoord(5),0.5,gridMapHelper.getGlobalZPositionFromCoord(5))
+const trapVerificationTrigger = new THREE.Object3D()
+trapVerificationTrigger.position.set(gridMapHelper.getGlobalXPositionFromCoord(4),0.0,gridMapHelper.getGlobalZPositionFromCoord(5))
+gridMapHelper.addTrap(5,5)
+
 scene.add(ambientLight)
 scene.add(mainLight)
 scene.add(plane)
@@ -68,6 +76,9 @@ scene.add(objective)
 scene.add(actor)
 scene.add(box1)
 scene.add(box2)
+scene.add(trap)
+
+console.log([trapVerificationTrigger.position,trap.position])
 
 function animate() {
     requestAnimationFrame(animate)
