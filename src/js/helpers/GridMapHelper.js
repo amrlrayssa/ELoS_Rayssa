@@ -23,6 +23,8 @@ export class GridMapHelper {
         this.endZ = divisions - 1
         this.obstacles = []
         this.traps = []
+        this.holes = []
+        this.fireHoles = []
     }
     
     /**
@@ -292,6 +294,146 @@ export class GridMapHelper {
             x:x,
             z:z
         })
+    }
+
+    addHole(x,z)
+    {
+        let hole = {
+            id: this.holes.length,
+            x:x,
+            z:z,
+            active: true 
+        }
+
+        this.holes.push(hole)
+
+        return hole.id
+    }
+
+    addFireHole(x,z)
+    {
+        let fireHole = {
+            id: this.fireHoles.length,
+            x:x,
+            z:z,
+            active: true
+        }
+
+        this.fireHoles.push(fireHole)
+
+        return fireHole.id
+    }
+
+    holeCollision(position)
+    {
+        let activeHoles = this.holes.filter(hole => hole.active == true)
+        for(let i = 0;i < activeHoles.length; i++)
+        {
+            if(this.getXCoordFromGlobalPosition(position.x) == this.activeHoles[i].x && this.getZCoordFromGlobalPosition(position.z) == this.activeHoles[i].z)
+            {
+                printOnConsole("Você caiu no buraco!")
+                return true
+            }
+            else
+            {
+                continue
+            }
+        }
+        
+        return false
+    }
+
+    fireHoleCollision(position)
+    {
+        let activeFireHoles = this.fireHoles.filter(fireHole => fireHole.active == true)
+        for(let i = 0;i < activeFireHoles.length; i++)
+        {
+            if(this.getXCoordFromGlobalPosition(position.x) == this.activeFireHoles[i].x && this.getZCoordFromGlobalPosition(position.z) == this.activeFireHoles[i].z)
+            {
+                printOnConsole("Robô foi queimado!")
+                return true
+            }
+            else
+            {
+                continue
+            }
+        }
+        
+        return false
+    }
+
+    detectHole(position,type = "fire")
+    {
+        if(type == "fire")
+        {
+            let activeFireHoles = this.fireHoles.filter(fireHole => fireHole.active == true)
+            for(let i = 0; activeFireHoles.length;i++)
+            {
+                if((Math.abs(this.getXCoordFromGlobalPosition(position.x) - this.activeFireHoles[i].x) == 1 && this.getZCoordFromGlobalPosition(position.z) == this.activeFireHoles[i].z) || (this.getXCoordFromGlobalPosition(position.x) == this.activeFireHoles[i].x && Math.abs(this.getZCoordFromGlobalPosition(position.z) - this.activeFireHoles[i].z) == 1))
+                {
+                    return activeFireHoles[i].id
+                }
+                else
+                {
+                    continue
+                }
+            }
+
+            return null
+        }
+        else
+        {
+            let activeHoles = this.holes.filter(fireHole => fireHole.active == true)
+            for(let i = 0; activeHoles.length;i++)
+            {
+                if((Math.abs(this.getXCoordFromGlobalPosition(position.x) - activeHoles[i].x) == 1 && this.getZCoordFromGlobalPosition(position.z) == activeHoles[i].z) || (this.getXCoordFromGlobalPosition(position.x) == activeHoles[i].x && Math.abs(this.getZCoordFromGlobalPosition(position.z) - activeHoles[i].z) == 1))
+                {
+                    return activeHoles[i].id
+                }
+                else
+                {
+                    continue
+                }
+            }
+
+            return null   
+        }
+    }
+
+    deactivateHole(position,type = "common")
+    {
+        let holeId = this.detectHole(position,type)
+
+        if(holeId != null)
+        {
+            if(type == "common")
+            {
+                let pos = this.holes.map(hole => hole.id).indexOf(holeId)
+                this.holes[pos].active = false
+            }
+            else if(type == "fire")
+            {
+                let pos = this.fireHoles.map(fireHole => fireHole.id).indexOf(holeId)
+                this.fireHoles[pos].active = false   
+            }
+            else
+            {
+                console.log("tipo errado")
+            }
+        }
+    }
+
+    restartHoles()
+    {
+        for(let i = 0;i < this.holes.length;i++)
+        {
+            this.holes[i].active = true
+        }
+
+        for(let i = 0;i < this.fireHoles.length;i++)
+        {
+            this.fireHoles[i].active = true
+        }
     }
 
     /**
