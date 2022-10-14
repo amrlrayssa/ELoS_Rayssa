@@ -65,9 +65,6 @@ const trapGeometry = new THREE.BoxGeometry(2,1,2)
 const trapMaterial = new THREE.MeshLambertMaterial({color: "rgb(255,0,0)"})
 const trap = new THREE.Mesh(trapGeometry,trapMaterial)
 trap.position.set(gridMapHelper.getGlobalXPositionFromCoord(5),0.5,gridMapHelper.getGlobalZPositionFromCoord(5))
-const trapVerificationTrigger = new THREE.Object3D()
-trapVerificationTrigger.position.set(gridMapHelper.getGlobalXPositionFromCoord(4),0.0,gridMapHelper.getGlobalZPositionFromCoord(5))
-gridMapHelper.addTrap(5,5)
 
 scene.add(ambientLight)
 scene.add(mainLight)
@@ -78,7 +75,7 @@ scene.add(box1)
 scene.add(box2)
 scene.add(trap)
 
-console.log([trapVerificationTrigger.position,trap.position])
+gridMapHelper.addFireHole(5,5)
 
 function animate() {
     requestAnimationFrame(animate)
@@ -104,6 +101,34 @@ async function girarDireita()
 async function girarEsquerda()
 {
     await rotateActorLeft(actor,sceneProperties)
+}
+
+function pegandoFogo()
+{
+    if(gridMapHelper.detectHole(actor.position) != null)
+    {
+        return true
+    }
+    else
+    {
+        return false
+    }
+}
+
+function apagarFogoECobrirBuraco()
+{
+    if(gridMapHelper.deactivateHole(actor.position,'fire'))
+    {
+        trap.visible = false
+    }
+}
+
+function cobrirBuraco()
+{
+    if(gridMapHelper.deactivateHole(actor.position))
+    {
+        trap.visible = false
+    }
 }
 
 function checkCollision(object1,object2)
@@ -141,6 +166,8 @@ function resetLevel()
     actor.position.set(gridMapHelper.getGlobalXPositionFromCoord(0),1.0,gridMapHelper.getGlobalZPositionFromCoord(5))
     actor.rotation.set(0,degreeToRadians(90),0)
     actor.getObjectByName('eve').rotation.set(0,0,0)
+    gridMapHelper.restartHoles()
+    trap.visible = true
     objective.visible = true
 }
 

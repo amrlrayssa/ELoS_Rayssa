@@ -329,7 +329,7 @@ export class GridMapHelper {
         let activeHoles = this.holes.filter(hole => hole.active == true)
         for(let i = 0;i < activeHoles.length; i++)
         {
-            if(this.getXCoordFromGlobalPosition(position.x) == this.activeHoles[i].x && this.getZCoordFromGlobalPosition(position.z) == this.activeHoles[i].z)
+            if(this.getXCoordFromGlobalPosition(position.x) == activeHoles[i].x && this.getZCoordFromGlobalPosition(position.z) == activeHoles[i].z)
             {
                 printOnConsole("Você caiu no buraco!")
                 return true
@@ -348,7 +348,7 @@ export class GridMapHelper {
         let activeFireHoles = this.fireHoles.filter(fireHole => fireHole.active == true)
         for(let i = 0;i < activeFireHoles.length; i++)
         {
-            if(this.getXCoordFromGlobalPosition(position.x) == this.activeFireHoles[i].x && this.getZCoordFromGlobalPosition(position.z) == this.activeFireHoles[i].z)
+            if(this.getXCoordFromGlobalPosition(position.x) == activeFireHoles[i].x && this.getZCoordFromGlobalPosition(position.z) == activeFireHoles[i].z)
             {
                 printOnConsole("Robô foi queimado!")
                 return true
@@ -367,9 +367,9 @@ export class GridMapHelper {
         if(type == "fire")
         {
             let activeFireHoles = this.fireHoles.filter(fireHole => fireHole.active == true)
-            for(let i = 0; activeFireHoles.length;i++)
+            for(let i = 0;i < activeFireHoles.length;i++)
             {
-                if((Math.abs(this.getXCoordFromGlobalPosition(position.x) - this.activeFireHoles[i].x) == 1 && this.getZCoordFromGlobalPosition(position.z) == this.activeFireHoles[i].z) || (this.getXCoordFromGlobalPosition(position.x) == this.activeFireHoles[i].x && Math.abs(this.getZCoordFromGlobalPosition(position.z) - this.activeFireHoles[i].z) == 1))
+                if((Math.abs(this.getXCoordFromGlobalPosition(position.x) - activeFireHoles[i].x) == 1 && this.getZCoordFromGlobalPosition(position.z) == activeFireHoles[i].z) || (this.getXCoordFromGlobalPosition(position.x) == activeFireHoles[i].x && Math.abs(this.getZCoordFromGlobalPosition(position.z) - activeFireHoles[i].z) == 1))
                 {
                     return activeFireHoles[i].id
                 }
@@ -383,8 +383,8 @@ export class GridMapHelper {
         }
         else
         {
-            let activeHoles = this.holes.filter(fireHole => fireHole.active == true)
-            for(let i = 0; activeHoles.length;i++)
+            let activeHoles = this.holes.filter(hole => hole.active == true)
+            for(let i = 0;i < activeHoles.length;i++)
             {
                 if((Math.abs(this.getXCoordFromGlobalPosition(position.x) - activeHoles[i].x) == 1 && this.getZCoordFromGlobalPosition(position.z) == activeHoles[i].z) || (this.getXCoordFromGlobalPosition(position.x) == activeHoles[i].x && Math.abs(this.getZCoordFromGlobalPosition(position.z) - activeHoles[i].z) == 1))
                 {
@@ -410,16 +410,24 @@ export class GridMapHelper {
             {
                 let pos = this.holes.map(hole => hole.id).indexOf(holeId)
                 this.holes[pos].active = false
+                return true
             }
             else if(type == "fire")
             {
                 let pos = this.fireHoles.map(fireHole => fireHole.id).indexOf(holeId)
-                this.fireHoles[pos].active = false   
+                this.fireHoles[pos].active = false
+                return true  
             }
             else
             {
                 console.log("tipo errado")
+                return false
             }
+        }
+        else
+        {
+            printOnConsole("Não posso fazer isso aqui!")
+            return false
         }
     }
 

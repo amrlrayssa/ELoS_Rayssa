@@ -101,7 +101,9 @@ export function translateActorFoward(actor,amount,gridMapHelper,sceneProperties)
         {
             newPosition = gridMapHelper.collisionTests(actor.position,newPosition)
             let trap = gridMapHelper.trapCollision(actor.position)
-            if((actor.position.x.toFixed(2) != newPosition.x.toFixed(2)||actor.position.z.toFixed(2) != newPosition.z.toFixed(2)) && !sceneProperties.cancelExecution && !trap)
+            let fireHole = gridMapHelper.fireHoleCollision(actor.position)
+            let hole = gridMapHelper.holeCollision(actor.position)
+            if((actor.position.x.toFixed(2) != newPosition.x.toFixed(2)||actor.position.z.toFixed(2) != newPosition.z.toFixed(2)) && !sceneProperties.cancelExecution && !trap && !hole && !fireHole)
             {
                 actor.position.lerp(newPosition,alpha)
                 alpha += 0.001
@@ -146,7 +148,9 @@ export function translateActorBackward(actor,amount,gridMapHelper,scenePropertie
         {
             newPosition = gridMapHelper.collisionTests(actor.position,newPosition)
             let trap = gridMapHelper.trapCollision(actor.position)
-            if((actor.position.x.toFixed(2) != newPosition.x.toFixed(2)||actor.position.z.toFixed(2) != newPosition.z.toFixed(2)) && !sceneProperties.cancelExecution && !trap)
+            let fireHole = gridMapHelper.fireHoleCollision(actor.position)
+            let hole = gridMapHelper.holeCollision(actor.position)
+            if((actor.position.x.toFixed(2) != newPosition.x.toFixed(2)||actor.position.z.toFixed(2) != newPosition.z.toFixed(2)) && !sceneProperties.cancelExecution && !trap && !hole && !fireHole)
             {
                 actor.position.lerp(newPosition,alpha)
                 alpha += 0.001

@@ -22,6 +22,18 @@ const functionFilter = [
         type: 'normal'
     },
     {
+        filter: new RegExp('^pegandoFogo(\\s+)?\\((\\s+)?\\)(\\s+)?(;)?$'),
+        type: 'normal'
+    },
+    {
+        filter: new RegExp('^apagarFogoECobrirBuraco(\\s+)?\\((\\s+)?\\)(\\s+)?(;)?$'),
+        type: 'normal'
+    },
+    {
+        filter: new RegExp('^cobrirBuraco(\\s+)?\\((\\s+)?\\)(\\s+)?(;)?$'),
+        type: 'normal'
+    },
+    {
         filter: new RegExp('^se(\\s+)?\\((\\s+)?.+\\)$'),
         type: 'conditional'
     },
