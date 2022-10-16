@@ -22,16 +22,12 @@ const functionFilter = [
         type: 'normal'
     },
     {
-        filter: new RegExp('^pegandoFogo(\\s+)?\\((\\s+)?\\)(\\s+)?(;)?$'),
-        type: 'normal'
-    },
-    {
         filter: new RegExp('^apagarFogoECobrirBuraco(\\s+)?\\((\\s+)?\\)(\\s+)?(;)?$'),
-        type: 'normal'
+        type: 'mustCondition'
     },
     {
         filter: new RegExp('^cobrirBuraco(\\s+)?\\((\\s+)?\\)(\\s+)?(;)?$'),
-        type: 'normal'
+        type: 'mustCondition'
     },
     {
         filter: new RegExp('^se(\\s+)?\\((\\s+)?.+\\)$'),
@@ -61,7 +57,8 @@ const functionFilter = [
 
 const conditionalParameters = [
     new RegExp('true'),
-    new RegExp('false')
+    new RegExp('false'),
+    new RegExp('^pegandoFogo(\\s+)?\\((\\s+)?\\)(\\s+)?$')
 ]
 
 /**
@@ -201,6 +198,61 @@ function elseValidation(lines,index)
         return valid
     }
 }
+
+/**
+ * 
+ * @param {Array<string>} lines 
+ * @param {number} index 
+ * @returns {boolean}
+ */
+ function mustConditionValidation(lines,index)
+ {
+     let valid = false
+     let completeCommonIf = new RegExp('^se(\\s+)?\\((\\s+)?.+\\)(\\s+)?.+(\\s+)?$')
+     let commonIf = new RegExp('^se(\\s+)?\\((\\s+)?.+\\)$')
+     let completeblockIf = new RegExp('^se(\\s+)?\\((\\s+)?.+\\)(\\s+)?{[^]*?$')
+     let blockIf = new RegExp('^se(\\s+)?\\((\\s+)?.+\\)(\\s+)?{$')
+     let commonElse = new RegExp('^senao$')
+     let blockElse = new RegExp('^senao(\\s+)?{$')
+     let completeCommonElse = new RegExp('^senao(\\s+)?.+(\\s+)?$')
+     let completeBlockElse = new RegExp('^senao(\\s+)?{[^]*?$')
+ 
+     let start = null
+     for(let i = index - 1; i >= 0;i--)
+     {
+         if(commonIf.test(lines[i].trim()) || blockIf.test(lines[i].trim()) || commonElse.test(lines[i].trim()) || blockElse.test(lines[i].trim()))
+         {
+             start = i
+             break
+         }
+         else
+         {
+             continue
+         }   
+     }
+ 
+     if(start != null)
+     {
+         let codeTillFunction = ""
+         for(let i = start; i < index;i++)
+         {
+             codeTillFunction += `${lines[i].trim()}`
+         }
+         if(completeCommonIf.test(codeTillFunction.trim()) || completeblockIf.test(codeTillFunction.trim()) || completeCommonElse.test(codeTillFunction.trim()) || completeBlockElse.test(codeTillFunction.trim()))
+         {
+             valid = true
+             return valid
+         }
+         else
+         {
+             return valid
+         }
+     }
+     else
+     {
+         return valid
+     }
+ }
 
 /**
  * 
@@ -364,6 +416,21 @@ export function parseCode(code,limit = 0)
                         printErrorOnConsole(`${lines[i]} (Bloco é fechado mas nunca é aberto)`,i+1)
                         valid = false
                         break   
+                    }
+                }
+                else if(lineType === "mustCondition")
+                {
+                    if(mustConditionValidation(lines,i))
+                    {
+                        let lineParsed = `${lines[i].trim()}\n`
+                        codeParsed += lineParsed
+                        totalCommands++   
+                    }
+                    else
+                    {
+                        printErrorOnConsole(`${lines[i]} (Não é possível usar comando sem saber o que está em minha frente)`,i+1)
+                        valid = false
+                        break
                     }
                 }
                 else
