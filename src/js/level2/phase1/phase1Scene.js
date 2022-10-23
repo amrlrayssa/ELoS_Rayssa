@@ -52,19 +52,20 @@ loadOBJFile(objective,crystalModelPath,'crystal',crystalTexturePath,2.0)
 objective.rotateX(degreeToRadians(-90))
 objective.position.set(gridMapHelper.getGlobalXPositionFromCoord(9),0.0,gridMapHelper.getGlobalZPositionFromCoord(5))
 
-const boxGeometry = new THREE.BoxGeometry(20,1,2)
+const boxGeometry = new THREE.BoxGeometry(18,2,2)
 const boxMaterial = new THREE.MeshLambertMaterial({color: "rgb(0,255,0)"})
 const box1 = new THREE.Mesh(boxGeometry,boxMaterial)
 const box2 = new THREE.Mesh(boxGeometry,boxMaterial)
-box1.position.set(gridMapHelper.getGlobalXPositionFromCoord(4.5),0.5,gridMapHelper.getGlobalZPositionFromCoord(4))
-box2.position.set(gridMapHelper.getGlobalXPositionFromCoord(4.5),0.5,gridMapHelper.getGlobalZPositionFromCoord(6))
-gridMapHelper.addObstacle(0,9,4,4)
-gridMapHelper.addObstacle(0,9,6,6)
+box1.position.set(gridMapHelper.getGlobalXPositionFromCoord(5),1,gridMapHelper.getGlobalZPositionFromCoord(4))
+box2.position.set(gridMapHelper.getGlobalXPositionFromCoord(5),1,gridMapHelper.getGlobalZPositionFromCoord(6))
+gridMapHelper.addObstacle(1,9,4,4)
+gridMapHelper.addObstacle(1,9,6,6)
 
-const trapGeometry = new THREE.BoxGeometry(2,1,2)
-const trapMaterial = new THREE.MeshLambertMaterial({color: "rgb(255,0,0)"})
-const trap = new THREE.Mesh(trapGeometry,trapMaterial)
-trap.position.set(gridMapHelper.getGlobalXPositionFromCoord(5),0.5,gridMapHelper.getGlobalZPositionFromCoord(5))
+const holeGeometry = new THREE.BoxGeometry(2,1,2)
+const holeMaterial = new THREE.MeshLambertMaterial({color: "rgb(255,255,255)"})
+const hole = new THREE.Mesh(holeGeometry,holeMaterial)
+hole.position.set(gridMapHelper.getGlobalXPositionFromCoord(7),0.5,gridMapHelper.getGlobalZPositionFromCoord(5))
+gridMapHelper.addHole(7,5)
 
 scene.add(ambientLight)
 scene.add(mainLight)
@@ -73,9 +74,7 @@ scene.add(objective)
 scene.add(actor)
 scene.add(box1)
 scene.add(box2)
-scene.add(trap)
-
-gridMapHelper.addFireHole(5,5)
+scene.add(hole)
 
 function animate() {
     requestAnimationFrame(animate)
@@ -119,7 +118,7 @@ function apagarFogoECobrirBuraco()
 {
     if(gridMapHelper.deactivateHole(actor.position,'fire'))
     {
-        trap.visible = false
+        hole.visible = false
     }
 }
 
@@ -127,7 +126,7 @@ function cobrirBuraco()
 {
     if(gridMapHelper.deactivateHole(actor.position))
     {
-        trap.visible = false
+        hole.visible = false
     }
 }
 
@@ -167,7 +166,7 @@ function resetLevel()
     actor.rotation.set(0,degreeToRadians(90),0)
     actor.getObjectByName('eve').rotation.set(0,0,0)
     gridMapHelper.restartHoles()
-    trap.visible = true
+    hole.visible = true
     objective.visible = true
 }
 
