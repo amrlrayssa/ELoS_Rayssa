@@ -137,7 +137,7 @@ function apagarFogoECobrirBuraco()
 {
     if(gridMapHelper.deactivateHole(actor.position,'fire'))
     {
-        hole.visible = false
+        fireHole.visible = false
     }
 }
 
@@ -196,6 +196,7 @@ function resetLevel()
     actor.getObjectByName('eve').rotation.set(0,0,0)
     gridMapHelper.restartHoles()
     hole.visible = true
+    fireHole.visible = true
     objective1.visible = true
     objective2.visible = true
 }
