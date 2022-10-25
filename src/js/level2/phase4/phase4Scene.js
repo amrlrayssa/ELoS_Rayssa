@@ -62,8 +62,10 @@ box1.position.set(gridMapHelper.getGlobalXPositionFromCoord(5),1,gridMapHelper.g
 box2.position.set(gridMapHelper.getGlobalXPositionFromCoord(5),1,gridMapHelper.getGlobalZPositionFromCoord(6))
 box3.position.set(gridMapHelper.getGlobalXPositionFromCoord(5),1,gridMapHelper.getGlobalZPositionFromCoord(2))
 box4.position.set(gridMapHelper.getGlobalXPositionFromCoord(5),1,gridMapHelper.getGlobalZPositionFromCoord(8))
-gridMapHelper.addObstacle(1,9,4,4)
-gridMapHelper.addObstacle(1,9,6,6)
+gridMapHelper.addObstacle(2,8,2,2)
+gridMapHelper.addObstacle(2,8,4,4)
+gridMapHelper.addObstacle(2,8,6,6)
+gridMapHelper.addObstacle(2,8,8,8)
 
 const holeGeometry = new THREE.BoxGeometry(2,1,2)
 const holeMaterial = new THREE.MeshLambertMaterial({color: "rgb(255,255,255)"})
@@ -150,32 +152,28 @@ function pegandoFogo()
 
 function apagarFogoECobrirBuraco()
 {
-    if(gridMapHelper.deactivateHole(actor.position,'fire'))
+    if(gridMapHelper.detectHole(actor.position) == 0)
     {
-        if(gridMapHelper.detectHole(actor.position) == 0)
-        {
-            fireHole1.visible = false
-        }
-        else if(gridMapHelper.detectHole(actor.position) == 1)
-        {
-            fireHole2.visible = false
-        }
+        fireHole1.visible = false
     }
+    else if(gridMapHelper.detectHole(actor.position) == 1)
+    {
+        fireHole2.visible = false
+    }
+    gridMapHelper.deactivateHole(actor.position,'fire')
 }
 
 function cobrirBuraco()
 {
-    if(gridMapHelper.deactivateHole(actor.position))
+    if(gridMapHelper.detectHole(actor.position,"common") == 0)
     {
-        if(gridMapHelper.detectHole(actor.position,"common") == 0)
-        {
-            hole1.visible = false
-        }
-        else if(gridMapHelper.detectHole(actor.position,"common") == 1)
-        {
-            hole2.visible = false
-        }
+        hole1.visible = false
     }
+    else if(gridMapHelper.detectHole(actor.position,"common") == 1)
+    {
+        hole2.visible = false
+    }
+    gridMapHelper.deactivateHole(actor.position)
 }
 
 function checkCollision(object1,object2)
@@ -235,7 +233,7 @@ function winCondition()
 
 const execBtn = document.getElementById("execute")
 execBtn.addEventListener("click",async function(){
-    let codeParsed = parseCode(editor.state.doc.toString(),10)
+    let codeParsed = parseCode(editor.state.doc.toString())
     sceneProperties.cancelExecution = false
     if(codeParsed != null)
     {

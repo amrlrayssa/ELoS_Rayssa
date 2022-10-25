@@ -216,7 +216,7 @@ function winCondition()
 
 const execBtn = document.getElementById("execute")
 execBtn.addEventListener("click",async function(){
-    let codeParsed = parseCode(editor.state.doc.toString(),10)
+    let codeParsed = parseCode(editor.state.doc.toString())
     sceneProperties.cancelExecution = false
     if(codeParsed != null)
     {
