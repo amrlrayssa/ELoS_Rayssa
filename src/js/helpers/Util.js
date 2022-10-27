@@ -239,6 +239,32 @@ export function rotateActorLeft(actor,sceneProperties)
     })
 }
 
+export function rotateActorUTurn(actor,sceneProperties)
+{
+    let objectCopy = actor.clone()
+    objectCopy.rotateY(degreeToRadians(180))
+    let newPosition = new THREE.Quaternion()
+    newPosition.setFromEuler(objectCopy.rotation)
+    let requestID
+    return new Promise(function(resolve){
+        function rotateActor()
+        {
+            if(!actor.quaternion.equals(newPosition) && !sceneProperties.cancelExecution)
+            {
+                actor.quaternion.rotateTowards(newPosition,degreeToRadians(1))
+                requestID = requestAnimationFrame(rotateActor)
+            }
+            else
+            {
+                cancelAnimationFrame(requestID)
+                resolve()
+            }
+        }
+
+        requestID = requestAnimationFrame(rotateActor)
+    })
+}
+
 /**
  * Prints something in the phase's console. This function will only work if the console HTML tag has the id "console-printing".
  * @example

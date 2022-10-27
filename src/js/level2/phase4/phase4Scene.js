@@ -12,7 +12,8 @@ import
     translateActorFoward,
     printOnConsole,
     loadGLBFile,
-    loadOBJFile
+    loadOBJFile,
+    rotateActorUTurn
 } from '../../helpers/Util'
 import {editor,readOnlyState} from '../../components/global/editor'
 import { parseCode } from '../../level2/level2Parser'
@@ -136,6 +137,11 @@ async function girarDireita()
 async function girarEsquerda()
 {
     await rotateActorLeft(actor,sceneProperties)
+}
+
+async function darMeiaVolta()
+{
+    await rotateActorUTurn(actor,sceneProperties)
 }
 
 function pegandoFogo()
