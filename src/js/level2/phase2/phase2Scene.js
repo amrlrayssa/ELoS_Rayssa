@@ -1,5 +1,6 @@
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
+import { nodeFrame } from 'three/examples/jsm/renderers/webgl/nodes/WebGLNodes'
 import { GridMapHelper } from '../../helpers/GridMapHelper'
 import 
 {
@@ -13,7 +14,8 @@ import
     printOnConsole,
     loadGLBFile,
     loadOBJFile,
-    rotateActorUTurn
+    rotateActorUTurn,
+    createFire
 } from '../../helpers/Util'
 import {editor,readOnlyState} from '../../components/global/editor'
 import { parseCode } from '../../level2/level2Parser'
@@ -78,9 +80,9 @@ const holeGeometry = new THREE.BoxGeometry(2,1,2)
 const holeMaterial = new THREE.MeshLambertMaterial({color: "rgb(255,255,255)"})
 const fireHoleMaterial = new THREE.MeshLambertMaterial({color: "rgb(255,165,0)"})
 const hole = new THREE.Mesh(holeGeometry,holeMaterial)
-const fireHole = new THREE.Mesh(holeGeometry,fireHoleMaterial)
+const fireHole = createFire()
 hole.position.set(gridMapHelper.getGlobalXPositionFromCoord(9),0.5,gridMapHelper.getGlobalZPositionFromCoord(7))
-fireHole.position.set(gridMapHelper.getGlobalXPositionFromCoord(9),0.5,gridMapHelper.getGlobalZPositionFromCoord(3))
+fireHole.position.set(gridMapHelper.getGlobalXPositionFromCoord(9),2,gridMapHelper.getGlobalZPositionFromCoord(3))
 gridMapHelper.addHole(9,7)
 gridMapHelper.addFireHole(9,3)
 
@@ -99,6 +101,7 @@ scene.add(fireHole)
 
 function animate() {
     requestAnimationFrame(animate)
+    nodeFrame.update()
     controls.update()
     renderer.render(scene, camera)
 }
