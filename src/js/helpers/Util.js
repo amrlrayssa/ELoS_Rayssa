@@ -44,7 +44,7 @@ export var sceneProperties = {
     phaseTimer: new THREE.Clock(false)
 }
 
-export function createFire()
+export function createFire(texturePath)
 {
     // geometries
 
@@ -82,7 +82,7 @@ export function createFire()
 
     // Forked from: https://answers.unrealengine.com/questions/143267/emergency-need-help-with-fire-fx-weird-loop.html
 
-    const fireMap = new THREE.TextureLoader().load( 'https://d3kjluh73b9h9o.cloudfront.net/original/4X/f/e/d/fedea854223c3937bb493eeae04757f0bb810c12.jpeg' );
+    const fireMap = new THREE.TextureLoader().load( texturePath );
 
     // nodes
 
