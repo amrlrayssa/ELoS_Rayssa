@@ -46,9 +46,19 @@
                             </div>
                         </div>
                         <div class="col-12">
-                            <script id="console">
-                                importComponent('../../components/global/console.html','console')
-                            </script>
+                            <div class="card" style="max-height: 40vh;">
+                                <div class="card-header">
+                                    <h4 class="card-title">Console</h4>
+                                </div>
+                                <div class="card-body overflow-auto">
+                                    <code id="console-printing">
+                            
+                                    </code>
+                                </div>
+                                <div class="card-footer d-flex flex-row-reverse">
+                                    <button id="clsConsole" type="button" class="btn btn-secondary">Limpar Console</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
