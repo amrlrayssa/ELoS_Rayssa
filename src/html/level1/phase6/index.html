@@ -32,9 +32,18 @@
                             </script>
                         </div>
                         <div class="col-12 mb-2">
-                            <script id="codeArea">
-                                importComponent('../../components/global/codeArea.html','codeArea')
-                            </script>
+                            <div class="card" style="min-height: 30vh; max-height: 40vh;">
+                                <div class="card-header">
+                                    <h4 class="card-title">Digite seu código aqui</h4>
+                                </div>
+                                <div class="card-body overflow-auto" id="codeToExecute">
+                                   
+                                </div>
+                                <div class="card-footer">
+                                    <button id="execute" type="button" class="btn btn-primary">Executar</button>
+                                    <button id="reset" type="button" class="btn btn-secondary">Reset</button>
+                                </div>
+                            </div>
                         </div>
                         <div class="col-12">
                             <script id="console">
