@@ -20,6 +20,8 @@ import { parseCode } from '../../level2/level2Parser'
 
 const scene = new THREE.Scene()
 
+let extinguisherUses = 1
+
 const camera = new THREE.PerspectiveCamera(45, 2, 1, 1000)
 camera.position.set(0,15,30)
 
@@ -66,7 +68,7 @@ const holeGeometry = new THREE.BoxGeometry(2,1,2)
 const holeMaterial = new THREE.MeshLambertMaterial({color: "rgb(255,255,255)"})
 const hole = new THREE.Mesh(holeGeometry,holeMaterial)
 hole.position.set(gridMapHelper.getGlobalXPositionFromCoord(7),0.5,gridMapHelper.getGlobalZPositionFromCoord(5))
-gridMapHelper.addHole(7,5)
+gridMapHelper.addFireHole(7,5)
 
 scene.add(ambientLight)
 scene.add(mainLight)
@@ -122,9 +124,17 @@ function pegandoFogo()
 
 function apagarFogoECobrirBuraco()
 {
-    if(gridMapHelper.deactivateHole(actor.position,'fire'))
+    if(extinguisherUses > 0)
     {
-        hole.visible = false
+        if(gridMapHelper.deactivateHole(actor.position,'fire'))
+        {
+            hole.visible = false
+            extinguisherUses--
+        }
+    }
+    else
+    {
+        printOnConsole("Estou sem extintores!")
     }
 }
 
@@ -168,6 +178,7 @@ function coletarCristal()
 
 function resetLevel()
 {
+    extinguisherUses = 1
     actor.position.set(gridMapHelper.getGlobalXPositionFromCoord(0),1.0,gridMapHelper.getGlobalZPositionFromCoord(5))
     actor.rotation.set(0,degreeToRadians(90),0)
     actor.getObjectByName('eve').rotation.set(0,0,0)
