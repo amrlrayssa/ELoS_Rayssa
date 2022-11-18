@@ -122,6 +122,12 @@ function pegandoFogo()
     }
 }
 
+function updateExtinguisherUses()
+{
+    const usesElement = document.getElementById("extinguisherUses")
+    usesElement.innerText = `x${extinguisherUses}`
+}
+
 function apagarFogoECobrirBuraco()
 {
     if(extinguisherUses > 0)
@@ -130,6 +136,7 @@ function apagarFogoECobrirBuraco()
         {
             hole.visible = false
             extinguisherUses--
+            updateExtinguisherUses()
         }
     }
     else
@@ -179,6 +186,7 @@ function coletarCristal()
 function resetLevel()
 {
     extinguisherUses = 1
+    updateExtinguisherUses()
     actor.position.set(gridMapHelper.getGlobalXPositionFromCoord(0),1.0,gridMapHelper.getGlobalZPositionFromCoord(5))
     actor.rotation.set(0,degreeToRadians(90),0)
     actor.getObjectByName('eve').rotation.set(0,0,0)
@@ -235,4 +243,5 @@ clsConsoleBtn.addEventListener("click",function(){
 })
 
 resizeCanvasToDisplaySize(renderer,camera)
+updateExtinguisherUses()
 animate()
