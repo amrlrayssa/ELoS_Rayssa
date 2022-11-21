@@ -76,7 +76,7 @@ box3.position.set(gridMapHelper.getGlobalXPositionFromCoord(7),1,gridMapHelper.g
 box4.position.set(gridMapHelper.getGlobalXPositionFromCoord(8),1,gridMapHelper.getGlobalZPositionFromCoord(1.5))
 gridMapHelper.addObstacle(1,8,4,4)
 gridMapHelper.addObstacle(1,7,6,6)
-gridMapHelper.addObstacle(8,8,7,9)
+gridMapHelper.addObstacle(7,7,7,9)
 gridMapHelper.addObstacle(8,8,0,3)
 
 const fireMapPath = new URL('../../../assets/textures/fireMap.jpg',import.meta.url).toString()
