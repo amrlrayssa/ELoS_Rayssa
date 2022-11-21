@@ -1,5 +1,6 @@
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
+import { nodeFrame } from 'three/examples/jsm/renderers/webgl/nodes/WebGLNodes'
 import { GridMapHelper } from '../../helpers/GridMapHelper'
 import 
 {
@@ -13,7 +14,8 @@ import
     printOnConsole,
     loadGLBFile,
     loadOBJFile,
-    rotateActorUTurn
+    rotateActorUTurn,
+    createFire
 } from '../../helpers/Util'
 import {editor,readOnlyState} from '../../components/global/editor'
 import { parseCode } from '../../level2/level2Parser'
@@ -64,10 +66,9 @@ box2.position.set(gridMapHelper.getGlobalXPositionFromCoord(5),1,gridMapHelper.g
 gridMapHelper.addObstacle(1,9,4,4)
 gridMapHelper.addObstacle(1,9,6,6)
 
-const holeGeometry = new THREE.BoxGeometry(2,1,2)
-const holeMaterial = new THREE.MeshLambertMaterial({color: "rgb(255,255,255)"})
-const hole = new THREE.Mesh(holeGeometry,holeMaterial)
-hole.position.set(gridMapHelper.getGlobalXPositionFromCoord(7),0.5,gridMapHelper.getGlobalZPositionFromCoord(5))
+const fireMapPath = new URL('../../../assets/textures/fireMap.jpg',import.meta.url).toString()
+const fireHole = createFire(fireMapPath)
+fireHole.position.set(gridMapHelper.getGlobalXPositionFromCoord(7),2,gridMapHelper.getGlobalZPositionFromCoord(5))
 gridMapHelper.addFireHole(7,5)
 
 scene.add(ambientLight)
@@ -77,10 +78,11 @@ scene.add(objective)
 scene.add(actor)
 scene.add(box1)
 scene.add(box2)
-scene.add(hole)
+scene.add(fireHole)
 
 function animate() {
     requestAnimationFrame(animate)
+    nodeFrame.update()
     controls.update()
     renderer.render(scene, camera)
 }
@@ -134,7 +136,7 @@ function apagarFogoECobrirBuraco()
     {
         if(gridMapHelper.deactivateHole(actor.position,'fire'))
         {
-            hole.visible = false
+            fireHole.visible = false
             extinguisherUses--
             updateExtinguisherUses()
         }
@@ -142,14 +144,6 @@ function apagarFogoECobrirBuraco()
     else
     {
         printOnConsole("Estou sem extintores!")
-    }
-}
-
-function cobrirBuraco()
-{
-    if(gridMapHelper.deactivateHole(actor.position))
-    {
-        hole.visible = false
     }
 }
 
@@ -191,7 +185,7 @@ function resetLevel()
     actor.rotation.set(0,degreeToRadians(90),0)
     actor.getObjectByName('eve').rotation.set(0,0,0)
     gridMapHelper.restartHoles()
-    hole.visible = true
+    fireHole.visible = true
     objective.visible = true
 }
 

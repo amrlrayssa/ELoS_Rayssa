@@ -1,5 +1,6 @@
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
+import { nodeFrame } from 'three/examples/jsm/renderers/webgl/nodes/WebGLNodes'
 import { GridMapHelper } from '../../helpers/GridMapHelper'
 import 
 {
@@ -13,12 +14,15 @@ import
     printOnConsole,
     loadGLBFile,
     loadOBJFile,
-    rotateActorUTurn
+    rotateActorUTurn,
+    createFire
 } from '../../helpers/Util'
 import {editor,readOnlyState} from '../../components/global/editor'
 import { parseCode } from '../../level2/level2Parser'
 
 const scene = new THREE.Scene()
+
+let extinguisherUses = 2
 
 const camera = new THREE.PerspectiveCamera(45, 2, 1, 1000)
 camera.position.set(0,15,30)
@@ -57,31 +61,33 @@ objective2.rotateX(degreeToRadians(-90))
 objective1.position.set(gridMapHelper.getGlobalXPositionFromCoord(0),0.0,gridMapHelper.getGlobalZPositionFromCoord(0))
 objective2.position.set(gridMapHelper.getGlobalXPositionFromCoord(9),0.0,gridMapHelper.getGlobalZPositionFromCoord(9))
 
-const boxGeometry = new THREE.BoxGeometry(6,2,2)
+const boxGeometry = new THREE.BoxGeometry(12,2,2)
 const boxGeometry2 = new THREE.BoxGeometry(2,2,2)
+const boxGeometry3 = new THREE.BoxGeometry(2,2,14)
 const boxMaterial = new THREE.MeshLambertMaterial({color: "rgb(0,255,0)"})
 const box1 = new THREE.Mesh(boxGeometry,boxMaterial)
 const box2 = new THREE.Mesh(boxGeometry2,boxMaterial)
-const box3 = new THREE.Mesh(boxGeometry,boxMaterial)
-const box4 = new THREE.Mesh(boxGeometry2,boxMaterial)
-box1.position.set(gridMapHelper.getGlobalXPositionFromCoord(1),1,gridMapHelper.getGlobalZPositionFromCoord(2))
+const box3 = new THREE.Mesh(boxGeometry2,boxMaterial)
+const box4 = new THREE.Mesh(boxGeometry3,boxMaterial)
+box1.position.set(gridMapHelper.getGlobalXPositionFromCoord(3.5),1,gridMapHelper.getGlobalZPositionFromCoord(2))
 box2.position.set(gridMapHelper.getGlobalXPositionFromCoord(2),1,gridMapHelper.getGlobalZPositionFromCoord(1))
 box3.position.set(gridMapHelper.getGlobalXPositionFromCoord(8),1,gridMapHelper.getGlobalZPositionFromCoord(7))
-box4.position.set(gridMapHelper.getGlobalXPositionFromCoord(7),1,gridMapHelper.getGlobalZPositionFromCoord(8))
-gridMapHelper.addObstacle(0,2,2,2)
+box4.position.set(gridMapHelper.getGlobalXPositionFromCoord(7),1,gridMapHelper.getGlobalZPositionFromCoord(5))
+gridMapHelper.addObstacle(1,6,2,2)
 gridMapHelper.addObstacle(2,2,1,1)
-gridMapHelper.addObstacle(7,9,7,7)
+gridMapHelper.addObstacle(8,8,7,7)
 gridMapHelper.addObstacle(7,7,8,8)
 
-const holeGeometry = new THREE.BoxGeometry(2,1,2)
-const holeMaterial = new THREE.MeshLambertMaterial({color: "rgb(255,255,255)"})
-const fireHoleMaterial = new THREE.MeshLambertMaterial({color: "rgb(255,165,0)"})
-const hole = new THREE.Mesh(holeGeometry,holeMaterial)
-const fireHole = new THREE.Mesh(holeGeometry,fireHoleMaterial)
-hole.position.set(gridMapHelper.getGlobalXPositionFromCoord(2),0.5,gridMapHelper.getGlobalZPositionFromCoord(0))
-fireHole.position.set(gridMapHelper.getGlobalXPositionFromCoord(7),0.5,gridMapHelper.getGlobalZPositionFromCoord(9))
-gridMapHelper.addHole(2,0)
-gridMapHelper.addFireHole(7,9)
+const fireMapPath = new URL('../../../assets/textures/fireMap.jpg',import.meta.url).toString()
+const fireHole = createFire(fireMapPath)
+const fireHole2 = createFire(fireMapPath)
+const fireHole3 = createFire(fireMapPath)
+fireHole.position.set(gridMapHelper.getGlobalXPositionFromCoord(0),2,gridMapHelper.getGlobalZPositionFromCoord(2))
+fireHole2.position.set(gridMapHelper.getGlobalXPositionFromCoord(2),2,gridMapHelper.getGlobalZPositionFromCoord(0))
+fireHole3.position.set(gridMapHelper.getGlobalXPositionFromCoord(9),2,gridMapHelper.getGlobalZPositionFromCoord(7))
+gridMapHelper.addFireHole(0,2)
+gridMapHelper.addFireHole(2,0)
+gridMapHelper.addFireHole(9,7)
 
 scene.add(ambientLight)
 scene.add(mainLight)
@@ -93,11 +99,13 @@ scene.add(box1)
 scene.add(box2)
 scene.add(box3)
 scene.add(box4)
-scene.add(hole)
 scene.add(fireHole)
+scene.add(fireHole2)
+scene.add(fireHole3)
 
 function animate() {
     requestAnimationFrame(animate)
+    nodeFrame.update()
     controls.update()
     renderer.render(scene, camera)
 }
@@ -139,19 +147,35 @@ function pegandoFogo()
     }
 }
 
-function apagarFogoECobrirBuraco()
+function updateExtinguisherUses()
 {
-    if(gridMapHelper.deactivateHole(actor.position,'fire'))
-    {
-        fireHole.visible = false
-    }
+    const usesElement = document.getElementById("extinguisherUses")
+    usesElement.innerText = `x${extinguisherUses}`
 }
 
-function cobrirBuraco()
+function apagarFogoECobrirBuraco()
 {
-    if(gridMapHelper.deactivateHole(actor.position))
+    if(extinguisherUses > 0)
     {
-        hole.visible = false
+        if(gridMapHelper.detectHole(actor.position) == 0)
+        {
+            fireHole.visible = false
+        }
+        else if(gridMapHelper.detectHole(actor.position) == 1)
+        {
+            fireHole2.visible = false
+        }
+        else if(gridMapHelper.detectHole(actor.position) == 2)
+        {
+            fireHole3.visible = false
+        }
+        gridMapHelper.deactivateHole(actor.position,'fire')
+        extinguisherUses--
+        updateExtinguisherUses()
+    }
+    else
+    {
+        printOnConsole("Estou sem extintores!")
     }
 }
 
@@ -197,12 +221,15 @@ function coletarCristal()
 
 function resetLevel()
 {
+    extinguisherUses = 2
+    updateExtinguisherUses()
     actor.position.set(gridMapHelper.getGlobalXPositionFromCoord(0),1.0,gridMapHelper.getGlobalZPositionFromCoord(5))
     actor.rotation.set(0,degreeToRadians(90),0)
     actor.getObjectByName('eve').rotation.set(0,0,0)
     gridMapHelper.restartHoles()
-    hole.visible = true
     fireHole.visible = true
+    fireHole2.visible = true
+    fireHole3.visible = true
     objective1.visible = true
     objective2.visible = true
 }
@@ -255,4 +282,5 @@ clsConsoleBtn.addEventListener("click",function(){
 })
 
 resizeCanvasToDisplaySize(renderer,camera)
+updateExtinguisherUses()
 animate()
