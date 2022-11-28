@@ -1,6 +1,5 @@
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
-import { nodeFrame } from 'three/examples/jsm/renderers/webgl/nodes/WebGLNodes'
 import { GridMapHelper } from '../../helpers/GridMapHelper'
 import 
 {
@@ -14,9 +13,9 @@ import
     printOnConsole,
     loadGLBFile,
     loadOBJFile,
-    rotateActorUTurn,
-    createFire
+    rotateActorUTurn
 } from '../../helpers/Util'
+import Fire from '../../helpers/FireObject/Fire'
 import {editor,readOnlyState} from '../../components/global/editor'
 import { parseCode } from '../../level2/level2Parser'
 
@@ -66,9 +65,12 @@ box2.position.set(gridMapHelper.getGlobalXPositionFromCoord(5),1,gridMapHelper.g
 gridMapHelper.addObstacle(1,9,4,4)
 gridMapHelper.addObstacle(1,9,6,6)
 
-const fireMapPath = new URL('../../../assets/textures/fireMap.jpg',import.meta.url).toString()
-const fireHole = createFire(fireMapPath)
-fireHole.position.set(gridMapHelper.getGlobalXPositionFromCoord(7),2,gridMapHelper.getGlobalZPositionFromCoord(5))
+const fireClock = new THREE.Clock()
+const fireTexPath = new URL('../../../assets/textures/fire.png',import.meta.url).toString()
+const fireTex = new THREE.TextureLoader().load(fireTexPath)
+const fireHole = new Fire(fireTex)
+fireHole.scale.set(1.2, 3.0, 1.2)
+fireHole.position.set(gridMapHelper.getGlobalXPositionFromCoord(7),1.5,gridMapHelper.getGlobalZPositionFromCoord(5))
 gridMapHelper.addFireHole(7,5)
 
 scene.add(ambientLight)
@@ -82,7 +84,7 @@ scene.add(fireHole)
 
 function animate() {
     requestAnimationFrame(animate)
-    nodeFrame.update()
+    fireHole.update(fireClock)
     controls.update()
     renderer.render(scene, camera)
 }

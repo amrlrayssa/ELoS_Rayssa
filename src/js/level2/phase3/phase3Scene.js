@@ -1,6 +1,5 @@
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
-import { nodeFrame } from 'three/examples/jsm/renderers/webgl/nodes/WebGLNodes'
 import { GridMapHelper } from '../../helpers/GridMapHelper'
 import 
 {
@@ -14,9 +13,9 @@ import
     printOnConsole,
     loadGLBFile,
     loadOBJFile,
-    rotateActorUTurn,
-    createFire
+    rotateActorUTurn
 } from '../../helpers/Util'
+import Fire from '../../helpers/FireObject/Fire'
 import {editor,readOnlyState} from '../../components/global/editor'
 import { parseCode } from '../../level2/level2Parser'
 
@@ -78,13 +77,18 @@ gridMapHelper.addObstacle(2,2,1,1)
 gridMapHelper.addObstacle(8,8,7,7)
 gridMapHelper.addObstacle(7,7,8,8)
 
-const fireMapPath = new URL('../../../assets/textures/fireMap.jpg',import.meta.url).toString()
-const fireHole = createFire(fireMapPath)
-const fireHole2 = createFire(fireMapPath)
-const fireHole3 = createFire(fireMapPath)
-fireHole.position.set(gridMapHelper.getGlobalXPositionFromCoord(0),2,gridMapHelper.getGlobalZPositionFromCoord(2))
-fireHole2.position.set(gridMapHelper.getGlobalXPositionFromCoord(2),2,gridMapHelper.getGlobalZPositionFromCoord(0))
-fireHole3.position.set(gridMapHelper.getGlobalXPositionFromCoord(9),2,gridMapHelper.getGlobalZPositionFromCoord(7))
+const fireTexPath = new URL('../../../assets/textures/fire.png',import.meta.url).toString()
+const fireTex = new THREE.TextureLoader().load(fireTexPath)
+const fireClock = new THREE.Clock()
+const fireHole = new Fire(fireTex)
+const fireHole2 = new Fire(fireTex)
+const fireHole3 = new Fire(fireTex)
+fireHole.scale.set(1.2, 3.0, 1.2)
+fireHole2.scale.set(1.2, 3.0, 1.2)
+fireHole3.scale.set(1.2, 3.0, 1.2)
+fireHole.position.set(gridMapHelper.getGlobalXPositionFromCoord(0),1.5,gridMapHelper.getGlobalZPositionFromCoord(2))
+fireHole2.position.set(gridMapHelper.getGlobalXPositionFromCoord(2),1.5,gridMapHelper.getGlobalZPositionFromCoord(0))
+fireHole3.position.set(gridMapHelper.getGlobalXPositionFromCoord(9),1.5,gridMapHelper.getGlobalZPositionFromCoord(7))
 gridMapHelper.addFireHole(0,2)
 gridMapHelper.addFireHole(2,0)
 gridMapHelper.addFireHole(9,7)
@@ -105,7 +109,9 @@ scene.add(fireHole3)
 
 function animate() {
     requestAnimationFrame(animate)
-    nodeFrame.update()
+    fireHole.update(fireClock)
+    fireHole2.update(fireClock)
+    fireHole3.update(fireClock)
     controls.update()
     renderer.render(scene, camera)
 }
