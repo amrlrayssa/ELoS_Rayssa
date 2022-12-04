@@ -17,11 +17,11 @@ import
 } from '../../helpers/Util'
 import Fire from '../../helpers/FireObject/Fire'
 import {editor,readOnlyState} from '../../components/global/editor'
-import { parseCode } from '../../level2/level2Parser'
+import { parseCode } from '../level2Parser'
 
 const scene = new THREE.Scene()
 
-let extinguisherUses = 2
+let extinguisherUses = 1
 
 const camera = new THREE.PerspectiveCamera(45, 2, 1, 1000)
 camera.position.set(0,15,30)
@@ -49,89 +49,64 @@ loadGLBFile(actor,actorModelPath,"eve",2.0)
 actor.position.set(gridMapHelper.getGlobalXPositionFromCoord(0),1.0,gridMapHelper.getGlobalZPositionFromCoord(5))
 actor.rotateY(degreeToRadians(90))
 
-const objective = new THREE.Object3D()
+const objective1 = new THREE.Object3D()
 var crystalModelPath = new URL('../../../assets/models/crystal.obj',import.meta.url).toString()
 var crystalTexturePath = new URL('../../../assets/textures/crystal.jpg',import.meta.url).toString()
-loadOBJFile(objective,crystalModelPath,'crystal',crystalTexturePath,2.0)
-objective.rotateX(degreeToRadians(-90))
-objective.position.set(gridMapHelper.getGlobalXPositionFromCoord(9),0.0,gridMapHelper.getGlobalZPositionFromCoord(5))
+loadOBJFile(objective1,crystalModelPath,'crystal',crystalTexturePath,2.0)
+objective1.rotateX(degreeToRadians(-90))
+const objective2 = new THREE.Object3D()
+loadOBJFile(objective2,crystalModelPath,'crystal',crystalTexturePath,2.0)
+objective2.rotateX(degreeToRadians(-90))
+objective1.position.set(gridMapHelper.getGlobalXPositionFromCoord(9),0.0,gridMapHelper.getGlobalZPositionFromCoord(9))
+objective2.position.set(gridMapHelper.getGlobalXPositionFromCoord(9),0.0,gridMapHelper.getGlobalZPositionFromCoord(0))
 
-const boxGeometry = new THREE.BoxGeometry(14,2,2)
+const boxGeometry = new THREE.BoxGeometry(16,2,2)
+const boxGeometry2 = new THREE.BoxGeometry(2,2,6)
+const boxGeometry3 = new THREE.BoxGeometry(2,2,8)
+const boxGeometry4 = new THREE.BoxGeometry(14,2,2)
 const boxMaterial = new THREE.MeshLambertMaterial({color: "rgb(0,255,0)"})
 const box1 = new THREE.Mesh(boxGeometry,boxMaterial)
-const box2 = new THREE.Mesh(boxGeometry,boxMaterial)
-const box3 = new THREE.Mesh(boxGeometry,boxMaterial)
-const box4 = new THREE.Mesh(boxGeometry,boxMaterial)
-box1.position.set(gridMapHelper.getGlobalXPositionFromCoord(5),1,gridMapHelper.getGlobalZPositionFromCoord(4))
-box2.position.set(gridMapHelper.getGlobalXPositionFromCoord(5),1,gridMapHelper.getGlobalZPositionFromCoord(6))
-box3.position.set(gridMapHelper.getGlobalXPositionFromCoord(5),1,gridMapHelper.getGlobalZPositionFromCoord(2))
-box4.position.set(gridMapHelper.getGlobalXPositionFromCoord(5),1,gridMapHelper.getGlobalZPositionFromCoord(8))
-gridMapHelper.addObstacle(2,8,2,2)
-gridMapHelper.addObstacle(2,8,4,4)
-gridMapHelper.addObstacle(2,8,6,6)
-gridMapHelper.addObstacle(2,8,8,8)
+const box2 = new THREE.Mesh(boxGeometry4,boxMaterial)
+const box3 = new THREE.Mesh(boxGeometry2,boxMaterial)
+const box4 = new THREE.Mesh(boxGeometry3,boxMaterial)
+box1.position.set(gridMapHelper.getGlobalXPositionFromCoord(4.5),1,gridMapHelper.getGlobalZPositionFromCoord(4))
+box2.position.set(gridMapHelper.getGlobalXPositionFromCoord(4),1,gridMapHelper.getGlobalZPositionFromCoord(6))
+box3.position.set(gridMapHelper.getGlobalXPositionFromCoord(7),1,gridMapHelper.getGlobalZPositionFromCoord(8))
+box4.position.set(gridMapHelper.getGlobalXPositionFromCoord(8),1,gridMapHelper.getGlobalZPositionFromCoord(1.5))
+gridMapHelper.addObstacle(1,8,4,4)
+gridMapHelper.addObstacle(1,7,6,6)
+gridMapHelper.addObstacle(7,7,7,9)
+gridMapHelper.addObstacle(8,8,0,3)
 
 const fireTexPath = new URL('../../../assets/textures/fire.png',import.meta.url).toString()
 const fireTex = new THREE.TextureLoader().load(fireTexPath)
 const fireClock = new THREE.Clock()
-const fireHole1 = new Fire(fireTex)
+const fireHole = new Fire(fireTex)
 const fireHole2 = new Fire(fireTex)
-const fireHole3 = new Fire(fireTex)
-const fireHole4 = new Fire(fireTex)
-const fireHole5 = new Fire(fireTex)
-fireHole1.scale.set(1.2,3.0,1.2)
-fireHole2.scale.set(1.2,3.0,1.2)
-fireHole3.scale.set(1.2,3.0,1.2)
-fireHole4.scale.set(1.2,3.0,1.2)
-fireHole5.scale.set(1.2,3.0,1.2)
-fireHole1.position.set(gridMapHelper.getGlobalXPositionFromCoord(3),1.5,gridMapHelper.getGlobalZPositionFromCoord(3))
-fireHole2.position.set(gridMapHelper.getGlobalXPositionFromCoord(6),1.5,gridMapHelper.getGlobalZPositionFromCoord(3))
-fireHole3.position.set(gridMapHelper.getGlobalXPositionFromCoord(3),1.5,gridMapHelper.getGlobalZPositionFromCoord(7))
-fireHole4.position.set(gridMapHelper.getGlobalXPositionFromCoord(6),1.5,gridMapHelper.getGlobalZPositionFromCoord(7))
-fireHole5.position.set(gridMapHelper.getGlobalXPositionFromCoord(9),1.5,gridMapHelper.getGlobalZPositionFromCoord(6))
-gridMapHelper.addFireHole(3,3)
-gridMapHelper.addFireHole(6,3)
-gridMapHelper.addFireHole(3,7)
-gridMapHelper.addFireHole(6,7)
-gridMapHelper.addFireHole(9,6)
-
-const trapGeometry = new THREE.BoxGeometry(2,1,2)
-const trapMaterial = new THREE.MeshLambertMaterial({color: "rgb(255,0,0)"})
-const trap1 = new THREE.Mesh(trapGeometry,trapMaterial)
-const trap2 = new THREE.Mesh(trapGeometry,trapMaterial)
-const trap3 = new THREE.Mesh(trapGeometry,trapMaterial)
-trap1.position.set(gridMapHelper.getGlobalXPositionFromCoord(9),0.5,gridMapHelper.getGlobalZPositionFromCoord(2))
-trap2.position.set(gridMapHelper.getGlobalXPositionFromCoord(8),0.5,gridMapHelper.getGlobalZPositionFromCoord(5))
-trap3.position.set(gridMapHelper.getGlobalXPositionFromCoord(9),0.5,gridMapHelper.getGlobalZPositionFromCoord(8))
-gridMapHelper.addTrap(9,2)
-gridMapHelper.addTrap(8,5)
-gridMapHelper.addTrap(9,8)
+fireHole.scale.set(1.2, 3.0, 1.2)
+fireHole2.scale.set(1.2, 3.0, 1.2)
+fireHole.position.set(gridMapHelper.getGlobalXPositionFromCoord(9),1.5,gridMapHelper.getGlobalZPositionFromCoord(3))
+fireHole2.position.set(gridMapHelper.getGlobalXPositionFromCoord(9),1.5,gridMapHelper.getGlobalZPositionFromCoord(7))
+gridMapHelper.addFireHole(9,3)
+gridMapHelper.addFireHole(9,7)
 
 scene.add(ambientLight)
 scene.add(mainLight)
 scene.add(plane)
-scene.add(objective)
+scene.add(objective1)
+scene.add(objective2)
 scene.add(actor)
 scene.add(box1)
 scene.add(box2)
 scene.add(box3)
 scene.add(box4)
-scene.add(fireHole1)
+scene.add(fireHole)
 scene.add(fireHole2)
-scene.add(fireHole3)
-scene.add(fireHole4)
-scene.add(fireHole5)
-scene.add(trap1)
-scene.add(trap2)
-scene.add(trap3)
 
 function animate() {
     requestAnimationFrame(animate)
-    fireHole1.update(fireClock)
+    fireHole.update(fireClock)
     fireHole2.update(fireClock)
-    fireHole3.update(fireClock)
-    fireHole4.update(fireClock)
-    fireHole5.update(fireClock)
     controls.update()
     renderer.render(scene, camera)
 }
@@ -185,23 +160,11 @@ function apagarFogoECobrirBuraco()
     {
         if(gridMapHelper.detectHole(actor.position) == 0)
         {
-            fireHole1.visible = false
+            fireHole.visible = false
         }
         else if(gridMapHelper.detectHole(actor.position) == 1)
         {
             fireHole2.visible = false
-        }
-        else if(gridMapHelper.detectHole(actor.position) == 2)
-        {
-            fireHole3.visible = false
-        }
-        else if(gridMapHelper.detectHole(actor.position) == 3)
-        {
-            fireHole4.visible = false
-        }
-        else if(gridMapHelper.detectHole(actor.position) == 4)
-        {
-            fireHole5.visible = false
         }
         gridMapHelper.deactivateHole(actor.position,'fire')
         extinguisherUses--
@@ -232,36 +195,44 @@ function coletarCristal()
         return
     }
 
-    if(checkCollision(actor,objective))
+    if(checkCollision(actor,objective1))
     {
-        objective.visible = false
-        printOnConsole("Cristal coletado com sucesso.")
+        objective1.visible = false
+        printOnConsole("Cristal coletado.")
+    }
+    else if(checkCollision(actor,objective2))
+    {
+        objective2.visible = false
+        printOnConsole("Cristal coletado.")
     }
     else
     {
         printOnConsole("Robô não está sobre o cristal.")
     }
+
+    if(!objective1.visible && !objective2.visible)
+    {
+        printOnConsole("Todos os cristais coletados com sucesso!")
+    }
 }
 
 function resetLevel()
 {
-    extinguisherUses = 2
+    extinguisherUses = 1
     updateExtinguisherUses()
     actor.position.set(gridMapHelper.getGlobalXPositionFromCoord(0),1.0,gridMapHelper.getGlobalZPositionFromCoord(5))
     actor.rotation.set(0,degreeToRadians(90),0)
     actor.getObjectByName('eve').rotation.set(0,0,0)
     gridMapHelper.restartHoles()
-    fireHole1.visible = true
+    fireHole.visible = true
     fireHole2.visible = true
-    fireHole3.visible = true
-    fireHole4.visible = true
-    fireHole5.visible = true
-    objective.visible = true
+    objective1.visible = true
+    objective2.visible = true
 }
 
 function winCondition()
 {
-    if(checkCollision(actor,objective) && !objective.visible)
+    if(!objective1.visible && !objective2.visible)
     {
         return true
     }
