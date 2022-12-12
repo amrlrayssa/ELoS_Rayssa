@@ -1,6 +1,7 @@
 import * as THREE from 'three'
 import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader'
 import {OBJLoader} from 'three/examples/jsm/loaders/OBJLoader'
+import * as Nodes from 'three/examples/jsm/nodes/Nodes'
 import { GridMapHelper } from './GridMapHelper'
 
 /**
@@ -219,6 +220,32 @@ export function rotateActorLeft(actor,sceneProperties)
     objectCopy.rotateY(degreeToRadians(90))
     let newPosition = new THREE.Quaternion()
     newPosition.setFromEuler(objectCopy.rotation.clone())
+    let requestID
+    return new Promise(function(resolve){
+        function rotateActor()
+        {
+            if(!actor.quaternion.equals(newPosition) && !sceneProperties.cancelExecution)
+            {
+                actor.quaternion.rotateTowards(newPosition,degreeToRadians(1))
+                requestID = requestAnimationFrame(rotateActor)
+            }
+            else
+            {
+                cancelAnimationFrame(requestID)
+                resolve()
+            }
+        }
+
+        requestID = requestAnimationFrame(rotateActor)
+    })
+}
+
+export function rotateActorUTurn(actor,sceneProperties)
+{
+    let objectCopy = actor.clone()
+    objectCopy.rotateY(degreeToRadians(180))
+    let newPosition = new THREE.Quaternion()
+    newPosition.setFromEuler(objectCopy.rotation)
     let requestID
     return new Promise(function(resolve){
         function rotateActor()

@@ -49,42 +49,111 @@ loadGLBFile(actor,actorModelPath,"eve",2.0)
 actor.position.set(gridMapHelper.getGlobalXPositionFromCoord(0),1.0,gridMapHelper.getGlobalZPositionFromCoord(5))
 actor.rotateY(degreeToRadians(90))
 
-const objective = new THREE.Object3D()
+const objective1 = new THREE.Object3D()
 var crystalModelPath = new URL('../../../assets/models/crystal.obj',import.meta.url).toString()
 var crystalTexturePath = new URL('../../../assets/textures/crystal.jpg',import.meta.url).toString()
-loadOBJFile(objective,crystalModelPath,'crystal',crystalTexturePath,2.0)
-objective.rotateX(degreeToRadians(-90))
-objective.position.set(gridMapHelper.getGlobalXPositionFromCoord(9),0.0,gridMapHelper.getGlobalZPositionFromCoord(5))
+loadOBJFile(objective1,crystalModelPath,'crystal',crystalTexturePath,2.0)
+objective1.rotateX(degreeToRadians(-90))
+const objective2 = new THREE.Object3D()
+loadOBJFile(objective2,crystalModelPath,'crystal',crystalTexturePath,2.0)
+objective2.rotateX(degreeToRadians(-90))
+objective1.position.set(gridMapHelper.getGlobalXPositionFromCoord(5),0.0,gridMapHelper.getGlobalZPositionFromCoord(7))
+objective2.position.set(gridMapHelper.getGlobalXPositionFromCoord(7),0.0,gridMapHelper.getGlobalZPositionFromCoord(0))
 
-const boxGeometry = new THREE.BoxGeometry(18,2,2)
+const boxGeometry = new THREE.BoxGeometry(14,2,2)
+const boxGeometry2 = new THREE.BoxGeometry(2,2,2)
+const boxGeometry3 = new THREE.BoxGeometry(2,2,6)
+const boxGeometry4 = new THREE.BoxGeometry(4,2,2)
 const boxMaterial = new THREE.MeshLambertMaterial({color: "rgb(0,255,0)"})
 const box1 = new THREE.Mesh(boxGeometry,boxMaterial)
-const box2 = new THREE.Mesh(boxGeometry,boxMaterial)
-box1.position.set(gridMapHelper.getGlobalXPositionFromCoord(5),1,gridMapHelper.getGlobalZPositionFromCoord(4))
-box2.position.set(gridMapHelper.getGlobalXPositionFromCoord(5),1,gridMapHelper.getGlobalZPositionFromCoord(6))
-gridMapHelper.addObstacle(1,9,4,4)
-gridMapHelper.addObstacle(1,9,6,6)
+const box2 = new THREE.Mesh(boxGeometry2,boxMaterial)
+const box3 = new THREE.Mesh(boxGeometry2,boxMaterial)
+const box4 = new THREE.Mesh(boxGeometry3,boxMaterial)
+const box5 = new THREE.Mesh(boxGeometry3,boxMaterial)
+const box6 = new THREE.Mesh(boxGeometry,boxMaterial)
+const box7 = new THREE.Mesh(boxGeometry2,boxMaterial)
+const box8 = new THREE.Mesh(boxGeometry4,boxMaterial)
+box1.position.set(gridMapHelper.getGlobalXPositionFromCoord(5),1,gridMapHelper.getGlobalZPositionFromCoord(8))
+box2.position.set(gridMapHelper.getGlobalXPositionFromCoord(2),1,gridMapHelper.getGlobalZPositionFromCoord(6))
+box3.position.set(gridMapHelper.getGlobalXPositionFromCoord(4),1,gridMapHelper.getGlobalZPositionFromCoord(6))
+box4.position.set(gridMapHelper.getGlobalXPositionFromCoord(5),1,gridMapHelper.getGlobalZPositionFromCoord(5))
+box5.position.set(gridMapHelper.getGlobalXPositionFromCoord(5),1,gridMapHelper.getGlobalZPositionFromCoord(2))
+box5.rotateY(degreeToRadians(90))
+box6.position.set(gridMapHelper.getGlobalXPositionFromCoord(8),1,gridMapHelper.getGlobalZPositionFromCoord(4))
+box6.rotateY(degreeToRadians(90))
+box7.position.set(gridMapHelper.getGlobalXPositionFromCoord(6),1,gridMapHelper.getGlobalZPositionFromCoord(1))
+box8.position.set(gridMapHelper.getGlobalXPositionFromCoord(2.5),1,gridMapHelper.getGlobalZPositionFromCoord(4))
+gridMapHelper.addObstacle(2,8,8,8)
+gridMapHelper.addObstacle(2,2,6,6)
+gridMapHelper.addObstacle(4,4,6,6)
+gridMapHelper.addObstacle(5,5,4,6)
+gridMapHelper.addObstacle(4,6,2,2)
+gridMapHelper.addObstacle(8,8,1,7)
+gridMapHelper.addObstacle(6,6,1,1)
+gridMapHelper.addObstacle(2,3,4,4)
 
-const fireClock = new THREE.Clock()
+const trapGeometry = new THREE.BoxGeometry(2,1,2)
+const trapMaterial = new THREE.MeshLambertMaterial({color: "rgb(255,0,0)"})
+const trap1 = new THREE.Mesh(trapGeometry,trapMaterial)
+const trap2 = new THREE.Mesh(trapGeometry,trapMaterial)
+const trap3 = new THREE.Mesh(trapGeometry,trapMaterial)
+const trap4 = new THREE.Mesh(trapGeometry,trapMaterial)
+const trap5 = new THREE.Mesh(trapGeometry,trapMaterial)
+trap1.position.set(gridMapHelper.getGlobalXPositionFromCoord(2),0.5,gridMapHelper.getGlobalZPositionFromCoord(5))
+trap2.position.set(gridMapHelper.getGlobalXPositionFromCoord(2),0.5,gridMapHelper.getGlobalZPositionFromCoord(3))
+trap3.position.set(gridMapHelper.getGlobalXPositionFromCoord(2),0.5,gridMapHelper.getGlobalZPositionFromCoord(7))
+trap4.position.set(gridMapHelper.getGlobalXPositionFromCoord(6),0.5,gridMapHelper.getGlobalZPositionFromCoord(6))
+trap5.position.set(gridMapHelper.getGlobalXPositionFromCoord(5),0.5,gridMapHelper.getGlobalZPositionFromCoord(3))
+gridMapHelper.addTrap(2,5)
+gridMapHelper.addTrap(2,3)
+gridMapHelper.addTrap(2,7)
+gridMapHelper.addTrap(6,6)
+gridMapHelper.addTrap(5,3)
+
 const fireTexPath = new URL('../../../assets/textures/fire.png',import.meta.url).toString()
 const fireTex = new THREE.TextureLoader().load(fireTexPath)
+const fireClock = new THREE.Clock()
 const fireHole = new Fire(fireTex)
+const fireHole2 = new Fire(fireTex)
+const fireHole3 = new Fire(fireTex)
 fireHole.scale.set(1.2, 3.0, 1.2)
+fireHole2.scale.set(1.2, 3.0, 1.2)
+fireHole3.scale.set(1.2, 3.0, 1.2)
 fireHole.position.set(gridMapHelper.getGlobalXPositionFromCoord(7),1.5,gridMapHelper.getGlobalZPositionFromCoord(5))
+fireHole2.position.set(gridMapHelper.getGlobalXPositionFromCoord(5),1.5,gridMapHelper.getGlobalZPositionFromCoord(0))
+fireHole3.position.set(gridMapHelper.getGlobalXPositionFromCoord(9),1.5,gridMapHelper.getGlobalZPositionFromCoord(0))
 gridMapHelper.addFireHole(7,5)
+gridMapHelper.addFireHole(5,0)
+gridMapHelper.addFireHole(9,0)
 
 scene.add(ambientLight)
 scene.add(mainLight)
 scene.add(plane)
-scene.add(objective)
+scene.add(objective1)
+scene.add(objective2)
 scene.add(actor)
 scene.add(box1)
 scene.add(box2)
+scene.add(box3)
+scene.add(box4)
+scene.add(box5)
+scene.add(box6)
+scene.add(box7)
+scene.add(box8)
+scene.add(trap1)
+scene.add(trap2)
+scene.add(trap3)
+scene.add(trap4)
+scene.add(trap5)
 scene.add(fireHole)
+scene.add(fireHole2)
+scene.add(fireHole3)
 
 function animate() {
     requestAnimationFrame(animate)
     fireHole.update(fireClock)
+    fireHole2.update(fireClock)
+    fireHole3.update(fireClock)
     controls.update()
     renderer.render(scene, camera)
 }
@@ -136,12 +205,21 @@ function apagarFogoECobrirBuraco()
 {
     if(extinguisherUses > 0)
     {
-        if(gridMapHelper.deactivateHole(actor.position,'fire'))
+        if(gridMapHelper.detectHole(actor.position) == 0)
         {
             fireHole.visible = false
-            extinguisherUses--
-            updateExtinguisherUses()
         }
+        else if(gridMapHelper.detectHole(actor.position) == 1)
+        {
+            fireHole2.visible = false
+        }
+        else if(gridMapHelper.detectHole(actor.position) == 2)
+        {
+            fireHole3.visible = false
+        }
+        gridMapHelper.deactivateHole(actor.position,'fire')
+        extinguisherUses--
+        updateExtinguisherUses()
     }
     else
     {
@@ -168,14 +246,24 @@ function coletarCristal()
         return
     }
 
-    if(checkCollision(actor,objective))
+    if(checkCollision(actor,objective1))
     {
-        objective.visible = false
-        printOnConsole("Cristal coletado com sucesso.")
+        objective1.visible = false
+        printOnConsole("Cristal coletado.")
+    }
+    else if(checkCollision(actor,objective2))
+    {
+        objective2.visible = false
+        printOnConsole("Cristal coletado.")
     }
     else
     {
         printOnConsole("Robô não está sobre o cristal.")
+    }
+
+    if(!objective1.visible && !objective2.visible)
+    {
+        printOnConsole("Todos os cristais coletados com sucesso!")
     }
 }
 
@@ -188,12 +276,15 @@ function resetLevel()
     actor.getObjectByName('eve').rotation.set(0,0,0)
     gridMapHelper.restartHoles()
     fireHole.visible = true
-    objective.visible = true
+    fireHole2.visible = true
+    fireHole3.visible = true
+    objective1.visible = true
+    objective2.visible = true
 }
 
 function winCondition()
 {
-    if(checkCollision(actor,objective) && !objective.visible)
+    if(!objective1.visible && !objective2.visible)
     {
         return true
     }
@@ -205,7 +296,7 @@ function winCondition()
 
 const execBtn = document.getElementById("execute")
 execBtn.addEventListener("click",async function(){
-    let codeParsed = parseCode(editor.state.doc.toString(),10)
+    let codeParsed = parseCode(editor.state.doc.toString())
     sceneProperties.cancelExecution = false
     if(codeParsed != null)
     {

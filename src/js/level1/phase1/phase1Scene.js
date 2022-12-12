@@ -16,7 +16,8 @@ import
     getTotalTime,
     displayTime,
     checkPhaseContinuity,
-    setTimeForNextPhase
+    setTimeForNextPhase,
+    rotateActorUTurn
 } from '../../helpers/Util'
 import {editor,readOnlyState} from '../../components/global/editor'
 import { parseCode } from '../level1Parser'
@@ -88,6 +89,11 @@ async function girarDireita()
 async function girarEsquerda()
 {
     await rotateActorLeft(actor,sceneProperties)
+}
+
+async function darMeiaVolta()
+{
+    await rotateActorUTurn(actor,sceneProperties)
 }
 
 function checkCollision(object1,object2)

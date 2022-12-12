@@ -5,6 +5,7 @@
         <title>ELoS - Nível 1</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="stylesheet" href="../../../scss/styles.scss">
+        <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon">
         <script src="../../../js/helpers/componentImporter.js"></script>
     </head>
     <body>
@@ -22,9 +23,7 @@
                     <div class="position-absolute bottom-0">
                         <h3 id="timer" class="text-white">Tempo:</h3>
                     </div>
-                    <script id="sceneArea">
-                        importComponent('../../components/global/sceneArea.html','sceneArea')
-                    </script>
+                    <canvas id="sceneView" style="width: 100%; height: 100%;"></canvas>
                 </div>
                 <div class="col-6">
                     <div class="row">
@@ -34,20 +33,39 @@
                             </script>
                         </div>
                         <div class="col-12 mb-2">
-                            <script id="codeArea">
-                                importComponent('../../components/global/codeArea.html','codeArea')
-                            </script>
+                            <div class="card" style="min-height: 30vh; max-height: 40vh;">
+                                <div class="card-header">
+                                    <h4 class="card-title">Digite seu código aqui</h4>
+                                </div>
+                                <div class="card-body overflow-auto" id="codeToExecute">
+                                   
+                                </div>
+                                <div class="card-footer">
+                                    <button id="execute" type="button" class="btn btn-primary">Executar</button>
+                                    <button id="reset" type="button" class="btn btn-secondary">Reset</button>
+                                </div>
+                            </div>
                         </div>
                         <div class="col-12">
-                            <script id="console">
-                                importComponent('../../components/global/console.html','console')
-                            </script>
+                            <div class="card" style="max-height: 40vh;">
+                                <div class="card-header">
+                                    <h4 class="card-title">Console</h4>
+                                </div>
+                                <div class="card-body overflow-auto">
+                                    <code id="console-printing">
+                            
+                                    </code>
+                                </div>
+                                <div class="card-footer d-flex flex-row-reverse">
+                                    <button id="clsConsole" type="button" class="btn btn-secondary">Limpar Console</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         <script type="module" src="../../../js/packages/bootstrap.js"></script>
-        <script type="module" src="../../../js/level1/phase2/phase2Scene.js" async="false" defer="false"></script>
+        <script type="module" src="../../../js/level1/phase2/phase2Scene.js"></script>
     </body>
 </html>

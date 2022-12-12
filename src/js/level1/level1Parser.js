@@ -23,6 +23,10 @@ const functionFilter = [
         type: 'sequential'
     },
     {
+        filter: new RegExp('^darMeiaVolta(\\s+)?\\((\\s+)?\\)(\\s+)?(;)?$'),
+        type: 'sequential'
+    },
+    {
         filter: new RegExp('^coletarCristal(\\s+)?\\((\\s+)?\\)(\\s+)?(;)?$'),
         type: 'normal'
     }

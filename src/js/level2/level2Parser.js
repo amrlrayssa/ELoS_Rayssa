@@ -18,6 +18,10 @@ const functionFilter = [
         type: 'sequential'
     },
     {
+        filter: new RegExp('^darMeiaVolta(\\s+)?\\((\\s+)?\\)(\\s+)?(;)?$'),
+        type: 'sequential'
+    },
+    {
         filter: new RegExp('^coletarCristal(\\s+)?\\((\\s+)?\\)(\\s+)?(;)?$'),
         type: 'normal'
     },
@@ -37,14 +41,14 @@ const functionFilter = [
         filter: new RegExp('^se(\\s+)?\\((\\s+)?.+\\)(\\s+)?{$'),
         type: 'conditional&&blockValidation'
     },
-    {
-        filter: new RegExp('^senao$'),
-        type: 'elseValidation'
-    },
-    {
-        filter: new RegExp('^senao(\\s+)?{$'),
-        type: 'elseValidation&&blockValidation'
-    },
+    // {
+    //     filter: new RegExp('^senao$'),
+    //     type: 'elseValidation'
+    // },
+    // {
+    //     filter: new RegExp('^senao(\\s+)?{$'),
+    //     type: 'elseValidation&&blockValidation'
+    // },
     {
         filter: new RegExp('^}$'),
         type: "closeBlockValidation"
@@ -154,50 +158,50 @@ function closeBlockValidation(lines,index)
  * @param {number} index 
  * @returns {boolean}
  */
-function elseValidation(lines,index)
-{
-    let valid = false
-    let completeCommonIf = new RegExp('^se(\\s+)?\\((\\s+)?.+\\)(\\s+)?.+(\\s+)?$')
-    let commonIf = new RegExp('^se(\\s+)?\\((\\s+)?.+\\)$')
-    let completeblockIf = new RegExp('^se(\\s+)?\\((\\s+)?.+\\)(\\s+)?{[^]*?}$')
-    let blockIf = new RegExp('^se(\\s+)?\\((\\s+)?.+\\)(\\s+)?{$')
+// function elseValidation(lines,index)
+// {
+//     let valid = false
+//     let completeCommonIf = new RegExp('^se(\\s+)?\\((\\s+)?.+\\)(\\s+)?.+(\\s+)?$')
+//     let commonIf = new RegExp('^se(\\s+)?\\((\\s+)?.+\\)$')
+//     let completeblockIf = new RegExp('^se(\\s+)?\\((\\s+)?.+\\)(\\s+)?{[^]*?}$')
+//     let blockIf = new RegExp('^se(\\s+)?\\((\\s+)?.+\\)(\\s+)?{$')
 
-    let start = null
-    for(let i = index - 1; i >= 0;i--)
-    {
-        if(commonIf.test(lines[i].trim()) || blockIf.test(lines[i].trim()))
-        {
-            start = i
-            break
-        }
-        else
-        {
-            continue
-        }   
-    }
+//     let start = null
+//     for(let i = index - 1; i >= 0;i--)
+//     {
+//         if(commonIf.test(lines[i].trim()) || blockIf.test(lines[i].trim()))
+//         {
+//             start = i
+//             break
+//         }
+//         else
+//         {
+//             continue
+//         }   
+//     }
 
-    if(start != null)
-    {
-        let codeTillElse = ""
-        for(let i = start; i < index;i++)
-        {
-            codeTillElse += `${lines[i].trim()}`
-        }
-        if(completeCommonIf.test(codeTillElse.trim()) || completeblockIf.test(codeTillElse.trim()))
-        {
-            valid = true
-            return valid
-        }
-        else
-        {
-            return valid
-        }
-    }
-    else
-    {
-        return valid
-    }
-}
+//     if(start != null)
+//     {
+//         let codeTillElse = ""
+//         for(let i = start; i < index;i++)
+//         {
+//             codeTillElse += `${lines[i].trim()}`
+//         }
+//         if(completeCommonIf.test(codeTillElse.trim()) || completeblockIf.test(codeTillElse.trim()))
+//         {
+//             valid = true
+//             return valid
+//         }
+//         else
+//         {
+//             return valid
+//         }
+//     }
+//     else
+//     {
+//         return valid
+//     }
+// }
 
 /**
  * 
@@ -212,15 +216,15 @@ function elseValidation(lines,index)
      let commonIf = new RegExp('^se(\\s+)?\\((\\s+)?.+\\)$')
      let completeblockIf = new RegExp('^se(\\s+)?\\((\\s+)?.+\\)(\\s+)?{[^]*?$')
      let blockIf = new RegExp('^se(\\s+)?\\((\\s+)?.+\\)(\\s+)?{$')
-     let commonElse = new RegExp('^senao$')
-     let blockElse = new RegExp('^senao(\\s+)?{$')
-     let completeCommonElse = new RegExp('^senao(\\s+)?.+(\\s+)?$')
-     let completeBlockElse = new RegExp('^senao(\\s+)?{[^]*?$')
+     //let commonElse = new RegExp('^senao$')
+     //let blockElse = new RegExp('^senao(\\s+)?{$')
+     //let completeCommonElse = new RegExp('^senao(\\s+)?.+(\\s+)?$')
+     //let completeBlockElse = new RegExp('^senao(\\s+)?{[^]*?$')
  
      let start = null
      for(let i = index - 1; i >= 0;i--)
      {
-         if(commonIf.test(lines[i].trim()) || blockIf.test(lines[i].trim()) || commonElse.test(lines[i].trim()) || blockElse.test(lines[i].trim()))
+         if(commonIf.test(lines[i].trim()) || blockIf.test(lines[i].trim())/* || commonElse.test(lines[i].trim()) || blockElse.test(lines[i].trim())*/)
          {
              start = i
              break
@@ -238,7 +242,7 @@ function elseValidation(lines,index)
          {
              codeTillFunction += `${lines[i].trim()}`
          }
-         if(completeCommonIf.test(codeTillFunction.trim()) || completeblockIf.test(codeTillFunction.trim()) || completeCommonElse.test(codeTillFunction.trim()) || completeBlockElse.test(codeTillFunction.trim()))
+         if(completeCommonIf.test(codeTillFunction.trim()) || completeblockIf.test(codeTillFunction.trim())/* || completeCommonElse.test(codeTillFunction.trim()) || completeBlockElse.test(codeTillFunction.trim())*/)
          {
              valid = true
              return valid
@@ -342,52 +346,52 @@ export function parseCode(code,limit = 0)
                         break
                     }
                 }
-                else if(lineType === 'elseValidation')
-                {
-                    if(elseValidation(lines,i))
-                    {
-                        let lineParsed = 'else\n'
-                        codeParsed += lineParsed
-                        totalCommands++
-                    }
-                    else
-                    {
-                        printErrorOnConsole(`${lines[i]} (Condição inválida)`,i+1)
-                        valid = false
-                        break
-                    }
-                }
-                else if(lineType === 'elseValidation&&blockValidation')
-                {
-                    let validElse = false
-                    if(blockValidation(lines,i))
-                    {
-                        if(elseValidation(lines,i))
-                        {
-                            validElse = true
-                        }
-                        else
-                        {
-                            printErrorOnConsole(`${lines[i]} (Condição inválida)`,i+1)
-                        }
-                    }
-                    else
-                    {
-                        printErrorOnConsole(`${lines[i]} (Bloco é aberto mas nunca é fechado)`,i+1)
-                    }
+                // else if(lineType === 'elseValidation')
+                // {
+                //     if(elseValidation(lines,i))
+                //     {
+                //         let lineParsed = 'else\n'
+                //         codeParsed += lineParsed
+                //         totalCommands++
+                //     }
+                //     else
+                //     {
+                //         printErrorOnConsole(`${lines[i]} (Condição inválida)`,i+1)
+                //         valid = false
+                //         break
+                //     }
+                // }
+                // else if(lineType === 'elseValidation&&blockValidation')
+                // {
+                //     let validElse = false
+                //     if(blockValidation(lines,i))
+                //     {
+                //         if(elseValidation(lines,i))
+                //         {
+                //             validElse = true
+                //         }
+                //         else
+                //         {
+                //             printErrorOnConsole(`${lines[i]} (Condição inválida)`,i+1)
+                //         }
+                //     }
+                //     else
+                //     {
+                //         printErrorOnConsole(`${lines[i]} (Bloco é aberto mas nunca é fechado)`,i+1)
+                //     }
 
-                    if(validElse)
-                    {
-                        let lineParsed = 'else{\n'
-                        codeParsed += lineParsed
-                        totalCommands++
-                    }
-                    else
-                    {
-                        valid = false
-                        break
-                    }
-                }
+                //     if(validElse)
+                //     {
+                //         let lineParsed = 'else{\n'
+                //         codeParsed += lineParsed
+                //         totalCommands++
+                //     }
+                //     else
+                //     {
+                //         valid = false
+                //         break
+                //     }
+                // }
                 else if(lineType === "blockValidation")
                 {
                     if(blockValidation(lines,i))

@@ -2,7 +2,7 @@
 <html lang="pt-BR">
     <head>
         <meta charset="utf-8" />
-        <title>ELoS - Nível 1</title>
+        <title>ELoS - Nível 2</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="stylesheet" href="../../../scss/styles.scss">
         <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon">
@@ -13,15 +13,18 @@
             <div class="row">
                 <div class="col-6 vh-100">
                     <div class="position-absolute">
-                        <h2 class="bg-warning">Nível 1 - Fase 4 de 8</h2>
+                        <h2 class="bg-warning">Nível 2 - Fase 3</h2>
                         <p class="bg-info">
-                            Faça o robô chegar ao cristal, após isso, o recolha.
+                            Faça o robô chegar aos cristais, após isso, os recolha.
                         </p>
                         <h2 id="winMessage" class="bg-success invisible">Fase Concluída</h2>
-                        <a id="advanceBtn" class="btn btn-primary invisible" href="../phase5/index.html">Avançar</a>
+                        <a id="advanceBtn" class="btn btn-primary invisible" href="../phase4/index.html">Avançar</a>
                     </div>
-                    <div class="position-absolute bottom-0">
-                        <h3 id="timer" class="text-white">Tempo:</h3>
+                    <div class="position-absolute bottom-0 start-0 ms-3">
+                        <div class="d-flex">
+                            <img src="../../img/fire-extinguisher.png" alt="Extintor de Incêndio" width="40" height="40">
+                            <h2 id="extinguisherUses" class="text-light">x3</h2>
+                        </div>
                     </div>
                     <canvas id="sceneView" style="width: 100%; height: 100%;"></canvas>
                 </div>
@@ -29,7 +32,7 @@
                     <div class="row">
                         <div class="col-12 mt-2 mb-2">
                             <script id="availableFunctions">
-                                importComponent('../../components/level1/availableFunctions.html','availableFunctions')
+                                importComponent('../../components/level2/availableFunctions.html','availableFunctions')
                             </script>
                         </div>
                         <div class="col-12 mb-2">
@@ -66,6 +69,6 @@
             </div>
         </div>
         <script type="module" src="../../../js/packages/bootstrap.js"></script>
-        <script type="module" src="../../../js/level1/phase4/phase4Scene.js"></script>
+        <script type="module" src="../../../js/level2/phase3/phase3Scene.js"></script>
     </body>
 </html>
