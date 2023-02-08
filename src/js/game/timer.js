@@ -43,7 +43,7 @@ export function configureDataAndUpload(nameInput,ageInput,subBtn,time,redirectPa
                     ['entry.1029337756',age],
                     ['entry.2140863999',`${hour < 10 ? '0' + hour : hour}:${(min < 10 ? '0' + min : min)}:${(seg < 10 ? '0' + seg : seg)}`]
                 ];
-                let success = true/*await uploadLog(data)*/;
+                let success = await uploadLog(data);
                 if(success)
                 {
                     console.log(data);
