@@ -1443,6 +1443,7 @@ function removeObjects(crystals, walls, traps, fires)
     crystals = undefined;
     walls = undefined;
     traps = undefined;
+    fires = undefined;
 }
 
 function animate()
