@@ -458,12 +458,12 @@ export default function parseCode(code,limit = 0)
                         }
                         else
                         {
-                            printErrorOnConsole(`${lines[i]} (Condição inválida)`,i+1)
+                            printError(`${lines[i]} (Condição inválida)`,i+1)
                         }
                     }
                     else
                     {
-                        printErrorOnConsole(`${lines[i]} (Bloco é aberto mas nunca é fechado)`,i+1)
+                        printError(`${lines[i]} (Bloco é aberto mas nunca é fechado)`,i+1)
                     }
 
                     if(validElse)
@@ -518,8 +518,9 @@ export default function parseCode(code,limit = 0)
                     }
                     else
                     {
+                        let state = functionFilter[6].filter.test(lines[i].trim()) ? 'red' : 'blue';
                         let pos = predictFunction(lines,i);
-                        badLuckFunctions += `badLuck([${pos[0]},${pos[1]}])\n`;
+                        badLuckFunctions += `badLuck([${pos[0]},${pos[1]}],${state})\n`;
                         let lineParsed = `${lines[i].trim()}\n`;
                         codeParsed += lineParsed;
                         totalCommands++;
