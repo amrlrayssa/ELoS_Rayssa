@@ -56,6 +56,13 @@ function changeFireActiveStatus(index,status)
     gridMapHelper.fires[index].active = status;
     fires[index].setFireVisibility(status);
 }
+function firesVisualRestart()
+{
+    for(let i = 0;i < fires.length;i++)
+    {
+        fires[i].setFireVisibility(true);
+    }
+}
 
 scene.add(plane);
 scene.add(actor);
@@ -333,6 +340,7 @@ phaseGeneration.push(
             actor.getObjectByName('eve').rotation.set(0,0,0);
             objectives[0].visible = true;
             gridMapHelper.restartFires();
+            firesVisualRestart();
             setFireStates();
             extinguisherUses = 1;
             displayExtinguisherUses();
@@ -468,6 +476,7 @@ phaseGeneration.push(
             objectives[0].visible = true;
             objectives[1].visible = true;
             gridMapHelper.restartFires();
+            firesVisualRestart();
             setFireStates();
             extinguisherUses = 1;
             displayExtinguisherUses();
@@ -599,6 +608,7 @@ phaseGeneration.push(
             objectives[0].visible = true;
             objectives[1].visible = true;
             gridMapHelper.restartFires();
+            firesVisualRestart();
             setFireStates();
             extinguisherUses = 1;
             displayExtinguisherUses();
@@ -760,6 +770,7 @@ phaseGeneration.push(
             objectives[0].visible = true;
             objectives[1].visible = true;
             gridMapHelper.restartFires();
+            firesVisualRestart();
             setFireStates();
             extinguisherUses = 1;
             displayExtinguisherUses();
@@ -941,6 +952,7 @@ phaseGeneration.push(
             objectives[0].visible = true;
             objectives[1].visible = true;
             gridMapHelper.restartFires();
+            firesVisualRestart();
             setFireStates();
             extinguisherUses = 1;
             displayExtinguisherUses();
@@ -1137,6 +1149,7 @@ phaseGeneration.push(
             objectives[0].visible = true;
             objectives[1].visible = true;
             gridMapHelper.restartFires();
+            firesVisualRestart();
             setFireStates();
             extinguisherUses = 1;
             displayExtinguisherUses();
@@ -1356,6 +1369,7 @@ phaseGeneration.push(
             objectives[1].visible = true;
             objectives[2].visible = true;
             gridMapHelper.restartFires();
+            firesVisualRestart();
             setFireStates();
             extinguisherUses = 1;
             displayExtinguisherUses();

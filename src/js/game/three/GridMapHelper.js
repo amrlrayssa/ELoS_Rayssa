@@ -15,6 +15,7 @@ export default class GridMapHelper
         this.obstacles = [];
         this.traps = [];
         this.fires = [];
+        this.lasers = [];
     }
 
     createGridPlane()
@@ -291,5 +292,70 @@ export default class GridMapHelper
     clearFires()
     {
         this.fires = [];
+    }
+
+    addLaser(x,z)
+    {
+        const laser = {
+            id: this.lasers.length,
+            x:x,
+            z:z,
+            active: true,
+            state: 'red'
+        };
+
+        this.lasers.push(laser);
+    }
+
+    laserCollision(position)
+    {
+        const laserFiltered = this.lasers.filter(laser => laser.active == true);
+        
+        for(let i = 0;i < laserFiltered.length;i++)
+        {
+            if((Math.abs(this.getXCoordFromGlobalPosition(position.x) - laserFiltered[i].x) == 1 && this.getZCoordFromGlobalPosition(position.z) == laserFiltered[i].z) || (this.getXCoordFromGlobalPosition(position.x) == laserFiltered[i].x && Math.abs(this.getZCoordFromGlobalPosition(position.z) - laserFiltered[i].z) == 1))
+            {
+                return laserFiltered[i].id;
+            }
+            else
+            {
+                continue;
+            }
+        }
+
+        return null;
+    }
+
+    detectLaser(position, state)
+    {
+        const laserFiltered = this.lasers.filter(laser => laser.state == state);
+
+        for(let i = 0;i < laserFiltered.length;i++)
+        {
+            if((Math.abs(this.getXCoordFromGlobalPosition(position.x) - laserFiltered[i].x) == 1 && this.getZCoordFromGlobalPosition(position.z) == laserFiltered[i].z) || (this.getXCoordFromGlobalPosition(position.x) == laserFiltered[i].x && Math.abs(this.getZCoordFromGlobalPosition(position.z) - laserFiltered[i].z) == 1))
+            {
+                return laserFiltered[i].id;
+            }
+            else
+            {
+                continue;
+            }
+        }
+
+        return null;
+    }
+
+    restartLasers()
+    {
+        for(let i = 0;i < this.lasers.length;i++)
+        {
+            this.lasers[i].active = true;
+            this.lasers[i].state = 'red';
+        }
+    }
+
+    clearLasers()
+    {
+        this.lasers = [];
     }
 }
