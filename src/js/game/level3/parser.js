@@ -518,9 +518,9 @@ export default function parseCode(code,limit = 0)
                     }
                     else
                     {
-                        let state = functionFilter[6].filter.test(lines[i].trim()) ? 'red' : 'blue';
+                        let state = functionFilter[6].filter.test(lines[i].trim()) ? 'blue' : 'red';
                         let pos = predictFunction(lines,i);
-                        badLuckFunctions += `badLuck([${pos[0]},${pos[1]}],${state})\n`;
+                        badLuckFunctions += `badLuck([${pos[0]},${pos[1]}],'${state}')\n`;
                         let lineParsed = `${lines[i].trim()}\n`;
                         codeParsed += lineParsed;
                         totalCommands++;

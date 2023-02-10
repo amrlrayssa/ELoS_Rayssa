@@ -57,7 +57,7 @@ function lasersVisualRestart()
     for(let i = 0;i < lasers.length;i++)
     {
         lasers[i].visible = true;
-        lasers[i].material.color.set('rbg(0,0,255)');
+        lasers[i].material.color.set('rgb(0,0,255)');
     }
 }
 
@@ -211,6 +211,7 @@ phaseGeneration.push(
             objectives[0].visible = true;
             gridMapHelper.restartLasers();
             lasersVisualRestart();
+            setLaserStates();
         }
 
         winCondition = () =>{
@@ -296,6 +297,7 @@ execBtn.addEventListener("click",async function() {
     sceneProperties.cancelExecution = false;
     if(codeParsed != null)
     {
+        console.log(codeParsed)
         resetLevel();
         sceneProperties.executing = true;
         this.disabled = true;
