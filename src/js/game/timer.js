@@ -10,21 +10,27 @@ export function displayTime(time,timerElement)
 
 async function uploadLog(data)
 {
-    let xhr = new XMLHttpRequest();
-    xhr.open('POST',FORM_ACCESS,true);
+    return new Promise((resolve,reject) => {
+        let xhr = new XMLHttpRequest();
+        xhr.open('POST',FORM_ACCESS,true);
 
-    let formData = new FormData();
-    for(let i = 0; i < data.length;i++)
-    {
-        formData.append(data[i][0],data[i][1]);
-    }
+        let formData = new FormData();
+        for(let i = 0; i < data.length;i++)
+        {
+            formData.append(data[i][0],data[i][1]);
+        }
 
-    xhr.send(formData);
-
-    return true;
+        xhr.onreadystatechange = () => {
+            if(xhr.readyState === XMLHttpRequest.DONE)
+            {
+                resolve(true);
+            }
+        };
+        xhr.send(formData);
+    });
 }
 
-export function configureDataAndUpload(nameInput,ageInput,subBtn,time,redirectPath,level)
+export async function configureDataAndUpload(nameInput,ageInput,subBtn,time,redirectPath,level)
 {
     subBtn.addEventListener('click',async () => {
         let hour = Math.floor(time / 3600);
