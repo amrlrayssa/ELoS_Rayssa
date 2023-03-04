@@ -784,6 +784,16 @@ advanceBtn.addEventListener('click',(e) => {
     }
 });
 
+const finishEarlierButton = document.getElementById('finishEarlier');
+finishEarlierButton.addEventListener('click', (e) => {
+    if(confirm("Deseja realmente finalizar a prática?"))
+    {
+        clearInterval(timerUpadate);
+        configureDataAndUpload(document.getElementById("name"),document.getElementById("age"),document.getElementById("subBtn"),sceneProperties.timer,'../',`Nível 1/Fase ${sceneProperties.phase + 1}`);
+        logModal.show();
+    }
+});
+
 //Running level 1
 
 resizeCanvasToDisplaySize(renderer,camera);
