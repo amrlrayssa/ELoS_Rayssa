@@ -297,7 +297,6 @@ execBtn.addEventListener("click",async function() {
     sceneProperties.cancelExecution = false;
     if(codeParsed != null)
     {
-        console.log(codeParsed)
         resetLevel();
         sceneProperties.executing = true;
         this.disabled = true;

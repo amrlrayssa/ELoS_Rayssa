@@ -238,6 +238,12 @@ export function translateActor(actor, amount, gridMapHelper, sceneProperties, co
                 sceneProperties.cancelExecution = true;
             }
 
+            if(gridMapHelper.laserCollision(actor.position))
+            {
+                consoleElement.innerText += "Aviso: Robô foi queimado pelo laser!\n";
+                sceneProperties.cancelExecution = true;
+            }
+
             if(!positionAlmostEqual(actor.position,finalPosition) && !sceneProperties.cancelExecution)
             {
                 actor.position.lerp(finalPosition,alpha);

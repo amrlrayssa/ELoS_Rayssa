@@ -313,9 +313,9 @@ export default class GridMapHelper
         
         for(let i = 0;i < laserFiltered.length;i++)
         {
-            if((Math.abs(this.getXCoordFromGlobalPosition(position.x) - laserFiltered[i].x) == 1 && this.getZCoordFromGlobalPosition(position.z) == laserFiltered[i].z) || (this.getXCoordFromGlobalPosition(position.x) == laserFiltered[i].x && Math.abs(this.getZCoordFromGlobalPosition(position.z) - laserFiltered[i].z) == 1))
+            if(this.getXCoordFromGlobalPosition(position.x) == laserFiltered[i].x && this.getZCoordFromGlobalPosition(position.z) == laserFiltered[i].z)
             {
-                return laserFiltered[i].id;
+                return true;
             }
             else
             {
@@ -323,7 +323,7 @@ export default class GridMapHelper
             }
         }
 
-        return null;
+        return false;
     }
 
     detectLaser(position, state)
