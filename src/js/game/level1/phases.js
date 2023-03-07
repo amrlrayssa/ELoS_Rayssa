@@ -728,6 +728,8 @@ window.addEventListener('resize',() => {
     resizeCanvasToDisplaySize(renderer,camera);
 });
 
+const finishEarlierButton = document.getElementById('finishEarlier');
+
 const execBtn = document.getElementById("execBtn")
 execBtn.addEventListener("click",async function() {
     const codeParsed = parseCode(editor.state.doc.toString());
@@ -744,10 +746,11 @@ execBtn.addEventListener("click",async function() {
             document.getElementById('winMessage').classList.remove('invisible');
             document.getElementById('advanceBtn').classList.remove('invisible');
             document.getElementById("resetBtn").disabled = true;
+            finishEarlierButton.disabled = true;
             clearInterval(timerUpadate);
             if(sceneProperties.phase == phaseGeneration.length - 1)
             {
-                configureDataAndUpload(document.getElementById("name"),document.getElementById("age"),document.getElementById("subBtn"),sceneProperties.timer,'../','Nível 1');
+                configureDataAndUpload(document.getElementById("name"),document.getElementById("age"),'gender','prog-exp',document.getElementById("subBtn"),sceneProperties.timer,'../','Nível 1/Completo');
             }
         }
         else
@@ -776,6 +779,7 @@ advanceBtn.addEventListener('click',(e) => {
         document.getElementById('advanceBtn').classList.add('invisible');
         execBtn.disabled = false;
         resetBtn.disabled = false;
+        finishEarlierButton.disabled = false;
     }
     else
     {
@@ -784,12 +788,11 @@ advanceBtn.addEventListener('click',(e) => {
     }
 });
 
-const finishEarlierButton = document.getElementById('finishEarlier');
 finishEarlierButton.addEventListener('click', (e) => {
     if(confirm("Deseja realmente finalizar a prática?"))
     {
         clearInterval(timerUpadate);
-        configureDataAndUpload(document.getElementById("name"),document.getElementById("age"),document.getElementById("subBtn"),sceneProperties.timer,'../',`Nível 1/Fase ${sceneProperties.phase + 1}`);
+        configureDataAndUpload(document.getElementById("name"),document.getElementById("age"),'gender','prog-exp',document.getElementById("subBtn"),sceneProperties.timer,'../',`Nível 1/Fase ${sceneProperties.phase + 1}`);
         logModal.show();
     }
 });

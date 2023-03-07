@@ -30,15 +30,19 @@ async function uploadLog(data)
     });
 }
 
-export async function configureDataAndUpload(nameInput,ageInput,subBtn,time,redirectPath,level)
+export async function configureDataAndUpload(nameInput,ageInput,genderRadioName,progExpRadioName,subBtn,time,redirectPath,level)
 {
     subBtn.addEventListener('click',async () => {
+        let genderInput = document.querySelector(`input[name="${genderRadioName}"]:checked`);
+        let progExpInput = document.querySelector(`input[name="${progExpRadioName}"]:checked`);
         let hour = Math.floor(time / 3600);
         let min = Math.floor(time / 60) % 60;
         let seg = Math.floor(time % 60);
         let name = nameInput.value;
         let age = ageInput.value;
-        if((name != null && name != '') && (age != null && age!= ''))
+        let gender = genderInput != null ? genderInput.value : null;
+        let progExp = progExpInput != null ? progExpInput.value : null;
+        if((name != null && name != '') && (age != null && age!= '') && (gender != null && gender != '') && (progExp != null && progExp != ''))
         {
             if(parseFloat(age) >= 1)
             {
@@ -47,6 +51,8 @@ export async function configureDataAndUpload(nameInput,ageInput,subBtn,time,redi
                     ['entry.1867777838',level],
                     ['entry.746491928',name],
                     ['entry.1029337756',age],
+                    ['entry.1806882852',gender],
+                    ['entry.1585862028',progExp],
                     ['entry.2140863999',`${hour < 10 ? '0' + hour : hour}:${(min < 10 ? '0' + min : min)}:${(seg < 10 ? '0' + seg : seg)}`]
                 ];
                 let success = await uploadLog(data);
