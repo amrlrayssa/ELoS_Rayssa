@@ -168,6 +168,20 @@ phaseGeneration.push(
         gridMapHelper.addObstacle(1,9,4,4);
         gridMapHelper.addObstacle(1,9,6,6);
 
+        const laserFenceGeometry = new THREE.BoxGeometry(0.5, 2, 0.3);
+        const laserFenceMaterial = new THREE.MeshLambertMaterial({color:"gray"});
+        let laserFence1 = new THREE.Mesh(laserFenceGeometry, laserFenceMaterial);
+        laserFence1.position.set(2, 1, 7)
+        let laserFence2 = new THREE.Mesh(laserFenceGeometry, laserFenceMaterial);
+        laserFence2.position.set(2, 1, 8)
+        //laserFence.position.set(gridMapHelper.getGlobalXPositionFromCoord(2),1,gridMapHelper.getGlobalZPositionFromCoord(9))
+        //gridMapHelper.addLaser(2,9)
+        //scene.add(laserFence);
+        let laserFenceCSG = CSG.fromMesh(laserFence1)
+        laserFenceCSG = laserFenceCSG.union(laserFence2)
+        let auxMat = new THREE.Matrix4();
+        let obj1 = CSG.toMesh(laserFenceCSG, auxMat)
+
         lasers = [];
         const laserGeometry = new THREE.BoxGeometry(2,2,2);
         const laserMaterial = new THREE.MeshLambertMaterial({color: 'rgb(0,0,255)'});
