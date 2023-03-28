@@ -12,6 +12,7 @@ import {
 } from "../three/util";
 import GridMapHelper from "../three/GridMapHelper";
 import parseCode from "./parser";
+import LaserFence from "../three/LaserFence";
 
 const sceneProperties = {
     cancelExecution: false,
@@ -41,6 +42,7 @@ let objectives;
 let walls;
 let traps;
 let lasers;
+let laserFences
 function changeLaserActiveStatus(index,status)
 {
     gridMapHelper.lasers[index].active = status;
@@ -168,27 +170,21 @@ phaseGeneration.push(
         gridMapHelper.addObstacle(1,9,4,4);
         gridMapHelper.addObstacle(1,9,6,6);
 
-        const laserFenceGeometry = new THREE.BoxGeometry(0.5, 2, 0.3);
-        const laserFenceMaterial = new THREE.MeshLambertMaterial({color:"gray"});
-        let laserFence1 = new THREE.Mesh(laserFenceGeometry, laserFenceMaterial);
-        laserFence1.position.set(2, 1, 7)
-        let laserFence2 = new THREE.Mesh(laserFenceGeometry, laserFenceMaterial);
-        laserFence2.position.set(2, 1, 8)
-        //laserFence.position.set(gridMapHelper.getGlobalXPositionFromCoord(2),1,gridMapHelper.getGlobalZPositionFromCoord(9))
-        //gridMapHelper.addLaser(2,9)
-        //scene.add(laserFence);
-        let laserFenceCSG = CSG.fromMesh(laserFence1)
-        laserFenceCSG = laserFenceCSG.union(laserFence2)
-        let auxMat = new THREE.Matrix4();
-        let obj1 = CSG.toMesh(laserFenceCSG, auxMat)
-
-        lasers = [];
-        const laserGeometry = new THREE.BoxGeometry(2,2,2);
-        const laserMaterial = new THREE.MeshLambertMaterial({color: 'rgb(0,0,255)'});
-        lasers.push(new THREE.Mesh(laserGeometry,laserMaterial));
-        lasers[0].position.set(gridMapHelper.getGlobalXPositionFromCoord(7),0.1,gridMapHelper.getGlobalZPositionFromCoord(5));
+        laserFences = [];
+        laserFences.push(new LaserFence());
+        laserFences[0].position.set(gridMapHelper.getGlobalXPositionFromCoord(7), 1, gridMapHelper.getGlobalZPositionFromCoord(5));
         gridMapHelper.addLaser(7,5);
-        laserState = 0;
+        scene.add(laserFences[0]);
+        laserFences[0].setBlue()
+
+
+        // lasers = [];
+        // const laserGeometry = new THREE.BoxGeometry(2,2,2);
+        // const laserMaterial = new THREE.MeshLambertMaterial({color: 'rgb(0,0,255)'});
+        // lasers.push(new THREE.Mesh(laserGeometry,laserMaterial));
+        // lasers[0].position.set(gridMapHelper.getGlobalXPositionFromCoord(7),0.1,gridMapHelper.getGlobalZPositionFromCoord(5));
+        // gridMapHelper.addLaser(7,5);
+         laserState = 0;
         setLaserStates = () => {
             if(laserState == 0)
             {
@@ -199,7 +195,7 @@ phaseGeneration.push(
                 changeLaserStateStatus(0,'red');
             }
         }
-        scene.add(lasers[0]);
+        // scene.add(lasers[0]);
 
         coletarCristal = () => {
             if(sceneProperties.cancelExecution)
