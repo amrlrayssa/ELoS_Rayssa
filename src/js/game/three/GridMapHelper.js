@@ -294,17 +294,15 @@ export default class GridMapHelper
         this.fires = [];
     }
 
-    addLaser(x,z)
+    addLaser(x,z, laserFence)
     {
-        const laser = {
-            id: this.lasers.length,
-            x:x,
-            z:z,
-            active: true,
-            state: 'red'
-        };
+        laserFence.index = this.lasers.length
+        laserFence.x = x;
+        laserFence.z = z;
+        laserFence.active = true;
+        laserFence.state = 'red';
 
-        this.lasers.push(laser);
+        this.lasers.push(laserFence);
     }
 
     laserCollision(position)
@@ -334,7 +332,7 @@ export default class GridMapHelper
         {
             if((Math.abs(this.getXCoordFromGlobalPosition(position.x) - laserFiltered[i].x) == 1 && this.getZCoordFromGlobalPosition(position.z) == laserFiltered[i].z) || (this.getXCoordFromGlobalPosition(position.x) == laserFiltered[i].x && Math.abs(this.getZCoordFromGlobalPosition(position.z) - laserFiltered[i].z) == 1))
             {
-                return laserFiltered[i].id;
+                return laserFiltered[i].index;
             }
             else
             {

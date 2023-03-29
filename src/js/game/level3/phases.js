@@ -46,20 +46,24 @@ let laserFences
 function changeLaserActiveStatus(index,status)
 {
     gridMapHelper.lasers[index].active = status;
-    lasers[index].visible = status;
+    //lasers[index].visible = status;
+    if(status == false)
+        laserFences[index].setNotVisible();
 }
 function changeLaserStateStatus(index,status)
 {
-    let color = status == 'blue' ? 'rgb(0,0,255)' : 'rgb(255,0,0)';
     gridMapHelper.lasers[index].state = status;
-    lasers[index].material.color.set(color);
+    if (status == 'blue'){
+        laserFences[index].setBlue();
+    } else if (status == 'red'){
+        laserFences[index].setRed();
+    }
 }
 function lasersVisualRestart()
 {
-    for(let i = 0;i < lasers.length;i++)
+    for(let i = 0;i < laserFences.length;i++)
     {
-        lasers[i].visible = true;
-        lasers[i].material.color.set('rgb(0,0,255)');
+        laserFences[i].active = true;
     }
 }
 
@@ -173,9 +177,9 @@ phaseGeneration.push(
         laserFences = [];
         laserFences.push(new LaserFence());
         laserFences[0].position.set(gridMapHelper.getGlobalXPositionFromCoord(7), 1, gridMapHelper.getGlobalZPositionFromCoord(5));
-        gridMapHelper.addLaser(7,5);
+        gridMapHelper.addLaser(7,5, laserFences[0]);
         scene.add(laserFences[0]);
-        laserFences[0].setBlue()
+        //laserFences[0].setBlue()
 
 
         // lasers = [];
@@ -343,7 +347,7 @@ advanceBtn.addEventListener('click',(e) => {
             clearInterval(setLaserStatesInterval);
             setLaserStatesInterval = undefined;
         }
-        removeObjects(objectives,walls,traps,lasers);
+        removeObjects(objectives,walls,traps,laserFences);
         phaseGeneration[sceneProperties.phase]();
         editor.setState(editState);
         consoleElement.innerText = null;
