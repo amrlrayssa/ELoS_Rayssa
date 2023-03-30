@@ -41,7 +41,6 @@ const actor = loadDefaultActor();
 let objectives;
 let walls;
 let traps;
-let lasers;
 let laserFences
 function changeLaserActiveStatus(index,status)
 {
@@ -50,13 +49,17 @@ function changeLaserActiveStatus(index,status)
     if(status == false)
         laserFences[index].setNotVisible();
 }
-function changeLaserStateStatus(index,status)
+function changeLaserStateStatus(index, status)
 {
-    gridMapHelper.lasers[index].state = status;
+    gridMapHelper.lasers.forEach(laser => laser.state = status);
     if (status == 'blue'){
-        laserFences[index].setBlue();
+        laserFences.forEach(laser => {
+            laser.setBlue()
+        });
     } else if (status == 'red'){
-        laserFences[index].setRed();
+        laserFences.forEach(laser => {
+            laser.setRed()
+        });
     }
 }
 function lasersVisualRestart()
@@ -153,6 +156,7 @@ phaseGeneration.push(
         document.getElementById('phaseTitle').innerText = "Nível 3 - Fase 1 de 8";
         document.getElementById('phaseObjective').innerText = "Faça o robô chegar ao cristal, após isso, o colete.";
         
+        sceneProperties.executing = false;
         camera.position.set(0,15,30);
 
         actor.position.set(gridMapHelper.getGlobalXPositionFromCoord(0),1.0,gridMapHelper.getGlobalZPositionFromCoord(5));
@@ -192,14 +196,132 @@ phaseGeneration.push(
         setLaserStates = () => {
             if(laserState == 0)
             {
-                changeLaserStateStatus(0,'blue');
+                changeLaserStateStatus(0, 'blue');
             }
             else
             {
-                changeLaserStateStatus(0,'red');
+                changeLaserStateStatus(0, 'red');
             }
         }
         // scene.add(lasers[0]);
+
+        coletarCristal = () => {
+            if(sceneProperties.cancelExecution)
+            {
+                return;
+            }
+
+            if(checkCollision(actor,objectives[0],gridMapHelper))
+            {
+                objectives[0].visible = false;
+                consoleElement.innerText += "Cristal coletado com sucesso.\n";
+            }
+            else
+            {
+                consoleElement.innerText += "Robô não está sobre o cristal.\n";
+            }
+        }
+
+        resetLevel = () =>{
+            actor.position.set(gridMapHelper.getGlobalXPositionFromCoord(0),1.0,gridMapHelper.getGlobalZPositionFromCoord(5));
+            actor.rotation.set(0,degreeToRadians(90),0);
+            actor.getObjectByName('eve').rotation.set(0,0,0);
+            objectives[0].visible = true;
+            gridMapHelper.restartLasers();
+            lasersVisualRestart();
+            setLaserStates();
+        }
+
+        winCondition = () =>{
+            if(!objectives[0].visible)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        setLaserStatesInterval = setInterval(() => {
+            if(sceneProperties.executing)
+            {
+                return;
+            }
+
+            laserState = (laserState + 1) % 2;
+            setLaserStates();
+        },1000);
+    }
+);
+
+//Phase 2
+phaseGeneration.push(
+    () => {
+        document.getElementById('phaseTitle').innerText = "Nível 3 - Fase 2 de 8";
+        document.getElementById('phaseObjective').innerText = "Faça o robô chegar ao cristal, após isso, o colete.";
+        
+        sceneProperties.executing = false;
+        camera.position.set(0,15,30);
+
+        actor.position.set(gridMapHelper.getGlobalXPositionFromCoord(0),1.0,gridMapHelper.getGlobalZPositionFromCoord(5));
+        actor.rotation.set(0,degreeToRadians(90),0);
+
+        objectives = loadDefaultObjectives(2);
+        objectives[0].position.set(gridMapHelper.getGlobalXPositionFromCoord(9),0.0,gridMapHelper.getGlobalZPositionFromCoord(9));
+        objectives[1].position.set(gridMapHelper.getGlobalXPositionFromCoord(9),0.0,gridMapHelper.getGlobalZPositionFromCoord(0));
+        scene.add(objectives[0]);
+        scene.add(objectives[1]);
+
+        walls = [];
+        const boxGeometry = new THREE.BoxGeometry(16,2,2);
+        const boxGeometry1 = new THREE.BoxGeometry(6,2,2);
+        const boxGeometry2 = new THREE.BoxGeometry(8,2,2);
+        const boxMaterial = new THREE.MeshLambertMaterial({color: "rgb(0,255,0)"});
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));        
+        walls.push(new THREE.Mesh(boxGeometry1,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry2,boxMaterial));
+        walls[0].position.set(gridMapHelper.getGlobalXPositionFromCoord(4.5),1,gridMapHelper.getGlobalZPositionFromCoord(4));
+        walls[1].position.set(gridMapHelper.getGlobalXPositionFromCoord(4.5),1,gridMapHelper.getGlobalZPositionFromCoord(6));
+        walls[2].position.set(gridMapHelper.getGlobalXPositionFromCoord(8),1,gridMapHelper.getGlobalZPositionFromCoord(8));
+        walls[3].position.set(gridMapHelper.getGlobalXPositionFromCoord(8),1,gridMapHelper.getGlobalZPositionFromCoord(1.5));
+        walls[2].rotateY(Math.PI/2)
+        walls[3].rotateY(Math.PI/2)
+        scene.add(walls[0]);
+        scene.add(walls[1]);        
+        scene.add(walls[2]);
+        scene.add(walls[3]);
+
+        gridMapHelper.addObstacle(1,8,4,4);
+        gridMapHelper.addObstacle(1,8,6,6);
+        gridMapHelper.addObstacle(8,8,7,9);
+        gridMapHelper.addObstacle(8,8,1,3);
+
+        laserFences = [];
+        laserFences.push(new LaserFence());
+        laserFences.push(new LaserFence());
+        laserFences[0].position.set(gridMapHelper.getGlobalXPositionFromCoord(9), 1, gridMapHelper.getGlobalZPositionFromCoord(8));
+        laserFences[1].position.set(gridMapHelper.getGlobalXPositionFromCoord(9), 1, gridMapHelper.getGlobalZPositionFromCoord(1));
+        gridMapHelper.addLaser(9,8, laserFences[0]);
+        gridMapHelper.addLaser(9,1, laserFences[1]);
+        laserFences[0].rotateY(Math.PI/2)
+        laserFences[1].rotateY(Math.PI/2)
+
+        scene.add(laserFences[0]);
+        scene.add(laserFences[1]);
+
+         laserState = 0;
+        setLaserStates = () => {
+            if(laserState == 0)
+            {
+                changeLaserStateStatus(0, 'blue');
+            }
+            else
+            {
+                changeLaserStateStatus(0, 'red');
+            }
+        }
 
         coletarCristal = () => {
             if(sceneProperties.cancelExecution)
