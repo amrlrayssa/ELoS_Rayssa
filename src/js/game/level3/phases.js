@@ -611,10 +611,8 @@ phaseGeneration.push(
         actor.rotation.set(0,degreeToRadians(90),0);
 
         objectives = loadDefaultObjectives(2);
-        objectives[0].position.set(gridMapHelper.getGlobalXPositionFromCoord(9),0.0,gridMapHelper.getGlobalZPositionFromCoord(3));
-        objectives[1].position.set(gridMapHelper.getGlobalXPositionFromCoord(9),0.0,gridMapHelper.getGlobalZPositionFromCoord(6));
+        objectives[0].position.set(gridMapHelper.getGlobalXPositionFromCoord(8),0.0,gridMapHelper.getGlobalZPositionFromCoord(9));
         scene.add(objectives[0]);
-        scene.add(objectives[1]);
 
         traps = [];
         const trapGeometry = new THREE.BoxGeometry(2,1,2);
@@ -624,58 +622,69 @@ phaseGeneration.push(
         traps.push(new THREE.Mesh(trapGeometry,trapMaterial));
         traps.push(new THREE.Mesh(trapGeometry,trapMaterial));
         traps.push(new THREE.Mesh(trapGeometry,trapMaterial));
-        traps.push(new THREE.Mesh(trapGeometry,trapMaterial));
-        traps[0].position.set(gridMapHelper.getGlobalXPositionFromCoord(4),0.5,gridMapHelper.getGlobalZPositionFromCoord(2));
-        traps[1].position.set(gridMapHelper.getGlobalXPositionFromCoord(4),0.5,gridMapHelper.getGlobalZPositionFromCoord(7));
-        traps[2].position.set(gridMapHelper.getGlobalXPositionFromCoord(6),0.5,gridMapHelper.getGlobalZPositionFromCoord(4));
-        traps[3].position.set(gridMapHelper.getGlobalXPositionFromCoord(6),0.5,gridMapHelper.getGlobalZPositionFromCoord(5));
-        traps[4].position.set(gridMapHelper.getGlobalXPositionFromCoord(9),0.5,gridMapHelper.getGlobalZPositionFromCoord(2));
-        traps[5].position.set(gridMapHelper.getGlobalXPositionFromCoord(9),0.5,gridMapHelper.getGlobalZPositionFromCoord(7));
+        traps[0].position.set(gridMapHelper.getGlobalXPositionFromCoord(0),0.5,gridMapHelper.getGlobalZPositionFromCoord(4));
+        traps[1].position.set(gridMapHelper.getGlobalXPositionFromCoord(3),0.5,gridMapHelper.getGlobalZPositionFromCoord(5));
+        traps[2].position.set(gridMapHelper.getGlobalXPositionFromCoord(5),0.5,gridMapHelper.getGlobalZPositionFromCoord(1));
+        traps[3].position.set(gridMapHelper.getGlobalXPositionFromCoord(5),0.5,gridMapHelper.getGlobalZPositionFromCoord(9));
+        traps[4].position.set(gridMapHelper.getGlobalXPositionFromCoord(7),0.5,gridMapHelper.getGlobalZPositionFromCoord(5));
 
-        gridMapHelper.addTrap(4,2);
-        gridMapHelper.addTrap(4,7);
-        gridMapHelper.addTrap(6,4);
-        gridMapHelper.addTrap(6,5);
-        gridMapHelper.addTrap(9,2);
-        gridMapHelper.addTrap(9,7);
+        gridMapHelper.addTrap(0,2);
+        gridMapHelper.addTrap(3,7);
+        gridMapHelper.addTrap(5,4);
+        gridMapHelper.addTrap(5,5);
+        gridMapHelper.addTrap(7,2);
         scene.add(traps[0]);
         scene.add(traps[1]);
         scene.add(traps[2]);
         scene.add(traps[3]);
         scene.add(traps[4]);
-        scene.add(traps[5]);
 
         walls = [];
-        const boxGeometry1 = new THREE.BoxGeometry(10,2,2);
-        const boxGeometry2 = new THREE.BoxGeometry(12,2,2);
-        const boxGeometry3 = new THREE.BoxGeometry(4,2,2);
-        const boxGeometry4 = new THREE.BoxGeometry(6,2,2);
-        const boxGeometry5 = new THREE.BoxGeometry(2,2,2);
+        const boxGeometry1 = new THREE.BoxGeometry(12,2,2);
+        const boxGeometry2 = new THREE.BoxGeometry(6,2,2);
+        const boxGeometry3 = new THREE.BoxGeometry(10,2,2);
+        const boxGeometry4 = new THREE.BoxGeometry(8,2,2);
+        const boxGeometry5 = new THREE.BoxGeometry(20,2,2);
         const boxMaterial = new THREE.MeshLambertMaterial({color: "rgb(0,255,0)"});
         walls.push(new THREE.Mesh(boxGeometry1,boxMaterial));
-        walls.push(new THREE.Mesh(boxGeometry1,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry3,boxMaterial));
         walls.push(new THREE.Mesh(boxGeometry2,boxMaterial));
-        walls.push(new THREE.Mesh(boxGeometry3,boxMaterial));
-        walls.push(new THREE.Mesh(boxGeometry3,boxMaterial));
-        walls.push(new THREE.Mesh(boxGeometry3,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry2,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry4,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry2,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry2,boxMaterial));
         walls.push(new THREE.Mesh(boxGeometry4,boxMaterial));
         walls.push(new THREE.Mesh(boxGeometry4,boxMaterial));
         walls.push(new THREE.Mesh(boxGeometry5,boxMaterial));
-        walls.push(new THREE.Mesh(boxGeometry5,boxMaterial));
 
-        walls[0].position.set(gridMapHelper.getGlobalXPositionFromCoord(5),1,gridMapHelper.getGlobalZPositionFromCoord(9));
-        walls[1].position.set(gridMapHelper.getGlobalXPositionFromCoord(5),1,gridMapHelper.getGlobalZPositionFromCoord(0));
-        walls[2].position.set(gridMapHelper.getGlobalXPositionFromCoord(3),1,gridMapHelper.getGlobalZPositionFromCoord(4.5));
-        walls[3].position.set(gridMapHelper.getGlobalXPositionFromCoord(5),1,gridMapHelper.getGlobalZPositionFromCoord(4.5));
-        walls[4].position.set(gridMapHelper.getGlobalXPositionFromCoord(7.5),1,gridMapHelper.getGlobalZPositionFromCoord(2));
-        walls[5].position.set(gridMapHelper.getGlobalXPositionFromCoord(7.5),1,gridMapHelper.getGlobalZPositionFromCoord(7));
-        walls[6].position.set(gridMapHelper.getGlobalXPositionFromCoord(8),1,gridMapHelper.getGlobalZPositionFromCoord(4));
-        walls[7].position.set(gridMapHelper.getGlobalXPositionFromCoord(8),1,gridMapHelper.getGlobalZPositionFromCoord(5));
-        walls[8].position.set(gridMapHelper.getGlobalXPositionFromCoord(5),1,gridMapHelper.getGlobalZPositionFromCoord(2));
-        walls[9].position.set(gridMapHelper.getGlobalXPositionFromCoord(5),1,gridMapHelper.getGlobalZPositionFromCoord(7));
-
-        walls[2].rotateY(Math.PI/2)
+        walls[0].position.set(gridMapHelper.getGlobalXPositionFromCoord(2.5),1,gridMapHelper.getGlobalZPositionFromCoord(0));
+        walls[1].position.set(gridMapHelper.getGlobalXPositionFromCoord(1),1,gridMapHelper.getGlobalZPositionFromCoord(6));
+        walls[2].position.set(gridMapHelper.getGlobalXPositionFromCoord(2),1,gridMapHelper.getGlobalZPositionFromCoord(2));
+        walls[3].position.set(gridMapHelper.getGlobalXPositionFromCoord(3),1,gridMapHelper.getGlobalZPositionFromCoord(3));
+        walls[4].position.set(gridMapHelper.getGlobalXPositionFromCoord(3),1,gridMapHelper.getGlobalZPositionFromCoord(7.5));
+        walls[5].position.set(gridMapHelper.getGlobalXPositionFromCoord(5),1,gridMapHelper.getGlobalZPositionFromCoord(3));
+        walls[6].position.set(gridMapHelper.getGlobalXPositionFromCoord(5),1,gridMapHelper.getGlobalZPositionFromCoord(7));
+        walls[7].position.set(gridMapHelper.getGlobalXPositionFromCoord(7),1,gridMapHelper.getGlobalZPositionFromCoord(2.5));
+        walls[8].position.set(gridMapHelper.getGlobalXPositionFromCoord(7),1,gridMapHelper.getGlobalZPositionFromCoord(7.5));
+        walls[9].position.set(gridMapHelper.getGlobalXPositionFromCoord(9),1,gridMapHelper.getGlobalZPositionFromCoord(4.5));
+        gridMapHelper.addObstacle(0,5,0,0);
+        gridMapHelper.addObstacle(1,1,4,8);
+        gridMapHelper.addObstacle(1,3,2,2);
+        gridMapHelper.addObstacle(3,3,2,4);
+        gridMapHelper.addObstacle(3,3,6,9);
+        gridMapHelper.addObstacle(5,5,2,4);
+        gridMapHelper.addObstacle(5,5,6,8);
+        gridMapHelper.addObstacle(7,7,1,4);
+        gridMapHelper.addObstacle(7,7,6,9);
+        gridMapHelper.addObstacle(9,9,0,9);
+        walls[1].rotateY(Math.PI/2)
         walls[3].rotateY(Math.PI/2)
+        walls[4].rotateY(Math.PI/2)
+        walls[5].rotateY(Math.PI/2)
+        walls[6].rotateY(Math.PI/2)
+        walls[7].rotateY(Math.PI/2)
+        walls[8].rotateY(Math.PI/2)
+        walls[9].rotateY(Math.PI/2)
 
         scene.add(walls[0]);
         scene.add(walls[1]);        
@@ -689,43 +698,16 @@ phaseGeneration.push(
         scene.add(walls[9]);
 
 
-        gridMapHelper.addObstacle(3,7,9,9);
-        gridMapHelper.addObstacle(3,7,0,0);
-        gridMapHelper.addObstacle(3,3,2,7);
-        gridMapHelper.addObstacle(5,5,4,5);
-        gridMapHelper.addObstacle(5,5,7,7);
-        gridMapHelper.addObstacle(5,5,2,2);
-        gridMapHelper.addObstacle(7,8,7,7);
-        gridMapHelper.addObstacle(7,8,2,2);
-        gridMapHelper.addObstacle(7,9,4,4);
-        gridMapHelper.addObstacle(7,9,5,5);
-
         laserFences = [];
-        laserFences.push(new LaserFence());
-        laserFences.push(new LaserFence());
-        laserFences.push(new LaserFence());
-        laserFences.push(new LaserFence());
-        laserFences.push(new LaserFence());
-        laserFences.push(new LaserFence());
-        laserFences[0].position.set(gridMapHelper.getGlobalXPositionFromCoord(3), 1, gridMapHelper.getGlobalZPositionFromCoord(1));
-        laserFences[1].position.set(gridMapHelper.getGlobalXPositionFromCoord(3), 1, gridMapHelper.getGlobalZPositionFromCoord(8));
-        laserFences[2].position.set(gridMapHelper.getGlobalXPositionFromCoord(7), 1, gridMapHelper.getGlobalZPositionFromCoord(1));
-        laserFences[3].position.set(gridMapHelper.getGlobalXPositionFromCoord(7), 1, gridMapHelper.getGlobalZPositionFromCoord(3));
-        laserFences[4].position.set(gridMapHelper.getGlobalXPositionFromCoord(7), 1, gridMapHelper.getGlobalZPositionFromCoord(6));
-        laserFences[5].position.set(gridMapHelper.getGlobalXPositionFromCoord(7), 1, gridMapHelper.getGlobalZPositionFromCoord(8));
-        gridMapHelper.addLaser(3,1, laserFences[0]);
-        gridMapHelper.addLaser(3,8, laserFences[1]);
-        gridMapHelper.addLaser(7,1, laserFences[2]);
-        gridMapHelper.addLaser(7,3, laserFences[3]);
-        gridMapHelper.addLaser(7,6, laserFences[4]);
-        gridMapHelper.addLaser(7,8, laserFences[5]);
-
+        laserFences.push(new LaserFence("multiColor"));
+        laserFences.push(new LaserFence("blue"));
+        laserFences[0].position.set(gridMapHelper.getGlobalXPositionFromCoord(5), 1, gridMapHelper.getGlobalZPositionFromCoord(5));
+        laserFences[1].position.set(gridMapHelper.getGlobalXPositionFromCoord(8), 1, gridMapHelper.getGlobalZPositionFromCoord(7));
+        gridMapHelper.addLaser(5,5, laserFences[0]);
+        gridMapHelper.addLaser(8,7, laserFences[1]);
+        laserFences[1].rotateY(Math.PI/2)
         scene.add(laserFences[0]);
-        scene.add(laserFences[1]);
-        scene.add(laserFences[2]);
-        scene.add(laserFences[3]);
-        scene.add(laserFences[4]);
-        scene.add(laserFences[5]);
+        scene.add(laserFences[1]); 
 
          laserState = 0;
         setLaserStates = () => {
@@ -788,6 +770,8 @@ phaseGeneration.push(
         },1000);
     }
 );
+
+
 
 function removeObjects(crystals, walls, traps, lasers)
 {
