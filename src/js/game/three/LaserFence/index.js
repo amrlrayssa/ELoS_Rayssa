@@ -15,13 +15,14 @@ class Laser extends THREE.Mesh {
 };
 
 class LaserFence extends THREE.Object3D {  
-   constructor(){
+   constructor(type){
         super();
         this.index = 0
         this.x = 0
         this.z = 0
-        this.state = "red"
+        this.state = type
         this.active = true
+        this.type = type;
 
         // fences
         let laserFence1 = new Fence;
@@ -40,8 +41,7 @@ class LaserFence extends THREE.Object3D {
         laserBlue3.rotateX(-Math.PI / 2);
         laserBlue3.position.set(0, -0.6, 0)
         this.blueLasers = [laserBlue1, laserBlue2, laserBlue3]
-        this.blueLasers.forEach(laser => laser.visible = false)
-
+        
         // red lasers
         let laserRed1 = new Laser("red")
         laserRed1.rotateX(-Math.PI / 2);
@@ -53,6 +53,14 @@ class LaserFence extends THREE.Object3D {
         laserRed3.rotateX(-Math.PI / 2);
         laserRed3.position.set(0, -0.6, 0)
         this.redLasers =[laserRed1, laserRed2, laserRed3]
+        if(type == "blue"){  
+            this.blueLasers.forEach(laser => laser.visible = true)
+            this.redLasers.forEach(laser => laser.visible = false)
+
+        }
+        else if(type == "red" || type == "multiColor"){
+            this.blueLasers.forEach(laser => laser.visible = false)
+        }
 
         this.add(laserFence1);
         this.add(laserFence2);
