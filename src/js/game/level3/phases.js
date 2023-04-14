@@ -1708,6 +1708,5 @@ advanceBtn.addEventListener('click',(e) => {
 });
 
 resizeCanvasToDisplaySize(renderer,camera);
-//phaseGeneration[sceneProperties.phase]();
-phaseGeneration[7]();
+phaseGeneration[sceneProperties.phase]();
 animate();
