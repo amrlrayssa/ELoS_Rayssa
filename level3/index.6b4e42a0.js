@@ -124,6 +124,7 @@ $parcel$export(module.exports, "PointsMaterial", () => $305c1a2873b5da70$export$
 $parcel$export(module.exports, "Points", () => $305c1a2873b5da70$export$1c787534cb11aa3e);
 $parcel$export(module.exports, "CylinderGeometry", () => $305c1a2873b5da70$export$68f745719dbe5198);
 $parcel$export(module.exports, "RingGeometry", () => $305c1a2873b5da70$export$68cb731f50f614af);
+$parcel$export(module.exports, "TorusGeometry", () => $305c1a2873b5da70$export$a2312a2a1fa56495);
 $parcel$export(module.exports, "MeshStandardMaterial", () => $305c1a2873b5da70$export$f2980790215acccd);
 $parcel$export(module.exports, "MeshPhysicalMaterial", () => $305c1a2873b5da70$export$28d04986c4269c9f);
 $parcel$export(module.exports, "MeshPhongMaterial", () => $305c1a2873b5da70$export$24c72f71cbaf0678);
@@ -60070,15 +60071,13 @@ class $229855a44a9d0678$export$2e2bcd8739ae039 {
     clearFires() {
         this.fires = [];
     }
-    addLaser(x, z) {
-        const laser = {
-            id: this.lasers.length,
-            x: x,
-            z: z,
-            active: true,
-            state: "red"
-        };
-        this.lasers.push(laser);
+    addLaser(x, z, laserFence) {
+        laserFence.index = this.lasers.length;
+        laserFence.x = x;
+        laserFence.z = z;
+        laserFence.active = true;
+        laserFence.state = "red";
+        this.lasers.push(laserFence);
     }
     laserCollision(position) {
         const laserFiltered = this.lasers.filter((laser)=>laser.active == true);
@@ -60091,7 +60090,7 @@ class $229855a44a9d0678$export$2e2bcd8739ae039 {
     detectLaser(position, state) {
         const laserFiltered = this.lasers.filter((laser)=>laser.state == state);
         for(let i = 0; i < laserFiltered.length; i++){
-            if (Math.abs(this.getXCoordFromGlobalPosition(position.x) - laserFiltered[i].x) == 1 && this.getZCoordFromGlobalPosition(position.z) == laserFiltered[i].z || this.getXCoordFromGlobalPosition(position.x) == laserFiltered[i].x && Math.abs(this.getZCoordFromGlobalPosition(position.z) - laserFiltered[i].z) == 1) return laserFiltered[i].id;
+            if (Math.abs(this.getXCoordFromGlobalPosition(position.x) - laserFiltered[i].x) == 1 && this.getZCoordFromGlobalPosition(position.z) == laserFiltered[i].z || this.getXCoordFromGlobalPosition(position.x) == laserFiltered[i].x && Math.abs(this.getZCoordFromGlobalPosition(position.z) - laserFiltered[i].z) == 1) return laserFiltered[i].index;
             else continue;
         }
         return null;
@@ -60111,6 +60110,6 @@ class $229855a44a9d0678$export$2e2bcd8739ae039 {
 
 var $b01a5420381def85$exports = {};
 
-(parcelRequire("2JpsI")).register(JSON.parse('{"5Spd2":"index.b3a75810.js","gkOf2":"eve.1d379c98.glb","hpjRp":"crystal.06b47171.jpg","9XNcj":"crystal.b012d479.obj"}'));
+(parcelRequire("2JpsI")).register(JSON.parse('{"5Spd2":"index.6b4e42a0.js","gkOf2":"eve.1d379c98.glb","hpjRp":"crystal.06b47171.jpg","9XNcj":"crystal.b012d479.obj"}'));
 
 

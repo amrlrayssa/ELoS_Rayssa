@@ -500,6 +500,7 @@ function animate() {
 window.addEventListener("resize", ()=>{
     (0, $6mhZf.resizeCanvasToDisplaySize)(renderer, camera);
 });
+const finishEarlierButton = document.getElementById("finishEarlier");
 const execBtn = document.getElementById("execBtn");
 execBtn.addEventListener("click", async function() {
     const codeParsed = (0, $4UvU9.default)(editor.state.doc.toString());
@@ -514,8 +515,9 @@ execBtn.addEventListener("click", async function() {
             document.getElementById("winMessage").classList.remove("invisible");
             document.getElementById("advanceBtn").classList.remove("invisible");
             document.getElementById("resetBtn").disabled = true;
+            finishEarlierButton.disabled = true;
             clearInterval(timerUpadate);
-            if (sceneProperties.phase == phaseGeneration.length - 1) (0, $c6e6z.configureDataAndUpload)(document.getElementById("name"), document.getElementById("age"), document.getElementById("subBtn"), sceneProperties.timer, "../", "N\xedvel 1");
+            if (sceneProperties.phase == phaseGeneration.length - 1) (0, $c6e6z.configureDataAndUpload)(document.getElementById("name"), document.getElementById("age"), "gender", "prog-exp", document.getElementById("subBtn"), sceneProperties.timer, "../", "N\xedvel 1/Completo");
         } else this.disabled = false;
     }
 });
@@ -536,8 +538,16 @@ advanceBtn.addEventListener("click", (e)=>{
         document.getElementById("advanceBtn").classList.add("invisible");
         execBtn.disabled = false;
         resetBtn.disabled = false;
+        finishEarlierButton.disabled = false;
     } else {
         sceneProperties.phase = sceneProperties.phase > phaseGeneration.length ? phaseGeneration.length : sceneProperties.phase;
+        logModal.show();
+    }
+});
+finishEarlierButton.addEventListener("click", (e)=>{
+    if (confirm("Deseja realmente finalizar a pr\xe1tica?")) {
+        clearInterval(timerUpadate);
+        (0, $c6e6z.configureDataAndUpload)(document.getElementById("name"), document.getElementById("age"), "gender", "prog-exp", document.getElementById("subBtn"), sceneProperties.timer, "../", `Nível 1/Fase ${sceneProperties.phase + 1}`);
         logModal.show();
     }
 });
@@ -630,21 +640,29 @@ function $8cf0fc8944b9cdfc$export$cbae8a5783c0845c(time, timerElement) {
     timerElement.innerText = `Tempo: ${hour < 10 ? "0" + hour : hour}:${min < 10 ? "0" + min : min}:${seg < 10 ? "0" + seg : seg}`;
 }
 async function $8cf0fc8944b9cdfc$var$uploadLog(data) {
-    let xhr = new XMLHttpRequest();
-    xhr.open("POST", $8cf0fc8944b9cdfc$var$FORM_ACCESS, true);
-    let formData = new FormData();
-    for(let i = 0; i < data.length; i++)formData.append(data[i][0], data[i][1]);
-    xhr.send(formData);
-    return true;
+    return new Promise((resolve, reject)=>{
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST", $8cf0fc8944b9cdfc$var$FORM_ACCESS, true);
+        let formData = new FormData();
+        for(let i = 0; i < data.length; i++)formData.append(data[i][0], data[i][1]);
+        xhr.onreadystatechange = ()=>{
+            if (xhr.readyState === XMLHttpRequest.DONE) resolve(true);
+        };
+        xhr.send(formData);
+    });
 }
-function $8cf0fc8944b9cdfc$export$ce33b877b675017a(nameInput, ageInput, subBtn, time, redirectPath, level) {
+async function $8cf0fc8944b9cdfc$export$ce33b877b675017a(nameInput, ageInput, genderRadioName, progExpRadioName, subBtn, time, redirectPath, level) {
     subBtn.addEventListener("click", async ()=>{
+        let genderInput = document.querySelector(`input[name="${genderRadioName}"]:checked`);
+        let progExpInput = document.querySelector(`input[name="${progExpRadioName}"]:checked`);
         let hour = Math.floor(time / 3600);
         let min = Math.floor(time / 60) % 60;
         let seg = Math.floor(time % 60);
         let name = nameInput.value;
         let age = ageInput.value;
-        if (name != null && name != "" && age != null && age != "") {
+        let gender = genderInput != null ? genderInput.value : null;
+        let progExp = progExpInput != null ? progExpInput.value : null;
+        if (name != null && name != "" && age != null && age != "" && gender != null && gender != "" && progExp != null && progExp != "") {
             if (parseFloat(age) >= 1) {
                 subBtn.disabled = true;
                 let data = [
@@ -659,6 +677,14 @@ function $8cf0fc8944b9cdfc$export$ce33b877b675017a(nameInput, ageInput, subBtn, 
                     [
                         "entry.1029337756",
                         age
+                    ],
+                    [
+                        "entry.1806882852",
+                        gender
+                    ],
+                    [
+                        "entry.1585862028",
+                        progExp
                     ],
                     [
                         "entry.2140863999",
