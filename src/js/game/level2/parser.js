@@ -279,6 +279,15 @@ function predictFunction(lines,index)
         }
     }
 
+    if(value == '+')
+    {
+        position[axis]++;
+    }
+    else
+    {
+        position[axis]--;
+    }
+
     return position;
 }
 

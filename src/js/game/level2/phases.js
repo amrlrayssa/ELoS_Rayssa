@@ -94,7 +94,9 @@ async function darMeiaVolta()
 
 function pegandoFogo()
 {
-    if(gridMapHelper.detectFire(actor.position) != null)
+    const vec = new THREE.Vector3();
+    actor.getObjectByName('interactionReference').getWorldPosition(vec);
+    if(gridMapHelper.detectFire(vec) != null)
     {
         return true;
     }
@@ -108,7 +110,9 @@ function apagarFogo()
 {
     if(extinguisherUses > 0)
     {
-        let fireIndex = gridMapHelper.detectFire(actor.position);
+        const vec = new THREE.Vector3();
+        actor.getObjectByName('interactionReference').getWorldPosition(vec);
+        let fireIndex = gridMapHelper.detectFire(vec);
 
         if(fireIndex != null)
         {
@@ -185,7 +189,7 @@ phaseGeneration.push(
                 return;
             }
 
-            if(checkCollision(actor,objectives[0],gridMapHelper))
+            if(checkCollision(actor.getObjectByName('interactionReference'),objectives[0],gridMapHelper))
             {
                 objectives[0].visible = false;
                 consoleElement.innerText += "Cristal coletado com sucesso.\n";
@@ -323,7 +327,7 @@ phaseGeneration.push(
                 return;
             }
 
-            if(checkCollision(actor,objectives[0],gridMapHelper))
+            if(checkCollision(actor.getObjectByName('interactionReference'),objectives[0],gridMapHelper))
             {
                 objectives[0].visible = false;
                 consoleElement.innerText += "Cristal coletado com sucesso.\n";
@@ -448,12 +452,12 @@ phaseGeneration.push(
                 return;
             }
 
-            if(checkCollision(actor,objectives[0],gridMapHelper))
+            if(checkCollision(actor.getObjectByName('interactionReference'),objectives[0],gridMapHelper))
             {
                 objectives[0].visible = false;
                 consoleElement.innerText += "Cristal coletado.\n";
             }
-            else if(checkCollision(actor,objectives[1],gridMapHelper))
+            else if(checkCollision(actor.getObjectByName('interactionReference'),objectives[1],gridMapHelper))
             {
                 objectives[1].visible = false;
                 consoleElement.innerText += "Cristal coletado.\n";
@@ -580,12 +584,12 @@ phaseGeneration.push(
                 return;
             }
 
-            if(checkCollision(actor,objectives[0],gridMapHelper))
+            if(checkCollision(actor.getObjectByName('interactionReference'),objectives[0],gridMapHelper))
             {
                 objectives[0].visible = false;
                 consoleElement.innerText += "Cristal coletado.\n";
             }
-            else if(checkCollision(actor,objectives[1],gridMapHelper))
+            else if(checkCollision(actor.getObjectByName('interactionReference'),objectives[1],gridMapHelper))
             {
                 objectives[1].visible = false;
                 consoleElement.innerText += "Cristal coletado.\n";
@@ -742,12 +746,12 @@ phaseGeneration.push(
                 return;
             }
 
-            if(checkCollision(actor,objectives[0],gridMapHelper))
+            if(checkCollision(actor.getObjectByName('interactionReference'),objectives[0],gridMapHelper))
             {
                 objectives[0].visible = false;
                 consoleElement.innerText += "Cristal coletado.\n";
             }
-            else if(checkCollision(actor,objectives[1],gridMapHelper))
+            else if(checkCollision(actor.getObjectByName('interactionReference'),objectives[1],gridMapHelper))
             {
                 objectives[1].visible = false;
                 consoleElement.innerText += "Cristal coletado.\n";
@@ -924,12 +928,12 @@ phaseGeneration.push(
                 return;
             }
 
-            if(checkCollision(actor,objectives[0],gridMapHelper))
+            if(checkCollision(actor.getObjectByName('interactionReference'),objectives[0],gridMapHelper))
             {
                 objectives[0].visible = false;
                 consoleElement.innerText += "Cristal coletado.\n";
             }
-            else if(checkCollision(actor,objectives[1],gridMapHelper))
+            else if(checkCollision(actor.getObjectByName('interactionReference'),objectives[1],gridMapHelper))
             {
                 objectives[1].visible = false;
                 consoleElement.innerText += "Cristal coletado.\n";
@@ -1121,12 +1125,12 @@ phaseGeneration.push(
                 return;
             }
 
-            if(checkCollision(actor,objectives[0],gridMapHelper))
+            if(checkCollision(actor.getObjectByName('interactionReference'),objectives[0],gridMapHelper))
             {
                 objectives[0].visible = false;
                 consoleElement.innerText += "Cristal coletado.\n";
             }
-            else if(checkCollision(actor,objectives[1],gridMapHelper))
+            else if(checkCollision(actor.getObjectByName('interactionReference'),objectives[1],gridMapHelper))
             {
                 objectives[1].visible = false;
                 consoleElement.innerText += "Cristal coletado.\n";
@@ -1335,17 +1339,17 @@ phaseGeneration.push(
                 return;
             }
 
-            if(checkCollision(actor,objectives[0],gridMapHelper))
+            if(checkCollision(actor.getObjectByName('interactionReference'),objectives[0],gridMapHelper))
             {
                 objectives[0].visible = false;
                 consoleElement.innerText += "Cristal coletado.\n";
             }
-            else if(checkCollision(actor,objectives[1],gridMapHelper))
+            else if(checkCollision(actor.getObjectByName('interactionReference'),objectives[1],gridMapHelper))
             {
                 objectives[1].visible = false;
                 consoleElement.innerText += "Cristal coletado.\n";
             }
-            else if(checkCollision(actor,objectives[2],gridMapHelper))
+            else if(checkCollision(actor.getObjectByName('interactionReference'),objectives[2],gridMapHelper))
             {
                 objectives[2].visible = false;
                 consoleElement.innerText += "Cristal coletado.\n";

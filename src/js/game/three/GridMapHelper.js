@@ -268,7 +268,7 @@ export default class GridMapHelper
 
         for(let i = 0;i < fireFiltered.length;i++)
             {
-                if((Math.abs(this.getXCoordFromGlobalPosition(position.x) - fireFiltered[i].x) == 1 && this.getZCoordFromGlobalPosition(position.z) == fireFiltered[i].z) || (this.getXCoordFromGlobalPosition(position.x) == fireFiltered[i].x && Math.abs(this.getZCoordFromGlobalPosition(position.z) - fireFiltered[i].z) == 1))
+                if(this.getXCoordFromGlobalPosition(position.x) == fireFiltered[i].x && this.getZCoordFromGlobalPosition(position.z) == fireFiltered[i].z)
                 {
                     return fireFiltered[i].id;
                 }
@@ -330,7 +330,7 @@ export default class GridMapHelper
 
         for(let i = 0;i < laserFiltered.length;i++)
         {
-            if((Math.abs(this.getXCoordFromGlobalPosition(position.x) - laserFiltered[i].x) == 1 && this.getZCoordFromGlobalPosition(position.z) == laserFiltered[i].z) || (this.getXCoordFromGlobalPosition(position.x) == laserFiltered[i].x && Math.abs(this.getZCoordFromGlobalPosition(position.z) - laserFiltered[i].z) == 1))
+            if(this.getXCoordFromGlobalPosition(position.x) == laserFiltered[i].x && this.getZCoordFromGlobalPosition(position.z) == laserFiltered[i].z)
             {
                 return laserFiltered[i].index;
             }

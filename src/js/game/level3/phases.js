@@ -115,7 +115,9 @@ async function darMeiaVolta()
 
 function laserAzulAtivo()
 {
-    if(gridMapHelper.detectLaser(actor.position,'blue') != null)
+    const vec = new THREE.Vector3();
+    actor.getObjectByName('interactionReference').getWorldPosition(vec);
+    if(gridMapHelper.detectLaser(vec,'blue') != null)
     {
         return true;
     }
@@ -127,7 +129,9 @@ function laserAzulAtivo()
 
 function laserVermelhoAtivo()
 {
-    if(gridMapHelper.detectLaser(actor.position,'red') != null)
+    const vec = new THREE.Vector3();
+    actor.getObjectByName('interactionReference').getWorldPosition(vec);
+    if(gridMapHelper.detectLaser(vec,'red') != null)
     {
         return true;
     }
@@ -139,7 +143,9 @@ function laserVermelhoAtivo()
 
 function desativarLaserAzul()
 {
-    let laserIndex = gridMapHelper.detectLaser(actor.position,'blue');
+    const vec = new THREE.Vector3();
+    actor.getObjectByName('interactionReference').getWorldPosition(vec);
+    let laserIndex = gridMapHelper.detectLaser(vec,'blue');
     
     if(laserIndex != null)
     {
@@ -154,7 +160,9 @@ function desativarLaserAzul()
 
 function desativarLaserVermelho()
 {
-    let laserIndex = gridMapHelper.detectLaser(actor.position,'red');
+    const vec = new THREE.Vector3();
+    actor.getObjectByName('interactionReference').getWorldPosition(vec);
+    let laserIndex = gridMapHelper.detectLaser(vec,'red');
     
     if(laserIndex != null)
     {
@@ -280,7 +288,7 @@ phaseGeneration.push(
                 return;
             }
 
-            if(checkCollision(actor,objectives[0],gridMapHelper))
+            if(checkCollision(actor.getObjectByName('interactionReference'),objectives[0],gridMapHelper))
             {
                 objectives[0].visible = false;
                 consoleElement.innerText += "Cristal coletado com sucesso.\n";
@@ -434,7 +442,7 @@ phaseGeneration.push(
                 return;
             }
 
-            if(checkCollision(actor,objectives[0],gridMapHelper))
+            if(checkCollision(actor.getObjectByName('interactionReference'),objectives[0],gridMapHelper))
             {
                 objectives[0].visible = false;
                 consoleElement.innerText += "Cristal coletado com sucesso.\n";
@@ -625,7 +633,7 @@ phaseGeneration.push(
                 return;
             }
 
-            if(checkCollision(actor,objectives[0],gridMapHelper))
+            if(checkCollision(actor.getObjectByName('interactionReference'),objectives[0],gridMapHelper))
             {
                 objectives[0].visible = false;
                 consoleElement.innerText += "Cristal coletado com sucesso.\n";
@@ -798,7 +806,7 @@ phaseGeneration.push(
                 return;
             }
 
-            if(checkCollision(actor,objectives[0],gridMapHelper))
+            if(checkCollision(actor.getObjectByName('interactionReference'),objectives[0],gridMapHelper))
             {
                 objectives[0].visible = false;
                 consoleElement.innerText += "Cristal coletado com sucesso.\n";
@@ -993,7 +1001,7 @@ phaseGeneration.push(
                 return;
             }
 
-            if(checkCollision(actor,objectives[0],gridMapHelper))
+            if(checkCollision(actor.getObjectByName('interactionReference'),objectives[0],gridMapHelper))
             {
                 objectives[0].visible = false;
                 consoleElement.innerText += "Cristal coletado com sucesso.\n";
@@ -1222,7 +1230,7 @@ phaseGeneration.push(
                 return;
             }
 
-            if(checkCollision(actor,objectives[0],gridMapHelper))
+            if(checkCollision(actor.getObjectByName('interactionReference'),objectives[0],gridMapHelper))
             {
                 objectives[0].visible = false;
                 consoleElement.innerText += "Cristal coletado com sucesso.\n";
@@ -1425,7 +1433,7 @@ phaseGeneration.push(
                 return;
             }
 
-            if(checkCollision(actor,objectives[0],gridMapHelper))
+            if(checkCollision(actor.getObjectByName('interactionReference'),objectives[0],gridMapHelper))
             {
                 objectives[0].visible = false;
                 consoleElement.innerText += "Cristal coletado com sucesso.\n";
@@ -1622,7 +1630,7 @@ phaseGeneration.push(
                 return;
             }
 
-            if(checkCollision(actor,objectives[0],gridMapHelper))
+            if(checkCollision(actor.getObjectByName('interactionReference'),objectives[0],gridMapHelper))
             {
                 objectives[0].visible = false;
                 consoleElement.innerText += "Cristal coletado com sucesso.\n";
