@@ -48,6 +48,19 @@ function changeLaserActiveStatus(index,status)
     //lasers[index].visible = status;
     if(status == false)
         laserFences[index].setNotVisible();
+    else
+    {
+        if(gridMapHelper.lasers[index].state == 'red')
+        {
+            laserFences[index].setVisible();
+            laserFences[index].setRed();
+        }
+        else
+        {
+            laserFences[index].setVisible();
+            laserFences[index].setBlue();   
+        }
+    }
 }
 function changeLaserStateStatus(index, status)
 {
@@ -100,7 +113,7 @@ async function darMeiaVolta()
     await rotateActor(actor,180,sceneProperties,1);
 }
 
-function laserAzul()
+function laserAzulAtivo()
 {
     if(gridMapHelper.detectLaser(actor.position,'blue') != null)
     {
@@ -112,7 +125,19 @@ function laserAzul()
     }
 }
 
-function desativarAzul()
+function laserVermelhoAtivo()
+{
+    if(gridMapHelper.detectLaser(actor.position,'red') != null)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+function desativarLaserAzul()
 {
     let laserIndex = gridMapHelper.detectLaser(actor.position,'blue');
     
@@ -120,27 +145,69 @@ function desativarAzul()
     {
         changeLaserActiveStatus(laserIndex,false);
     }
+    else
+    {
+        consoleElement.innerText += "O robô entrou em curto circuito por tentar desativar um laser azul que não existe.\n";
+        sceneProperties.cancelExecution = true;
+    }
 }
 
-function desativarVermelho()
+function desativarLaserVermelho()
 {
     let laserIndex = gridMapHelper.detectLaser(actor.position,'red');
     
     if(laserIndex != null)
     {
         changeLaserActiveStatus(laserIndex,false);
-    }   
+    }
+    else
+    {
+        consoleElement.innerText += "O robô entrou em curto circuito por tentar desativar um laser vermelho que não existe.\n";
+        sceneProperties.cancelExecution = true;
+    }
 }
 
 function badLuck(position,state)
 {
     const vector = new THREE.Vector3(gridMapHelper.getGlobalXPositionFromCoord(position[0]),0,gridMapHelper.getGlobalZPositionFromCoord(position[1]));
     let newLaserState = state == 'blue' ? 'red' : 'blue';
-    let laserIndex = gridMapHelper.detectLaser(actor.position,state);
+    let laserIndex = gridMapHelper.detectLaser(vector,state);
 
     if(laserIndex != null)
     {
-        changeLaserStateStatus(laserIndex,newLaserState);
+        if(gridMapHelper.lasers[laserIndex].type == 'multiColor')
+        {
+            gridMapHelper.lasers[laserIndex].state = newLaserState;
+            if(newLaserState == 'blue')
+            {
+                laserFences[laserIndex].setBlue();
+            }
+            else
+            {
+                laserFences[laserIndex].setRed();
+            }
+        }
+        else
+        {
+            if(gridMapHelper.lasers[laserIndex].active)
+            {
+                gridMapHelper.lasers[laserIndex].active = false;
+                laserFences[laserIndex].setNotVisible();
+            }
+            else
+            {
+                gridMapHelper.lasers[laserIndex].active = true;
+                laserFences[laserIndex].setVisible();
+                if(gridMapHelper.lasers[laserIndex].state == 'blue')
+                {
+                    laserFences[laserIndex].setBlue();
+                }
+                else
+                {
+                    laserFences[laserIndex].setRed();
+                }   
+            }
+        }
     }
 }
 
@@ -350,10 +417,14 @@ phaseGeneration.push(
             if(laserState == 0)
             {
                 changeLaserStateStatus(0, 'blue');
+                changeLaserActiveStatus(0,true);
+                changeLaserActiveStatus(1,false);
             }
             else
             {
                 changeLaserStateStatus(0, 'red');
+                changeLaserActiveStatus(0,false);
+                changeLaserActiveStatus(1,true);
             }
         }
 

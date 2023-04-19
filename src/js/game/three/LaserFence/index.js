@@ -88,10 +88,12 @@ class LaserFence extends THREE.Object3D {
         if(type == "blue"){  
             this.blueLasers.forEach(laser => laser.visible = true)
             this.redLasers.forEach(laser => laser.visible = false)
+            this.state = 'blue';
 
         }
         else if(type == "red" || type == "multiColor"){
             this.blueLasers.forEach(laser => laser.visible = false)
+            this.state = 'red';
         }
 
         this.add(fenceBase);

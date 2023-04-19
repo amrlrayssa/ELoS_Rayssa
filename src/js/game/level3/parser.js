@@ -24,11 +24,11 @@ const functionFilter = [
         type: 'normal'
     },
     {
-        filter: new RegExp('^desativarAzul(\\s+)?\\((\\s+)?\\)(\\s+)?(;)?$'),
+        filter: new RegExp('^desativarLaserAzul(\\s+)?\\((\\s+)?\\)(\\s+)?(;)?$'),
         type: 'mustCondition'
     },
     {
-        filter: new RegExp('^desativarVermelho(\\s+)?\\((\\s+)?\\)(\\s+)?(;)?$'),
+        filter: new RegExp('^desativarLaserVermelho(\\s+)?\\((\\s+)?\\)(\\s+)?(;)?$'),
         type: 'mustCondition'
     },
     {
@@ -60,7 +60,8 @@ const functionFilter = [
 const conditionalParameters = [
     new RegExp('true'),
     new RegExp('false'),
-    new RegExp('^laserAzul(\\s+)?\\((\\s+)?\\)(\\s+)?$')
+    new RegExp('^laserAzulAtivo(\\s+)?\\((\\s+)?\\)(\\s+)?$'),
+    new RegExp('^laserVermelhoAtivo(\\s+)?\\((\\s+)?\\)(\\s+)?$')
 ]
 
 function ifValidation(line)

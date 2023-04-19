@@ -300,7 +300,7 @@ export default class GridMapHelper
         laserFence.x = x;
         laserFence.z = z;
         laserFence.active = true;
-        laserFence.state = 'red';
+        laserFence.state = laserFence.state;
 
         this.lasers.push(laserFence);
     }
