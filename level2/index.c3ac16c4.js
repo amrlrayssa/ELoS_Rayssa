@@ -1773,7 +1773,7 @@ function $0c161e84c454184c$export$2e2bcd8739ae039(code, limit = 0) {
 
 var $524b4210a04cbb56$exports = {};
 
-(parcelRequire("2JpsI")).register(JSON.parse('{"gktNi":"index.86d21e30.js","GGIiK":"fire.e088cc30.png","2x2Z6":"stone.543880d2.jpg","5Spd2":"index.7824e49b.js","c5VSK":"index.8c12255d.js"}'));
+(parcelRequire("2JpsI")).register(JSON.parse('{"gktNi":"index.c3ac16c4.js","GGIiK":"fire.e088cc30.png","2x2Z6":"stone.543880d2.jpg","5Spd2":"index.2789399f.js","c5VSK":"index.8c12255d.js"}'));
 
 
 parcelRequire("apYFO");

@@ -60094,7 +60094,7 @@ class $229855a44a9d0678$export$2e2bcd8739ae039 {
         return false;
     }
     detectLaser(position, state) {
-        const laserFiltered = this.lasers.filter((laser)=>laser.state == state);
+        const laserFiltered = this.lasers.filter((laser)=>laser.state == state && laser.active == true);
         for(let i = 0; i < laserFiltered.length; i++){
             if (this.getXCoordFromGlobalPosition(position.x) == laserFiltered[i].x && this.getZCoordFromGlobalPosition(position.z) == laserFiltered[i].z) return laserFiltered[i].index;
             else continue;
@@ -60113,6 +60113,6 @@ class $229855a44a9d0678$export$2e2bcd8739ae039 {
 
 var $b01a5420381def85$exports = {};
 
-(parcelRequire("2JpsI")).register(JSON.parse('{"5Spd2":"index.7824e49b.js","gkOf2":"eve.1d379c98.glb","hpjRp":"crystal.06b47171.jpg","9XNcj":"crystal.b012d479.obj"}'));
+(parcelRequire("2JpsI")).register(JSON.parse('{"5Spd2":"index.2789399f.js","gkOf2":"eve.1d379c98.glb","hpjRp":"crystal.06b47171.jpg","9XNcj":"crystal.b012d479.obj"}'));
 
 
