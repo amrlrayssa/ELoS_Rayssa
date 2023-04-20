@@ -109,7 +109,7 @@ phaseGeneration.push(()=>{
     scene.add(objectives[0]);
     coletarCristal = ()=>{
         if (sceneProperties.cancelExecution) return;
-        if ((0, $6mhZf.checkCollision)(actor, objectives[0], gridMapHelper)) {
+        if ((0, $6mhZf.checkCollision)(actor.getObjectByName("interactionReference"), objectives[0], gridMapHelper)) {
             objectives[0].visible = false;
             consoleElement.innerText += "Cristal coletado com sucesso.\n";
         } else consoleElement.innerText += "Rob\xf4 n\xe3o est\xe1 sobre o cristal.\n";
@@ -139,7 +139,7 @@ phaseGeneration.push(()=>{
     scene.add(objectives[0]);
     coletarCristal = ()=>{
         if (sceneProperties.cancelExecution) return;
-        if ((0, $6mhZf.checkCollision)(actor, objectives[0], gridMapHelper)) {
+        if ((0, $6mhZf.checkCollision)(actor.getObjectByName("interactionReference"), objectives[0], gridMapHelper)) {
             objectives[0].visible = false;
             consoleElement.innerText += "Cristal coletado com sucesso.\n";
         } else consoleElement.innerText += "Rob\xf4 n\xe3o est\xe1 sobre o cristal.\n";
@@ -171,10 +171,10 @@ phaseGeneration.push(()=>{
     scene.add(objectives[1]);
     coletarCristal = ()=>{
         if (sceneProperties.cancelExecution) return;
-        if ((0, $6mhZf.checkCollision)(actor, objectives[0], gridMapHelper)) {
+        if ((0, $6mhZf.checkCollision)(actor.getObjectByName("interactionReference"), objectives[0], gridMapHelper)) {
             objectives[0].visible = false;
             consoleElement.innerText += "Cristal coletado.\n";
-        } else if ((0, $6mhZf.checkCollision)(actor, objectives[1], gridMapHelper)) {
+        } else if ((0, $6mhZf.checkCollision)(actor.getObjectByName("interactionReference"), objectives[1], gridMapHelper)) {
             objectives[1].visible = false;
             consoleElement.innerText += "Cristal coletado.\n";
         } else consoleElement.innerText += "Rob\xf4 n\xe3o est\xe1 sobre o cristal.\n";
@@ -215,7 +215,7 @@ phaseGeneration.push(()=>{
     scene.add(walls[0]);
     coletarCristal = ()=>{
         if (sceneProperties.cancelExecution) return;
-        if ((0, $6mhZf.checkCollision)(actor, objectives[0], gridMapHelper)) {
+        if ((0, $6mhZf.checkCollision)(actor.getObjectByName("interactionReference"), objectives[0], gridMapHelper)) {
             objectives[0].visible = false;
             consoleElement.innerText += "Cristal coletado com sucesso.\n";
         } else consoleElement.innerText += "Rob\xf4 n\xe3o est\xe1 sobre o cristal.\n";
@@ -262,10 +262,10 @@ phaseGeneration.push(()=>{
     scene.add(walls[1]);
     coletarCristal = ()=>{
         if (sceneProperties.cancelExecution) return;
-        if ((0, $6mhZf.checkCollision)(actor, objectives[0], gridMapHelper)) {
+        if ((0, $6mhZf.checkCollision)(actor.getObjectByName("interactionReference"), objectives[0], gridMapHelper)) {
             objectives[0].visible = false;
             consoleElement.innerText += "Cristal coletado.\n";
-        } else if ((0, $6mhZf.checkCollision)(actor, objectives[1], gridMapHelper)) {
+        } else if ((0, $6mhZf.checkCollision)(actor.getObjectByName("interactionReference"), objectives[1], gridMapHelper)) {
             objectives[1].visible = false;
             consoleElement.innerText += "Cristal coletado.\n";
         } else consoleElement.innerText += "Rob\xf4 n\xe3o est\xe1 sobre o cristal.\n";
@@ -316,7 +316,7 @@ phaseGeneration.push(()=>{
     scene.add(walls[2]);
     coletarCristal = ()=>{
         if (sceneProperties.cancelExecution) return;
-        if ((0, $6mhZf.checkCollision)(actor, objectives[0], gridMapHelper)) {
+        if ((0, $6mhZf.checkCollision)(actor.getObjectByName("interactionReference"), objectives[0], gridMapHelper)) {
             objectives[0].visible = false;
             consoleElement.innerText += "Cristal coletado com sucesso.\n";
         } else consoleElement.innerText += "Rob\xf4 n\xe3o est\xe1 sobre o cristal.\n";
@@ -378,7 +378,7 @@ phaseGeneration.push(()=>{
     scene.add(traps[0]);
     coletarCristal = ()=>{
         if (sceneProperties.cancelExecution) return;
-        if ((0, $6mhZf.checkCollision)(actor, objectives[0], gridMapHelper)) {
+        if ((0, $6mhZf.checkCollision)(actor.getObjectByName("interactionReference"), objectives[0], gridMapHelper)) {
             objectives[0].visible = false;
             consoleElement.innerText += "Cristal coletado com sucesso.\n";
         } else consoleElement.innerText += "Rob\xf4 n\xe3o est\xe1 sobre o cristal.\n";
@@ -448,13 +448,13 @@ phaseGeneration.push(()=>{
     scene.add(traps[2]);
     coletarCristal = ()=>{
         if (sceneProperties.cancelExecution) return;
-        if ((0, $6mhZf.checkCollision)(actor, objectives[0], gridMapHelper)) {
+        if ((0, $6mhZf.checkCollision)(actor.getObjectByName("interactionReference"), objectives[0], gridMapHelper)) {
             objectives[0].visible = false;
             consoleElement.innerText += "Cristal coletado.\n";
-        } else if ((0, $6mhZf.checkCollision)(actor, objectives[1], gridMapHelper)) {
+        } else if ((0, $6mhZf.checkCollision)(actor.getObjectByName("interactionReference"), objectives[1], gridMapHelper)) {
             objectives[1].visible = false;
             consoleElement.innerText += "Cristal coletado.\n";
-        } else if ((0, $6mhZf.checkCollision)(actor, objectives[2], gridMapHelper)) {
+        } else if ((0, $6mhZf.checkCollision)(actor.getObjectByName("interactionReference"), objectives[2], gridMapHelper)) {
             objectives[2].visible = false;
             consoleElement.innerText += "Cristal coletado.\n";
         } else consoleElement.innerText += "Rob\xf4 n\xe3o est\xe1 sobre o cristal.\n";

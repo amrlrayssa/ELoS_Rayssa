@@ -55726,7 +55726,11 @@ function $4a12bffc769d698d$export$67a4dc6be717a342(path, modelName, scale) {
 function $4a12bffc769d698d$export$e8d5e11e24d927eb() {
     const path = new URL((parcelRequire("2JD2i"))).toString();
     const obj = $4a12bffc769d698d$export$67a4dc6be717a342(path, "eve", 2.0);
+    const interactionReference = new $49pUz.Object3D();
+    interactionReference.name = "interactionReference";
+    interactionReference.translateZ(2);
     obj.rotateY($4a12bffc769d698d$export$b30a5dbc5cf297c2(90));
+    obj.add(interactionReference);
     return obj;
 }
 function $4a12bffc769d698d$export$1dc8a9bc087b35e3(path, modelName, texture, scale) {
@@ -55841,7 +55845,9 @@ function $4a12bffc769d698d$export$1f34b7ddb8582c2d(actor, amount, scenePropertie
     });
 }
 function $4a12bffc769d698d$export$65cbfae5bde8bfd2(objectA, objectB, gridMapHelper) {
-    if (Math.abs(gridMapHelper.getXCoordFromGlobalPosition(objectA.position.x) - gridMapHelper.getXCoordFromGlobalPosition(objectB.position.x)) == 1 && gridMapHelper.getXCoordFromGlobalPosition(objectA.position.z) == gridMapHelper.getXCoordFromGlobalPosition(objectB.position.z) || gridMapHelper.getXCoordFromGlobalPosition(objectA.position.x) == gridMapHelper.getXCoordFromGlobalPosition(objectB.position.x) && Math.abs(gridMapHelper.getXCoordFromGlobalPosition(objectA.position.z) - gridMapHelper.getXCoordFromGlobalPosition(objectB.position.z)) == 1) return true;
+    const vec = new $49pUz.Vector3();
+    objectA.getWorldPosition(vec);
+    if (gridMapHelper.getXCoordFromGlobalPosition(vec.x) == gridMapHelper.getXCoordFromGlobalPosition(objectB.position.x) && gridMapHelper.getZCoordFromGlobalPosition(vec.z) == gridMapHelper.getZCoordFromGlobalPosition(objectB.position.z)) return true;
     else return false;
 }
 
@@ -60060,7 +60066,7 @@ class $229855a44a9d0678$export$2e2bcd8739ae039 {
     detectFire(position, state = true) {
         const fireFiltered = this.fires.filter((fire)=>fire.active == state);
         for(let i = 0; i < fireFiltered.length; i++){
-            if (Math.abs(this.getXCoordFromGlobalPosition(position.x) - fireFiltered[i].x) == 1 && this.getZCoordFromGlobalPosition(position.z) == fireFiltered[i].z || this.getXCoordFromGlobalPosition(position.x) == fireFiltered[i].x && Math.abs(this.getZCoordFromGlobalPosition(position.z) - fireFiltered[i].z) == 1) return fireFiltered[i].id;
+            if (this.getXCoordFromGlobalPosition(position.x) == fireFiltered[i].x && this.getZCoordFromGlobalPosition(position.z) == fireFiltered[i].z) return fireFiltered[i].id;
             else continue;
         }
         return null;
@@ -60076,7 +60082,7 @@ class $229855a44a9d0678$export$2e2bcd8739ae039 {
         laserFence.x = x;
         laserFence.z = z;
         laserFence.active = true;
-        laserFence.state = "red";
+        laserFence.state = laserFence.state;
         this.lasers.push(laserFence);
     }
     laserCollision(position) {
@@ -60090,16 +60096,13 @@ class $229855a44a9d0678$export$2e2bcd8739ae039 {
     detectLaser(position, state) {
         const laserFiltered = this.lasers.filter((laser)=>laser.state == state);
         for(let i = 0; i < laserFiltered.length; i++){
-            if (Math.abs(this.getXCoordFromGlobalPosition(position.x) - laserFiltered[i].x) == 1 && this.getZCoordFromGlobalPosition(position.z) == laserFiltered[i].z || this.getXCoordFromGlobalPosition(position.x) == laserFiltered[i].x && Math.abs(this.getZCoordFromGlobalPosition(position.z) - laserFiltered[i].z) == 1) return laserFiltered[i].index;
+            if (this.getXCoordFromGlobalPosition(position.x) == laserFiltered[i].x && this.getZCoordFromGlobalPosition(position.z) == laserFiltered[i].z) return laserFiltered[i].index;
             else continue;
         }
         return null;
     }
     restartLasers() {
-        for(let i = 0; i < this.lasers.length; i++){
-            this.lasers[i].active = true;
-            this.lasers[i].state = "blue";
-        }
+        for(let i = 0; i < this.lasers.length; i++)this.lasers[i].active = true;
     }
     clearLasers() {
         this.lasers = [];
@@ -60110,6 +60113,6 @@ class $229855a44a9d0678$export$2e2bcd8739ae039 {
 
 var $b01a5420381def85$exports = {};
 
-(parcelRequire("2JpsI")).register(JSON.parse('{"5Spd2":"index.6b4e42a0.js","gkOf2":"eve.1d379c98.glb","hpjRp":"crystal.06b47171.jpg","9XNcj":"crystal.b012d479.obj"}'));
+(parcelRequire("2JpsI")).register(JSON.parse('{"5Spd2":"index.7824e49b.js","gkOf2":"eve.1d379c98.glb","hpjRp":"crystal.06b47171.jpg","9XNcj":"crystal.b012d479.obj"}'));
 
 

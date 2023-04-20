@@ -74,6 +74,13 @@ function changeLaserActiveStatus(index, status) {
     gridMapHelper.lasers[index].active = status;
     //lasers[index].visible = status;
     if (status == false) laserFences[index].setNotVisible();
+    else if (gridMapHelper.lasers[index].state == "red") {
+        laserFences[index].setVisible();
+        laserFences[index].setRed();
+    } else {
+        laserFences[index].setVisible();
+        laserFences[index].setBlue();
+    }
 }
 function changeLaserStateStatus(index, status) {
     gridMapHelper.lasers.forEach((laser)=>{
@@ -106,23 +113,57 @@ async function girarDireita() {
 async function darMeiaVolta() {
     await (0, $6mhZf.rotateActor)(actor, 180, sceneProperties, 1);
 }
-function laserAzul() {
-    if (gridMapHelper.detectLaser(actor.position, "blue") != null) return true;
+function laserAzulAtivo() {
+    const vec = new $49pUz.Vector3();
+    actor.getObjectByName("interactionReference").getWorldPosition(vec);
+    if (gridMapHelper.detectLaser(vec, "blue") != null) return true;
     else return false;
 }
-function desativarAzul() {
-    let laserIndex = gridMapHelper.detectLaser(actor.position, "blue");
-    if (laserIndex != null) changeLaserActiveStatus(laserIndex, false);
+function laserVermelhoAtivo() {
+    const vec = new $49pUz.Vector3();
+    actor.getObjectByName("interactionReference").getWorldPosition(vec);
+    if (gridMapHelper.detectLaser(vec, "red") != null) return true;
+    else return false;
 }
-function desativarVermelho() {
-    let laserIndex = gridMapHelper.detectLaser(actor.position, "red");
+function desativarLaserAzul() {
+    const vec = new $49pUz.Vector3();
+    actor.getObjectByName("interactionReference").getWorldPosition(vec);
+    let laserIndex = gridMapHelper.detectLaser(vec, "blue");
     if (laserIndex != null) changeLaserActiveStatus(laserIndex, false);
+    else {
+        consoleElement.innerText += "O rob\xf4 entrou em curto circuito por tentar desativar um laser azul que n\xe3o existe.\n";
+        sceneProperties.cancelExecution = true;
+    }
+}
+function desativarLaserVermelho() {
+    const vec = new $49pUz.Vector3();
+    actor.getObjectByName("interactionReference").getWorldPosition(vec);
+    let laserIndex = gridMapHelper.detectLaser(vec, "red");
+    if (laserIndex != null) changeLaserActiveStatus(laserIndex, false);
+    else {
+        consoleElement.innerText += "O rob\xf4 entrou em curto circuito por tentar desativar um laser vermelho que n\xe3o existe.\n";
+        sceneProperties.cancelExecution = true;
+    }
 }
 function badLuck(position, state) {
     const vector = new $49pUz.Vector3(gridMapHelper.getGlobalXPositionFromCoord(position[0]), 0, gridMapHelper.getGlobalZPositionFromCoord(position[1]));
     let newLaserState = state == "blue" ? "red" : "blue";
-    let laserIndex = gridMapHelper.detectLaser(actor.position, state);
-    if (laserIndex != null) changeLaserStateStatus(laserIndex, newLaserState);
+    let laserIndex = gridMapHelper.detectLaser(vector, state);
+    if (laserIndex != null) {
+        if (gridMapHelper.lasers[laserIndex].type == "multiColor") {
+            gridMapHelper.lasers[laserIndex].state = newLaserState;
+            if (newLaserState == "blue") laserFences[laserIndex].setBlue();
+            else laserFences[laserIndex].setRed();
+        } else if (gridMapHelper.lasers[laserIndex].active) {
+            gridMapHelper.lasers[laserIndex].active = false;
+            laserFences[laserIndex].setNotVisible();
+        } else {
+            gridMapHelper.lasers[laserIndex].active = true;
+            laserFences[laserIndex].setVisible();
+            if (gridMapHelper.lasers[laserIndex].state == "blue") laserFences[laserIndex].setBlue();
+            else laserFences[laserIndex].setRed();
+        }
+    }
 }
 let coletarCristal;
 let resetLevel;
@@ -172,7 +213,7 @@ phaseGeneration.push(()=>{
     // scene.add(lasers[0]);
     coletarCristal = ()=>{
         if (sceneProperties.cancelExecution) return;
-        if ((0, $6mhZf.checkCollision)(actor, objectives[0], gridMapHelper)) {
+        if ((0, $6mhZf.checkCollision)(actor.getObjectByName("interactionReference"), objectives[0], gridMapHelper)) {
             objectives[0].visible = false;
             consoleElement.innerText += "Cristal coletado com sucesso.\n";
         } else consoleElement.innerText += "Rob\xf4 n\xe3o est\xe1 sobre o cristal.\n";
@@ -280,15 +321,24 @@ phaseGeneration.push(()=>{
     scene.add(laserFences[1]);
     laserState = 0;
     setLaserStates = ()=>{
-        if (laserState == 0) changeLaserStateStatus(0, "blue");
-        else changeLaserStateStatus(0, "red");
+        if (laserState == 0) {
+            changeLaserActiveStatus(0, true);
+            changeLaserActiveStatus(1, false);
+        } else {
+            changeLaserActiveStatus(0, false);
+            changeLaserActiveStatus(1, true);
+        }
     };
     coletarCristal = ()=>{
         if (sceneProperties.cancelExecution) return;
-        if ((0, $6mhZf.checkCollision)(actor, objectives[0], gridMapHelper)) {
+        if ((0, $6mhZf.checkCollision)(actor.getObjectByName("interactionReference"), objectives[0], gridMapHelper)) {
             objectives[0].visible = false;
-            consoleElement.innerText += "Cristal coletado com sucesso.\n";
+            consoleElement.innerText += "Cristal coletado.\n";
+        } else if ((0, $6mhZf.checkCollision)(actor.getObjectByName("interactionReference"), objectives[1], gridMapHelper)) {
+            objectives[1].visible = false;
+            consoleElement.innerText += "Cristal coletado.\n";
         } else consoleElement.innerText += "Rob\xf4 n\xe3o est\xe1 sobre o cristal.\n";
+        if (!objectives[0].visible && !objectives[1].visible) consoleElement.innerText += "Todos os cristais coletados com sucesso!\n";
     };
     resetLevel = ()=>{
         actor.position.set(gridMapHelper.getGlobalXPositionFromCoord(0), 1.0, gridMapHelper.getGlobalZPositionFromCoord(5));
@@ -308,6 +358,7 @@ phaseGeneration.push(()=>{
         laserState = (laserState + 1) % 2;
         setLaserStates();
     }, 1000);
+    console.log(gridMapHelper.lasers);
 });
 //Phase 3
 phaseGeneration.push(()=>{
@@ -434,7 +485,7 @@ phaseGeneration.push(()=>{
     };
     coletarCristal = ()=>{
         if (sceneProperties.cancelExecution) return;
-        if ((0, $6mhZf.checkCollision)(actor, objectives[0], gridMapHelper)) {
+        if ((0, $6mhZf.checkCollision)(actor.getObjectByName("interactionReference"), objectives[0], gridMapHelper)) {
             objectives[0].visible = false;
             consoleElement.innerText += "Cristal coletado com sucesso.\n";
         } else consoleElement.innerText += "Rob\xf4 n\xe3o est\xe1 sobre o cristal.\n";
@@ -568,7 +619,7 @@ phaseGeneration.push(()=>{
     };
     coletarCristal = ()=>{
         if (sceneProperties.cancelExecution) return;
-        if ((0, $6mhZf.checkCollision)(actor, objectives[0], gridMapHelper)) {
+        if ((0, $6mhZf.checkCollision)(actor.getObjectByName("interactionReference"), objectives[0], gridMapHelper)) {
             objectives[0].visible = false;
             consoleElement.innerText += "Cristal coletado com sucesso.\n";
         } else consoleElement.innerText += "Rob\xf4 n\xe3o est\xe1 sobre o cristal.\n";
@@ -704,7 +755,7 @@ phaseGeneration.push(()=>{
     };
     coletarCristal = ()=>{
         if (sceneProperties.cancelExecution) return;
-        if ((0, $6mhZf.checkCollision)(actor, objectives[0], gridMapHelper)) {
+        if ((0, $6mhZf.checkCollision)(actor.getObjectByName("interactionReference"), objectives[0], gridMapHelper)) {
             objectives[0].visible = false;
             consoleElement.innerText += "Cristal coletado com sucesso.\n";
         } else consoleElement.innerText += "Rob\xf4 n\xe3o est\xe1 sobre o cristal.\n";
@@ -878,7 +929,7 @@ phaseGeneration.push(()=>{
     };
     coletarCristal = ()=>{
         if (sceneProperties.cancelExecution) return;
-        if ((0, $6mhZf.checkCollision)(actor, objectives[0], gridMapHelper)) {
+        if ((0, $6mhZf.checkCollision)(actor.getObjectByName("interactionReference"), objectives[0], gridMapHelper)) {
             objectives[0].visible = false;
             consoleElement.innerText += "Cristal coletado com sucesso.\n";
         } else consoleElement.innerText += "Rob\xf4 n\xe3o est\xe1 sobre o cristal.\n";
@@ -1031,7 +1082,7 @@ phaseGeneration.push(()=>{
     };
     coletarCristal = ()=>{
         if (sceneProperties.cancelExecution) return;
-        if ((0, $6mhZf.checkCollision)(actor, objectives[0], gridMapHelper)) {
+        if ((0, $6mhZf.checkCollision)(actor.getObjectByName("interactionReference"), objectives[0], gridMapHelper)) {
             objectives[0].visible = false;
             consoleElement.innerText += "Cristal coletado com sucesso.\n";
         } else consoleElement.innerText += "Rob\xf4 n\xe3o est\xe1 sobre o cristal.\n";
@@ -1179,7 +1230,7 @@ phaseGeneration.push(()=>{
     };
     coletarCristal = ()=>{
         if (sceneProperties.cancelExecution) return;
-        if ((0, $6mhZf.checkCollision)(actor, objectives[0], gridMapHelper)) {
+        if ((0, $6mhZf.checkCollision)(actor.getObjectByName("interactionReference"), objectives[0], gridMapHelper)) {
             objectives[0].visible = false;
             consoleElement.innerText += "Cristal coletado com sucesso.\n";
         } else consoleElement.innerText += "Rob\xf4 n\xe3o est\xe1 sobre o cristal.\n";
@@ -1233,6 +1284,7 @@ window.addEventListener("resize", ()=>{
 const execBtn = document.getElementById("execBtn");
 execBtn.addEventListener("click", async function() {
     const codeParsed = (0, $3vWij.default)(editor.state.doc.toString());
+    console.log(codeParsed);
     sceneProperties.cancelExecution = false;
     if (codeParsed != null) {
         resetLevel();
@@ -1311,11 +1363,11 @@ const $28f17c62ce377190$var$functionFilter = [
         type: "normal"
     },
     {
-        filter: new RegExp("^desativarAzul(\\s+)?\\((\\s+)?\\)(\\s+)?(;)?$"),
+        filter: new RegExp("^desativarLaserAzul(\\s+)?\\((\\s+)?\\)(\\s+)?(;)?$"),
         type: "mustCondition"
     },
     {
-        filter: new RegExp("^desativarVermelho(\\s+)?\\((\\s+)?\\)(\\s+)?(;)?$"),
+        filter: new RegExp("^desativarLaserVermelho(\\s+)?\\((\\s+)?\\)(\\s+)?(;)?$"),
         type: "mustCondition"
     },
     {
@@ -1346,7 +1398,8 @@ const $28f17c62ce377190$var$functionFilter = [
 const $28f17c62ce377190$var$conditionalParameters = [
     new RegExp("true"),
     new RegExp("false"),
-    new RegExp("^laserAzul(\\s+)?\\((\\s+)?\\)(\\s+)?$")
+    new RegExp("^laserAzulAtivo(\\s+)?\\((\\s+)?\\)(\\s+)?$"),
+    new RegExp("^laserVermelhoAtivo(\\s+)?\\((\\s+)?\\)(\\s+)?$")
 ];
 function $28f17c62ce377190$var$ifValidation(line) {
     let trimLine = line.trim();
@@ -1502,6 +1555,8 @@ function $28f17c62ce377190$var$predictFunction(lines, index) {
             value = obj2.value;
         } else continue;
     }
+    if (value == "+") position[axis]++;
+    else position[axis]--;
     return position;
 }
 function $28f17c62ce377190$var$printError(text, line) {
@@ -1740,7 +1795,11 @@ class $287fd608de0fa8e7$var$LaserFence extends $49pUz.Object3D {
         if (type == "blue") {
             this.blueLasers.forEach((laser)=>laser.visible = true);
             this.redLasers.forEach((laser)=>laser.visible = false);
-        } else if (type == "red" || type == "multiColor") this.blueLasers.forEach((laser)=>laser.visible = false);
+            this.state = "blue";
+        } else if (type == "red" || type == "multiColor") {
+            this.blueLasers.forEach((laser)=>laser.visible = false);
+            this.state = "red";
+        }
         this.add(fenceBase);
         this.add(laserFence1);
         this.add(laserFence2);

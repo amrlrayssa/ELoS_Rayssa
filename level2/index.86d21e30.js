@@ -101,12 +101,16 @@ async function darMeiaVolta() {
     await (0, $6mhZf.rotateActor)(actor, 180, sceneProperties, 1);
 }
 function pegandoFogo() {
-    if (gridMapHelper.detectFire(actor.position) != null) return true;
+    const vec = new $49pUz.Vector3();
+    actor.getObjectByName("interactionReference").getWorldPosition(vec);
+    if (gridMapHelper.detectFire(vec) != null) return true;
     else return false;
 }
 function apagarFogo() {
     if (extinguisherUses > 0) {
-        let fireIndex = gridMapHelper.detectFire(actor.position);
+        const vec = new $49pUz.Vector3();
+        actor.getObjectByName("interactionReference").getWorldPosition(vec);
+        let fireIndex = gridMapHelper.detectFire(vec);
         if (fireIndex != null) changeFireActiveStatus(fireIndex, false);
         extinguisherUses--;
         displayExtinguisherUses();
@@ -153,7 +157,7 @@ phaseGeneration.push(()=>{
     scene.add(fires[0]);
     coletarCristal = ()=>{
         if (sceneProperties.cancelExecution) return;
-        if ((0, $6mhZf.checkCollision)(actor, objectives[0], gridMapHelper)) {
+        if ((0, $6mhZf.checkCollision)(actor.getObjectByName("interactionReference"), objectives[0], gridMapHelper)) {
             objectives[0].visible = false;
             consoleElement.innerText += "Cristal coletado com sucesso.\n";
         } else consoleElement.innerText += "Rob\xf4 n\xe3o est\xe1 sobre o cristal.\n";
@@ -262,7 +266,7 @@ phaseGeneration.push(()=>{
     scene.add(traps[2]);
     coletarCristal = ()=>{
         if (sceneProperties.cancelExecution) return;
-        if ((0, $6mhZf.checkCollision)(actor, objectives[0], gridMapHelper)) {
+        if ((0, $6mhZf.checkCollision)(actor.getObjectByName("interactionReference"), objectives[0], gridMapHelper)) {
             objectives[0].visible = false;
             consoleElement.innerText += "Cristal coletado com sucesso.\n";
         } else consoleElement.innerText += "Rob\xf4 n\xe3o est\xe1 sobre o cristal.\n";
@@ -352,10 +356,10 @@ phaseGeneration.push(()=>{
     scene.add(fires[2]);
     coletarCristal = ()=>{
         if (sceneProperties.cancelExecution) return;
-        if ((0, $6mhZf.checkCollision)(actor, objectives[0], gridMapHelper)) {
+        if ((0, $6mhZf.checkCollision)(actor.getObjectByName("interactionReference"), objectives[0], gridMapHelper)) {
             objectives[0].visible = false;
             consoleElement.innerText += "Cristal coletado.\n";
-        } else if ((0, $6mhZf.checkCollision)(actor, objectives[1], gridMapHelper)) {
+        } else if ((0, $6mhZf.checkCollision)(actor.getObjectByName("interactionReference"), objectives[1], gridMapHelper)) {
             objectives[1].visible = false;
             consoleElement.innerText += "Cristal coletado.\n";
         } else consoleElement.innerText += "Rob\xf4 n\xe3o est\xe1 sobre o cristal.\n";
@@ -443,10 +447,10 @@ phaseGeneration.push(()=>{
     scene.add(fires[1]);
     coletarCristal = ()=>{
         if (sceneProperties.cancelExecution) return;
-        if ((0, $6mhZf.checkCollision)(actor, objectives[0], gridMapHelper)) {
+        if ((0, $6mhZf.checkCollision)(actor.getObjectByName("interactionReference"), objectives[0], gridMapHelper)) {
             objectives[0].visible = false;
             consoleElement.innerText += "Cristal coletado.\n";
-        } else if ((0, $6mhZf.checkCollision)(actor, objectives[1], gridMapHelper)) {
+        } else if ((0, $6mhZf.checkCollision)(actor.getObjectByName("interactionReference"), objectives[1], gridMapHelper)) {
             objectives[1].visible = false;
             consoleElement.innerText += "Cristal coletado.\n";
         } else consoleElement.innerText += "Rob\xf4 n\xe3o est\xe1 sobre o cristal.\n";
@@ -565,10 +569,10 @@ phaseGeneration.push(()=>{
     scene.add(fires[4]);
     coletarCristal = ()=>{
         if (sceneProperties.cancelExecution) return;
-        if ((0, $6mhZf.checkCollision)(actor, objectives[0], gridMapHelper)) {
+        if ((0, $6mhZf.checkCollision)(actor.getObjectByName("interactionReference"), objectives[0], gridMapHelper)) {
             objectives[0].visible = false;
             consoleElement.innerText += "Cristal coletado.\n";
-        } else if ((0, $6mhZf.checkCollision)(actor, objectives[1], gridMapHelper)) {
+        } else if ((0, $6mhZf.checkCollision)(actor.getObjectByName("interactionReference"), objectives[1], gridMapHelper)) {
             objectives[1].visible = false;
             consoleElement.innerText += "Cristal coletado.\n";
         } else consoleElement.innerText += "Rob\xf4 n\xe3o est\xe1 sobre o cristal.\n";
@@ -708,10 +712,10 @@ phaseGeneration.push(()=>{
     scene.add(fires[3]);
     coletarCristal = ()=>{
         if (sceneProperties.cancelExecution) return;
-        if ((0, $6mhZf.checkCollision)(actor, objectives[0], gridMapHelper)) {
+        if ((0, $6mhZf.checkCollision)(actor.getObjectByName("interactionReference"), objectives[0], gridMapHelper)) {
             objectives[0].visible = false;
             consoleElement.innerText += "Cristal coletado.\n";
-        } else if ((0, $6mhZf.checkCollision)(actor, objectives[1], gridMapHelper)) {
+        } else if ((0, $6mhZf.checkCollision)(actor.getObjectByName("interactionReference"), objectives[1], gridMapHelper)) {
             objectives[1].visible = false;
             consoleElement.innerText += "Cristal coletado.\n";
         } else consoleElement.innerText += "Rob\xf4 n\xe3o est\xe1 sobre o cristal.\n";
@@ -866,10 +870,10 @@ phaseGeneration.push(()=>{
     scene.add(fires[5]);
     coletarCristal = ()=>{
         if (sceneProperties.cancelExecution) return;
-        if ((0, $6mhZf.checkCollision)(actor, objectives[0], gridMapHelper)) {
+        if ((0, $6mhZf.checkCollision)(actor.getObjectByName("interactionReference"), objectives[0], gridMapHelper)) {
             objectives[0].visible = false;
             consoleElement.innerText += "Cristal coletado.\n";
-        } else if ((0, $6mhZf.checkCollision)(actor, objectives[1], gridMapHelper)) {
+        } else if ((0, $6mhZf.checkCollision)(actor.getObjectByName("interactionReference"), objectives[1], gridMapHelper)) {
             objectives[1].visible = false;
             consoleElement.innerText += "Cristal coletado.\n";
         } else consoleElement.innerText += "Rob\xf4 n\xe3o est\xe1 sobre o cristal.\n";
@@ -1041,13 +1045,13 @@ phaseGeneration.push(()=>{
     scene.add(fires[6]);
     coletarCristal = ()=>{
         if (sceneProperties.cancelExecution) return;
-        if ((0, $6mhZf.checkCollision)(actor, objectives[0], gridMapHelper)) {
+        if ((0, $6mhZf.checkCollision)(actor.getObjectByName("interactionReference"), objectives[0], gridMapHelper)) {
             objectives[0].visible = false;
             consoleElement.innerText += "Cristal coletado.\n";
-        } else if ((0, $6mhZf.checkCollision)(actor, objectives[1], gridMapHelper)) {
+        } else if ((0, $6mhZf.checkCollision)(actor.getObjectByName("interactionReference"), objectives[1], gridMapHelper)) {
             objectives[1].visible = false;
             consoleElement.innerText += "Cristal coletado.\n";
-        } else if ((0, $6mhZf.checkCollision)(actor, objectives[2], gridMapHelper)) {
+        } else if ((0, $6mhZf.checkCollision)(actor.getObjectByName("interactionReference"), objectives[2], gridMapHelper)) {
             objectives[2].visible = false;
             consoleElement.innerText += "Cristal coletado.\n";
         } else consoleElement.innerText += "Rob\xf4 n\xe3o est\xe1 sobre o cristal.\n";
@@ -1653,6 +1657,8 @@ function $0c161e84c454184c$var$predictFunction(lines, index) {
             value = obj2.value;
         } else continue;
     }
+    if (value == "+") position[axis]++;
+    else position[axis]--;
     return position;
 }
 function $0c161e84c454184c$var$printError(text, line) {
@@ -1767,7 +1773,7 @@ function $0c161e84c454184c$export$2e2bcd8739ae039(code, limit = 0) {
 
 var $524b4210a04cbb56$exports = {};
 
-(parcelRequire("2JpsI")).register(JSON.parse('{"gktNi":"index.800fbcb7.js","GGIiK":"fire.e088cc30.png","2x2Z6":"stone.543880d2.jpg","5Spd2":"index.6b4e42a0.js","c5VSK":"index.8c12255d.js"}'));
+(parcelRequire("2JpsI")).register(JSON.parse('{"gktNi":"index.86d21e30.js","GGIiK":"fire.e088cc30.png","2x2Z6":"stone.543880d2.jpg","5Spd2":"index.7824e49b.js","c5VSK":"index.8c12255d.js"}'));
 
 
 parcelRequire("apYFO");
