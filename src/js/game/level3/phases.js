@@ -424,13 +424,11 @@ phaseGeneration.push(
         setLaserStates = () => {
             if(laserState == 0)
             {
-                changeLaserStateStatus(0, 'blue');
                 changeLaserActiveStatus(0,true);
                 changeLaserActiveStatus(1,false);
             }
             else
             {
-                changeLaserStateStatus(0, 'red');
                 changeLaserActiveStatus(0,false);
                 changeLaserActiveStatus(1,true);
             }
@@ -445,11 +443,21 @@ phaseGeneration.push(
             if(checkCollision(actor.getObjectByName('interactionReference'),objectives[0],gridMapHelper))
             {
                 objectives[0].visible = false;
-                consoleElement.innerText += "Cristal coletado com sucesso.\n";
+                consoleElement.innerText += "Cristal coletado.\n";
+            }
+            else if(checkCollision(actor.getObjectByName('interactionReference'),objectives[1],gridMapHelper))
+            {
+                objectives[1].visible = false;
+                consoleElement.innerText += "Cristal coletado.\n";
             }
             else
             {
                 consoleElement.innerText += "Robô não está sobre o cristal.\n";
+            }
+
+            if(!objectives[0].visible && !objectives[1].visible)
+            {
+                consoleElement.innerText += "Todos os cristais coletados com sucesso!\n";
             }
         }
 
@@ -483,6 +491,8 @@ phaseGeneration.push(
             laserState = (laserState + 1) % 2;
             setLaserStates();
         },1000);
+
+        console.log(gridMapHelper.lasers);
     }
 );
 
@@ -1731,6 +1741,7 @@ window.addEventListener('resize',() => {
 const execBtn = document.getElementById("execBtn")
 execBtn.addEventListener("click",async function() {
     const codeParsed = parseCode(editor.state.doc.toString());
+    console.log(codeParsed);
     sceneProperties.cancelExecution = false;
     if(codeParsed != null)
     {

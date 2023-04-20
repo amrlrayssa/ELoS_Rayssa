@@ -348,7 +348,6 @@ export default class GridMapHelper
         for(let i = 0;i < this.lasers.length;i++)
         {
             this.lasers[i].active = true;
-            this.lasers[i].state = 'blue';
         }
     }
 
