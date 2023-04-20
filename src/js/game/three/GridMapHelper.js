@@ -326,7 +326,7 @@ export default class GridMapHelper
 
     detectLaser(position, state)
     {
-        const laserFiltered = this.lasers.filter(laser => laser.state == state);
+        const laserFiltered = this.lasers.filter(laser => laser.state == state && laser.active == true);
 
         for(let i = 0;i < laserFiltered.length;i++)
         {
