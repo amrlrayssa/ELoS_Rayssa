@@ -466,6 +466,7 @@ phaseGeneration.push(
             actor.rotation.set(0,degreeToRadians(90),0);
             actor.getObjectByName('eve').rotation.set(0,0,0);
             objectives[0].visible = true;
+            objectives[1].visible = true;
             gridMapHelper.restartLasers();
             lasersVisualRestart();
             setLaserStates();
@@ -630,10 +631,18 @@ phaseGeneration.push(
             if(laserState == 0)
             {
                 changeLaserStateStatus(0, 'blue');
+                changeLaserActiveStatus(0,true);
+                changeLaserActiveStatus(1,true);
+                changeLaserActiveStatus(2,false);
+                changeLaserActiveStatus(5,false);
             }
             else
             {
                 changeLaserStateStatus(0, 'red');
+                changeLaserActiveStatus(0,false);
+                changeLaserActiveStatus(1,false);
+                changeLaserActiveStatus(2,true);
+                changeLaserActiveStatus(5,true);
             }
         }
 
@@ -646,11 +655,21 @@ phaseGeneration.push(
             if(checkCollision(actor.getObjectByName('interactionReference'),objectives[0],gridMapHelper))
             {
                 objectives[0].visible = false;
-                consoleElement.innerText += "Cristal coletado com sucesso.\n";
+                consoleElement.innerText += "Cristal coletado.\n";
+            }
+            else if(checkCollision(actor.getObjectByName('interactionReference'),objectives[1],gridMapHelper))
+            {
+                objectives[1].visible = false;
+                consoleElement.innerText += "Cristal coletado.\n";
             }
             else
             {
                 consoleElement.innerText += "Robô não está sobre o cristal.\n";
+            }
+
+            if(!objectives[0].visible && !objectives[1].visible)
+            {
+                consoleElement.innerText += "Todos os cristais coletados com sucesso!\n";
             }
         }
 
@@ -659,6 +678,7 @@ phaseGeneration.push(
             actor.rotation.set(0,degreeToRadians(90),0);
             actor.getObjectByName('eve').rotation.set(0,0,0);
             objectives[0].visible = true;
+            objectives[1].visible = true;
             gridMapHelper.restartLasers();
             lasersVisualRestart();
             setLaserStates();
@@ -803,10 +823,14 @@ phaseGeneration.push(
             if(laserState == 0)
             {
                 changeLaserStateStatus(0, 'blue');
+                changeLaserActiveStatus(1,true);
+                changeLaserActiveStatus(2,false);
             }
             else
             {
                 changeLaserStateStatus(0, 'red');
+                changeLaserActiveStatus(1,false);
+                changeLaserActiveStatus(2,true);
             }
         }
 
@@ -838,7 +862,7 @@ phaseGeneration.push(
         }
 
         winCondition = () =>{
-            if(!objectives[0].visible && !objectives[1].visible)
+            if(!objectives[0].visible)
             {
                 return true;
             }
@@ -998,10 +1022,14 @@ phaseGeneration.push(
             if(laserState == 0)
             {
                 changeLaserStateStatus(0, 'blue');
+                changeLaserActiveStatus(2,true);
+                changeLaserActiveStatus(4,false);
             }
             else
             {
                 changeLaserStateStatus(0, 'red');
+                changeLaserActiveStatus(2,false);
+                changeLaserActiveStatus(4,true);
             }
         }
 
@@ -1014,11 +1042,21 @@ phaseGeneration.push(
             if(checkCollision(actor.getObjectByName('interactionReference'),objectives[0],gridMapHelper))
             {
                 objectives[0].visible = false;
-                consoleElement.innerText += "Cristal coletado com sucesso.\n";
+                consoleElement.innerText += "Cristal coletado.\n";
+            }
+            else if(checkCollision(actor.getObjectByName('interactionReference'),objectives[1],gridMapHelper))
+            {
+                objectives[1].visible = false;
+                consoleElement.innerText += "Cristal coletado.\n";
             }
             else
             {
                 consoleElement.innerText += "Robô não está sobre o cristal.\n";
+            }
+
+            if(!objectives[0].visible && !objectives[1].visible)
+            {
+                consoleElement.innerText += "Todos os cristais coletados com sucesso!\n";
             }
         }
 
@@ -1027,6 +1065,7 @@ phaseGeneration.push(
             actor.rotation.set(0,degreeToRadians(90),0);
             actor.getObjectByName('eve').rotation.set(0,0,0);
             objectives[0].visible = true;
+            objectives[1].visible = true;
             gridMapHelper.restartLasers();
             lasersVisualRestart();
             setLaserStates();
@@ -1227,10 +1266,14 @@ phaseGeneration.push(
             if(laserState == 0)
             {
                 changeLaserStateStatus(0, 'blue');
+                changeLaserActiveStatus(2,true);
+                changeLaserActiveStatus(3,false);
             }
             else
             {
                 changeLaserStateStatus(0, 'red');
+                changeLaserActiveStatus(2,false);
+                changeLaserActiveStatus(3,true);
             }
         }
 
@@ -1243,11 +1286,21 @@ phaseGeneration.push(
             if(checkCollision(actor.getObjectByName('interactionReference'),objectives[0],gridMapHelper))
             {
                 objectives[0].visible = false;
-                consoleElement.innerText += "Cristal coletado com sucesso.\n";
+                consoleElement.innerText += "Cristal coletado.\n";
+            }
+            else if(checkCollision(actor.getObjectByName('interactionReference'),objectives[1],gridMapHelper))
+            {
+                objectives[1].visible = false;
+                consoleElement.innerText += "Cristal coletado.\n";
             }
             else
             {
                 consoleElement.innerText += "Robô não está sobre o cristal.\n";
+            }
+
+            if(!objectives[0].visible && !objectives[1].visible)
+            {
+                consoleElement.innerText += "Todos os cristais coletados com sucesso!\n";
             }
         }
 
@@ -1256,6 +1309,7 @@ phaseGeneration.push(
             actor.rotation.set(0,degreeToRadians(90),0);
             actor.getObjectByName('eve').rotation.set(0,0,0);
             objectives[0].visible = true;
+            objectives[1].visible = true;
             gridMapHelper.restartLasers();
             lasersVisualRestart();
             setLaserStates();
@@ -1430,10 +1484,14 @@ phaseGeneration.push(
             if(laserState == 0)
             {
                 changeLaserStateStatus(0, 'blue');
+                changeLaserActiveStatus(2,true);
+                changeLaserActiveStatus(3,false);
             }
             else
             {
                 changeLaserStateStatus(0, 'red');
+                changeLaserActiveStatus(2,false);
+                changeLaserActiveStatus(3,true);
             }
         }
 
@@ -1446,11 +1504,21 @@ phaseGeneration.push(
             if(checkCollision(actor.getObjectByName('interactionReference'),objectives[0],gridMapHelper))
             {
                 objectives[0].visible = false;
-                consoleElement.innerText += "Cristal coletado com sucesso.\n";
+                consoleElement.innerText += "Cristal coletado.\n";
+            }
+            else if(checkCollision(actor.getObjectByName('interactionReference'),objectives[1],gridMapHelper))
+            {
+                objectives[1].visible = false;
+                consoleElement.innerText += "Cristal coletado.\n";
             }
             else
             {
                 consoleElement.innerText += "Robô não está sobre o cristal.\n";
+            }
+
+            if(!objectives[0].visible && !objectives[1].visible)
+            {
+                consoleElement.innerText += "Todos os cristais coletados com sucesso!\n";
             }
         }
 
@@ -1459,6 +1527,7 @@ phaseGeneration.push(
             actor.rotation.set(0,degreeToRadians(90),0);
             actor.getObjectByName('eve').rotation.set(0,0,0);
             objectives[0].visible = true;
+            objectives[1].visible = true;
             gridMapHelper.restartLasers();
             lasersVisualRestart();
             setLaserStates();
@@ -1627,10 +1696,16 @@ phaseGeneration.push(
             if(laserState == 0)
             {
                 changeLaserStateStatus(0, 'blue');
+                changeLaserActiveStatus(2,true);
+                changeLaserActiveStatus(3,false);
+                changeLaserActiveStatus(4,true);
             }
             else
             {
                 changeLaserStateStatus(0, 'red');
+                changeLaserActiveStatus(2,false);
+                changeLaserActiveStatus(3,true);
+                changeLaserActiveStatus(4,false);
             }
         }
 
@@ -1643,11 +1718,26 @@ phaseGeneration.push(
             if(checkCollision(actor.getObjectByName('interactionReference'),objectives[0],gridMapHelper))
             {
                 objectives[0].visible = false;
-                consoleElement.innerText += "Cristal coletado com sucesso.\n";
+                consoleElement.innerText += "Cristal coletado.\n";
+            }
+            else if(checkCollision(actor.getObjectByName('interactionReference'),objectives[1],gridMapHelper))
+            {
+                objectives[1].visible = false;
+                consoleElement.innerText += "Cristal coletado.\n";
+            }
+            else if(checkCollision(actor.getObjectByName('interactionReference'),objectives[2],gridMapHelper))
+            {
+                objectives[2].visible = false;
+                consoleElement.innerText += "Cristal coletado.\n";
             }
             else
             {
                 consoleElement.innerText += "Robô não está sobre o cristal.\n";
+            }
+
+            if(!objectives[0].visible && !objectives[1].visible && !objectives[2].visible)
+            {
+                consoleElement.innerText += "Todos os cristais coletados com sucesso!\n";
             }
         }
 
@@ -1656,6 +1746,8 @@ phaseGeneration.push(
             actor.rotation.set(0,degreeToRadians(90),0);
             actor.getObjectByName('eve').rotation.set(0,0,0);
             objectives[0].visible = true;
+            objectives[1].visible = true;
+            objectives[2].visible = true;
             gridMapHelper.restartLasers();
             lasersVisualRestart();
             setLaserStates();
