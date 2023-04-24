@@ -196,7 +196,7 @@ phaseGeneration.push(
             }
             else
             {
-                consoleElement.innerText += "Robô não está sobre o cristal.\n";
+                consoleElement.innerText += "Robô não está em frente ao cristal.\n";
             }
         }
 
@@ -334,7 +334,7 @@ phaseGeneration.push(
             }
             else
             {
-                consoleElement.innerText += "Robô não está sobre o cristal.\n";
+                consoleElement.innerText += "Robô não está em frente ao cristal.\n";
             }
         }
 
@@ -464,7 +464,7 @@ phaseGeneration.push(
             }
             else
             {
-                consoleElement.innerText += "Robô não está sobre o cristal.\n";
+                consoleElement.innerText += "Robô não está em frente ao cristal.\n";
             }
 
             if(!objectives[0].visible && !objectives[1].visible)
@@ -596,7 +596,7 @@ phaseGeneration.push(
             }
             else
             {
-                consoleElement.innerText += "Robô não está sobre o cristal.\n";
+                consoleElement.innerText += "Robô não está em frente ao cristal.\n";
             }
 
             if(!objectives[0].visible && !objectives[1].visible)
@@ -758,7 +758,7 @@ phaseGeneration.push(
             }
             else
             {
-                consoleElement.innerText += "Robô não está sobre o cristal.\n";
+                consoleElement.innerText += "Robô não está em frente ao cristal.\n";
             }
 
             if(!objectives[0].visible && !objectives[1].visible)
@@ -940,7 +940,7 @@ phaseGeneration.push(
             }
             else
             {
-                consoleElement.innerText += "Robô não está sobre o cristal.\n";
+                consoleElement.innerText += "Robô não está em frente ao cristal.\n";
             }
 
             if(!objectives[0].visible && !objectives[1].visible)
@@ -1137,7 +1137,7 @@ phaseGeneration.push(
             }
             else
             {
-                consoleElement.innerText += "Robô não está sobre o cristal.\n";
+                consoleElement.innerText += "Robô não está em frente ao cristal.\n";
             }
 
             if(!objectives[0].visible && !objectives[1].visible)
@@ -1356,7 +1356,7 @@ phaseGeneration.push(
             }
             else
             {
-                consoleElement.innerText += "Robô não está sobre o cristal.\n";
+                consoleElement.innerText += "Robô não está em frente ao cristal.\n";
             }
 
             if(!objectives[0].visible && !objectives[1].visible && !objectives[2].visible)
