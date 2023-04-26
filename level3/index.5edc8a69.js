@@ -216,7 +216,7 @@ phaseGeneration.push(()=>{
         if ((0, $6mhZf.checkCollision)(actor.getObjectByName("interactionReference"), objectives[0], gridMapHelper)) {
             objectives[0].visible = false;
             consoleElement.innerText += "Cristal coletado com sucesso.\n";
-        } else consoleElement.innerText += "Rob\xf4 n\xe3o est\xe1 sobre o cristal.\n";
+        } else consoleElement.innerText += "Rob\xf4 n\xe3o est\xe1 em frente ao cristal.\n";
     };
     resetLevel = ()=>{
         actor.position.set(gridMapHelper.getGlobalXPositionFromCoord(0), 1.0, gridMapHelper.getGlobalZPositionFromCoord(5));
@@ -337,7 +337,7 @@ phaseGeneration.push(()=>{
         } else if ((0, $6mhZf.checkCollision)(actor.getObjectByName("interactionReference"), objectives[1], gridMapHelper)) {
             objectives[1].visible = false;
             consoleElement.innerText += "Cristal coletado.\n";
-        } else consoleElement.innerText += "Rob\xf4 n\xe3o est\xe1 sobre o cristal.\n";
+        } else consoleElement.innerText += "Rob\xf4 n\xe3o est\xe1 em frente ao cristal.\n";
         if (!objectives[0].visible && !objectives[1].visible) consoleElement.innerText += "Todos os cristais coletados com sucesso!\n";
     };
     resetLevel = ()=>{
@@ -345,6 +345,7 @@ phaseGeneration.push(()=>{
         actor.rotation.set(0, (0, $6mhZf.degreeToRadians)(90), 0);
         actor.getObjectByName("eve").rotation.set(0, 0, 0);
         objectives[0].visible = true;
+        objectives[1].visible = true;
         gridMapHelper.restartLasers();
         lasersVisualRestart();
         setLaserStates();
@@ -480,21 +481,37 @@ phaseGeneration.push(()=>{
     scene.add(laserFences[5]);
     laserState = 0;
     setLaserStates = ()=>{
-        if (laserState == 0) changeLaserStateStatus(0, "blue");
-        else changeLaserStateStatus(0, "red");
+        if (laserState == 0) {
+            changeLaserStateStatus(0, "blue");
+            changeLaserActiveStatus(0, true);
+            changeLaserActiveStatus(1, true);
+            changeLaserActiveStatus(2, false);
+            changeLaserActiveStatus(5, false);
+        } else {
+            changeLaserStateStatus(0, "red");
+            changeLaserActiveStatus(0, false);
+            changeLaserActiveStatus(1, false);
+            changeLaserActiveStatus(2, true);
+            changeLaserActiveStatus(5, true);
+        }
     };
     coletarCristal = ()=>{
         if (sceneProperties.cancelExecution) return;
         if ((0, $6mhZf.checkCollision)(actor.getObjectByName("interactionReference"), objectives[0], gridMapHelper)) {
             objectives[0].visible = false;
-            consoleElement.innerText += "Cristal coletado com sucesso.\n";
-        } else consoleElement.innerText += "Rob\xf4 n\xe3o est\xe1 sobre o cristal.\n";
+            consoleElement.innerText += "Cristal coletado.\n";
+        } else if ((0, $6mhZf.checkCollision)(actor.getObjectByName("interactionReference"), objectives[1], gridMapHelper)) {
+            objectives[1].visible = false;
+            consoleElement.innerText += "Cristal coletado.\n";
+        } else consoleElement.innerText += "Rob\xf4 n\xe3o est\xe1 em frente ao cristal.\n";
+        if (!objectives[0].visible && !objectives[1].visible) consoleElement.innerText += "Todos os cristais coletados com sucesso!\n";
     };
     resetLevel = ()=>{
         actor.position.set(gridMapHelper.getGlobalXPositionFromCoord(0), 1.0, gridMapHelper.getGlobalZPositionFromCoord(5));
         actor.rotation.set(0, (0, $6mhZf.degreeToRadians)(90), 0);
         actor.getObjectByName("eve").rotation.set(0, 0, 0);
         objectives[0].visible = true;
+        objectives[1].visible = true;
         gridMapHelper.restartLasers();
         lasersVisualRestart();
         setLaserStates();
@@ -614,15 +631,22 @@ phaseGeneration.push(()=>{
     scene.add(laserFences[2]);
     laserState = 0;
     setLaserStates = ()=>{
-        if (laserState == 0) changeLaserStateStatus(0, "blue");
-        else changeLaserStateStatus(0, "red");
+        if (laserState == 0) {
+            changeLaserStateStatus(0, "blue");
+            changeLaserActiveStatus(1, true);
+            changeLaserActiveStatus(2, false);
+        } else {
+            changeLaserStateStatus(0, "red");
+            changeLaserActiveStatus(1, false);
+            changeLaserActiveStatus(2, true);
+        }
     };
     coletarCristal = ()=>{
         if (sceneProperties.cancelExecution) return;
         if ((0, $6mhZf.checkCollision)(actor.getObjectByName("interactionReference"), objectives[0], gridMapHelper)) {
             objectives[0].visible = false;
             consoleElement.innerText += "Cristal coletado com sucesso.\n";
-        } else consoleElement.innerText += "Rob\xf4 n\xe3o est\xe1 sobre o cristal.\n";
+        } else consoleElement.innerText += "Rob\xf4 n\xe3o est\xe1 em frente ao cristal.\n";
     };
     resetLevel = ()=>{
         actor.position.set(gridMapHelper.getGlobalXPositionFromCoord(0), 1.0, gridMapHelper.getGlobalZPositionFromCoord(5));
@@ -634,7 +658,7 @@ phaseGeneration.push(()=>{
         setLaserStates();
     };
     winCondition = ()=>{
-        if (!objectives[0].visible && !objectives[1].visible) return true;
+        if (!objectives[0].visible) return true;
         else return false;
     };
     setLaserStatesInterval = setInterval(()=>{
@@ -750,21 +774,33 @@ phaseGeneration.push(()=>{
     scene.add(laserFences[4]);
     laserState = 0;
     setLaserStates = ()=>{
-        if (laserState == 0) changeLaserStateStatus(0, "blue");
-        else changeLaserStateStatus(0, "red");
+        if (laserState == 0) {
+            changeLaserStateStatus(0, "blue");
+            changeLaserActiveStatus(2, true);
+            changeLaserActiveStatus(4, false);
+        } else {
+            changeLaserStateStatus(0, "red");
+            changeLaserActiveStatus(2, false);
+            changeLaserActiveStatus(4, true);
+        }
     };
     coletarCristal = ()=>{
         if (sceneProperties.cancelExecution) return;
         if ((0, $6mhZf.checkCollision)(actor.getObjectByName("interactionReference"), objectives[0], gridMapHelper)) {
             objectives[0].visible = false;
-            consoleElement.innerText += "Cristal coletado com sucesso.\n";
-        } else consoleElement.innerText += "Rob\xf4 n\xe3o est\xe1 sobre o cristal.\n";
+            consoleElement.innerText += "Cristal coletado.\n";
+        } else if ((0, $6mhZf.checkCollision)(actor.getObjectByName("interactionReference"), objectives[1], gridMapHelper)) {
+            objectives[1].visible = false;
+            consoleElement.innerText += "Cristal coletado.\n";
+        } else consoleElement.innerText += "Rob\xf4 n\xe3o est\xe1 em frente ao cristal.\n";
+        if (!objectives[0].visible && !objectives[1].visible) consoleElement.innerText += "Todos os cristais coletados com sucesso!\n";
     };
     resetLevel = ()=>{
         actor.position.set(gridMapHelper.getGlobalXPositionFromCoord(0), 1.0, gridMapHelper.getGlobalZPositionFromCoord(5));
         actor.rotation.set(0, (0, $6mhZf.degreeToRadians)(90), 0);
         actor.getObjectByName("eve").rotation.set(0, 0, 0);
         objectives[0].visible = true;
+        objectives[1].visible = true;
         gridMapHelper.restartLasers();
         lasersVisualRestart();
         setLaserStates();
@@ -924,21 +960,33 @@ phaseGeneration.push(()=>{
     scene.add(laserFences[5]);
     laserState = 0;
     setLaserStates = ()=>{
-        if (laserState == 0) changeLaserStateStatus(0, "blue");
-        else changeLaserStateStatus(0, "red");
+        if (laserState == 0) {
+            changeLaserStateStatus(0, "blue");
+            changeLaserActiveStatus(2, true);
+            changeLaserActiveStatus(3, false);
+        } else {
+            changeLaserStateStatus(0, "red");
+            changeLaserActiveStatus(2, false);
+            changeLaserActiveStatus(3, true);
+        }
     };
     coletarCristal = ()=>{
         if (sceneProperties.cancelExecution) return;
         if ((0, $6mhZf.checkCollision)(actor.getObjectByName("interactionReference"), objectives[0], gridMapHelper)) {
             objectives[0].visible = false;
-            consoleElement.innerText += "Cristal coletado com sucesso.\n";
-        } else consoleElement.innerText += "Rob\xf4 n\xe3o est\xe1 sobre o cristal.\n";
+            consoleElement.innerText += "Cristal coletado.\n";
+        } else if ((0, $6mhZf.checkCollision)(actor.getObjectByName("interactionReference"), objectives[1], gridMapHelper)) {
+            objectives[1].visible = false;
+            consoleElement.innerText += "Cristal coletado.\n";
+        } else consoleElement.innerText += "Rob\xf4 n\xe3o est\xe1 em frente ao cristal.\n";
+        if (!objectives[0].visible && !objectives[1].visible) consoleElement.innerText += "Todos os cristais coletados com sucesso!\n";
     };
     resetLevel = ()=>{
         actor.position.set(gridMapHelper.getGlobalXPositionFromCoord(0), 1.0, gridMapHelper.getGlobalZPositionFromCoord(5));
         actor.rotation.set(0, (0, $6mhZf.degreeToRadians)(90), 0);
         actor.getObjectByName("eve").rotation.set(0, 0, 0);
         objectives[0].visible = true;
+        objectives[1].visible = true;
         gridMapHelper.restartLasers();
         lasersVisualRestart();
         setLaserStates();
@@ -1077,21 +1125,33 @@ phaseGeneration.push(()=>{
     scene.add(laserFences[4]);
     laserState = 0;
     setLaserStates = ()=>{
-        if (laserState == 0) changeLaserStateStatus(0, "blue");
-        else changeLaserStateStatus(0, "red");
+        if (laserState == 0) {
+            changeLaserStateStatus(0, "blue");
+            changeLaserActiveStatus(2, true);
+            changeLaserActiveStatus(3, false);
+        } else {
+            changeLaserStateStatus(0, "red");
+            changeLaserActiveStatus(2, false);
+            changeLaserActiveStatus(3, true);
+        }
     };
     coletarCristal = ()=>{
         if (sceneProperties.cancelExecution) return;
         if ((0, $6mhZf.checkCollision)(actor.getObjectByName("interactionReference"), objectives[0], gridMapHelper)) {
             objectives[0].visible = false;
-            consoleElement.innerText += "Cristal coletado com sucesso.\n";
-        } else consoleElement.innerText += "Rob\xf4 n\xe3o est\xe1 sobre o cristal.\n";
+            consoleElement.innerText += "Cristal coletado.\n";
+        } else if ((0, $6mhZf.checkCollision)(actor.getObjectByName("interactionReference"), objectives[1], gridMapHelper)) {
+            objectives[1].visible = false;
+            consoleElement.innerText += "Cristal coletado.\n";
+        } else consoleElement.innerText += "Rob\xf4 n\xe3o est\xe1 em frente ao cristal.\n";
+        if (!objectives[0].visible && !objectives[1].visible) consoleElement.innerText += "Todos os cristais coletados com sucesso!\n";
     };
     resetLevel = ()=>{
         actor.position.set(gridMapHelper.getGlobalXPositionFromCoord(0), 1.0, gridMapHelper.getGlobalZPositionFromCoord(5));
         actor.rotation.set(0, (0, $6mhZf.degreeToRadians)(90), 0);
         actor.getObjectByName("eve").rotation.set(0, 0, 0);
         objectives[0].visible = true;
+        objectives[1].visible = true;
         gridMapHelper.restartLasers();
         lasersVisualRestart();
         setLaserStates();
@@ -1225,21 +1285,39 @@ phaseGeneration.push(()=>{
     scene.add(laserFences[6]);
     laserState = 0;
     setLaserStates = ()=>{
-        if (laserState == 0) changeLaserStateStatus(0, "blue");
-        else changeLaserStateStatus(0, "red");
+        if (laserState == 0) {
+            changeLaserStateStatus(0, "blue");
+            changeLaserActiveStatus(2, true);
+            changeLaserActiveStatus(3, false);
+            changeLaserActiveStatus(4, true);
+        } else {
+            changeLaserStateStatus(0, "red");
+            changeLaserActiveStatus(2, false);
+            changeLaserActiveStatus(3, true);
+            changeLaserActiveStatus(4, false);
+        }
     };
     coletarCristal = ()=>{
         if (sceneProperties.cancelExecution) return;
         if ((0, $6mhZf.checkCollision)(actor.getObjectByName("interactionReference"), objectives[0], gridMapHelper)) {
             objectives[0].visible = false;
-            consoleElement.innerText += "Cristal coletado com sucesso.\n";
-        } else consoleElement.innerText += "Rob\xf4 n\xe3o est\xe1 sobre o cristal.\n";
+            consoleElement.innerText += "Cristal coletado.\n";
+        } else if ((0, $6mhZf.checkCollision)(actor.getObjectByName("interactionReference"), objectives[1], gridMapHelper)) {
+            objectives[1].visible = false;
+            consoleElement.innerText += "Cristal coletado.\n";
+        } else if ((0, $6mhZf.checkCollision)(actor.getObjectByName("interactionReference"), objectives[2], gridMapHelper)) {
+            objectives[2].visible = false;
+            consoleElement.innerText += "Cristal coletado.\n";
+        } else consoleElement.innerText += "Rob\xf4 n\xe3o est\xe1 em frente ao cristal.\n";
+        if (!objectives[0].visible && !objectives[1].visible && !objectives[2].visible) consoleElement.innerText += "Todos os cristais coletados com sucesso!\n";
     };
     resetLevel = ()=>{
         actor.position.set(gridMapHelper.getGlobalXPositionFromCoord(0), 1.0, gridMapHelper.getGlobalZPositionFromCoord(5));
         actor.rotation.set(0, (0, $6mhZf.degreeToRadians)(90), 0);
         actor.getObjectByName("eve").rotation.set(0, 0, 0);
         objectives[0].visible = true;
+        objectives[1].visible = true;
+        objectives[2].visible = true;
         gridMapHelper.restartLasers();
         lasersVisualRestart();
         setLaserStates();
