@@ -201,11 +201,12 @@ export default class GridMapHelper
         }
     }
 
-    addTrap(x,z)
+    addTrap(x,z,obj)
     {
         this.traps.push({
             x:x,
-            z:z
+            z:z,
+            obj:obj
         });
     }
     
@@ -220,6 +221,23 @@ export default class GridMapHelper
         {
             if(this.getXCoordFromGlobalPosition(position.x) == this.traps[i].x && this.getZCoordFromGlobalPosition(position.z) == this.traps[i].z)
             {
+                let requestID = null
+                let alpha2 = 0.1
+                let thisTrap = this.traps[i].obj
+                activateTrap()
+                function activateTrap(){
+                    if(thisTrap.spikes[4].position.y.toFixed(1) < 1)
+                    {
+                        alpha2 += 0.05;
+                        thisTrap.spikes.forEach(spike => spike.position.lerp(new THREE.Vector3(spike.position.x, 1, spike.position.z), alpha2))
+                        requestID = requestAnimationFrame(activateTrap);
+                    }
+                    else
+                    {
+                        cancelAnimationFrame(requestID);
+                        alpha2 = 0.1
+                    }
+                }
                 return true
             }
             else
