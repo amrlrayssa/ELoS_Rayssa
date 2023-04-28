@@ -12,6 +12,7 @@ import {
 } from "../three/util";
 import GridMapHelper from "../three/GridMapHelper";
 import FireBase from "../three/FireBase";
+import {SpikeTrap, trapsActivation, trapsDeactivation} from "../three/SpikeTrap";
 import parseCode from "./parser";
 
 //Defining Level 2 Scene's Properties
@@ -33,6 +34,12 @@ let fireState;
 let setFireStates;
 
 let setFireStatesInterval;
+
+let spikeTrapState;
+
+let setSpikeTrapState;
+
+let setSpikeTrapStateInterval;
 
 const editor = generateDefaultEditor(document.getElementById("editorArea"));
 
@@ -306,17 +313,15 @@ phaseGeneration.push(
         scene.add(fires[4]);
 
         traps = [];
-        const trapGeometry = new THREE.BoxGeometry(2,1,2);
-        const trapMaterial = new THREE.MeshLambertMaterial({color: "rgb(255,0,0)"});
-        traps.push(new THREE.Mesh(trapGeometry,trapMaterial));
-        traps.push(new THREE.Mesh(trapGeometry,trapMaterial));
-        traps.push(new THREE.Mesh(trapGeometry,trapMaterial));
-        traps[0].position.set(gridMapHelper.getGlobalXPositionFromCoord(9),0.5,gridMapHelper.getGlobalZPositionFromCoord(2));
-        traps[1].position.set(gridMapHelper.getGlobalXPositionFromCoord(8),0.5,gridMapHelper.getGlobalZPositionFromCoord(5));
-        traps[2].position.set(gridMapHelper.getGlobalXPositionFromCoord(9),0.5,gridMapHelper.getGlobalZPositionFromCoord(8));
-        gridMapHelper.addTrap(9,2);
-        gridMapHelper.addTrap(8,5);
-        gridMapHelper.addTrap(9,8);
+        traps.push(new SpikeTrap());
+        traps.push(new SpikeTrap());
+        traps.push(new SpikeTrap());
+        traps[0].position.set(gridMapHelper.getGlobalXPositionFromCoord(9),0,gridMapHelper.getGlobalZPositionFromCoord(2));
+        traps[1].position.set(gridMapHelper.getGlobalXPositionFromCoord(8),0,gridMapHelper.getGlobalZPositionFromCoord(5));
+        traps[2].position.set(gridMapHelper.getGlobalXPositionFromCoord(9),0,gridMapHelper.getGlobalZPositionFromCoord(8));
+        gridMapHelper.addTrap(9,2,traps[0]);
+        gridMapHelper.addTrap(8,5,traps[1]);
+        gridMapHelper.addTrap(9,8,traps[2]);
         scene.add(traps[0]);
         scene.add(traps[1]);
         scene.add(traps[2]);
@@ -369,6 +374,29 @@ phaseGeneration.push(
 
             fireState = (fireState + 1) % 2;
             setFireStates();
+        },1000);
+
+        spikeTrapState = 0;
+        setSpikeTrapState = () => {
+            if(spikeTrapState == 0)
+            {
+                trapsDeactivation(traps)
+            }
+            else
+            {
+                trapsActivation(traps)
+
+            }
+        }
+
+        setSpikeTrapStateInterval = setInterval(() => {
+            if(sceneProperties.executing)
+            {
+                return;
+            }
+
+            spikeTrapState = (spikeTrapState + 1) % 2;
+            setSpikeTrapState();
         },1000);
     }
 );
@@ -696,11 +724,9 @@ phaseGeneration.push(
         scene.add(walls[5]);
 
         traps = [];
-        const trapGeometry = new THREE.BoxGeometry(2,1,2);
-        const trapMaterial = new THREE.MeshLambertMaterial({color: "rgb(255,0,0)"});
-        traps.push(new THREE.Mesh(trapGeometry,trapMaterial));
-        traps[0].position.set(gridMapHelper.getGlobalXPositionFromCoord(5),0.5,gridMapHelper.getGlobalZPositionFromCoord(5));
-        gridMapHelper.addTrap(5,5);
+        traps.push(new SpikeTrap());
+        traps[0].position.set(gridMapHelper.getGlobalXPositionFromCoord(5),0,gridMapHelper.getGlobalZPositionFromCoord(5));
+        gridMapHelper.addTrap(5,5,traps[0]);
         scene.add(traps[0]);
 
         fires = [];
@@ -800,6 +826,29 @@ phaseGeneration.push(
             fireState = (fireState + 1) % 2;
             setFireStates();
         },1000);
+
+        spikeTrapState = 0;
+        setSpikeTrapState = () => {
+            if(spikeTrapState == 0)
+            {
+                trapsDeactivation(traps)
+            }
+            else
+            {
+                trapsActivation(traps)
+
+            }
+        }
+
+        setSpikeTrapStateInterval = setInterval(() => {
+            if(sceneProperties.executing)
+            {
+                return;
+            }
+
+            spikeTrapState = (spikeTrapState + 1) % 2;
+            setSpikeTrapState();
+        },1000);
     }
 );
 //Phase 6
@@ -866,23 +915,21 @@ phaseGeneration.push(
         scene.add(walls[7]);
 
         traps = [];
-        const trapGeometry = new THREE.BoxGeometry(2,1,2);
-        const trapMaterial = new THREE.MeshLambertMaterial({color: "rgb(255,0,0)"});
-        traps.push(new THREE.Mesh(trapGeometry,trapMaterial));
-        traps.push(new THREE.Mesh(trapGeometry,trapMaterial));
-        traps.push(new THREE.Mesh(trapGeometry,trapMaterial));
-        traps.push(new THREE.Mesh(trapGeometry,trapMaterial));
-        traps.push(new THREE.Mesh(trapGeometry,trapMaterial));
-        traps[0].position.set(gridMapHelper.getGlobalXPositionFromCoord(2),0.5,gridMapHelper.getGlobalZPositionFromCoord(5));
-        traps[1].position.set(gridMapHelper.getGlobalXPositionFromCoord(2),0.5,gridMapHelper.getGlobalZPositionFromCoord(3));
-        traps[2].position.set(gridMapHelper.getGlobalXPositionFromCoord(2),0.5,gridMapHelper.getGlobalZPositionFromCoord(7));
-        traps[3].position.set(gridMapHelper.getGlobalXPositionFromCoord(6),0.5,gridMapHelper.getGlobalZPositionFromCoord(6));
-        traps[4].position.set(gridMapHelper.getGlobalXPositionFromCoord(5),0.5,gridMapHelper.getGlobalZPositionFromCoord(3));
-        gridMapHelper.addTrap(2,5);
-        gridMapHelper.addTrap(2,3);
-        gridMapHelper.addTrap(2,7);
-        gridMapHelper.addTrap(6,6);
-        gridMapHelper.addTrap(5,3);
+        traps.push(new SpikeTrap());
+        traps.push(new SpikeTrap());
+        traps.push(new SpikeTrap());
+        traps.push(new SpikeTrap());
+        traps.push(new SpikeTrap());
+        traps[0].position.set(gridMapHelper.getGlobalXPositionFromCoord(2),0,gridMapHelper.getGlobalZPositionFromCoord(5));
+        traps[1].position.set(gridMapHelper.getGlobalXPositionFromCoord(2),0,gridMapHelper.getGlobalZPositionFromCoord(3));
+        traps[2].position.set(gridMapHelper.getGlobalXPositionFromCoord(2),0,gridMapHelper.getGlobalZPositionFromCoord(7));
+        traps[3].position.set(gridMapHelper.getGlobalXPositionFromCoord(6),0,gridMapHelper.getGlobalZPositionFromCoord(6));
+        traps[4].position.set(gridMapHelper.getGlobalXPositionFromCoord(5),0,gridMapHelper.getGlobalZPositionFromCoord(3));
+        gridMapHelper.addTrap(2,5,traps[0]);
+        gridMapHelper.addTrap(2,3,traps[1]);
+        gridMapHelper.addTrap(2,7,traps[2]);
+        gridMapHelper.addTrap(6,6,traps[3]);
+        gridMapHelper.addTrap(5,3,traps[4]);
         scene.add(traps[0]);
         scene.add(traps[1]);
         scene.add(traps[2]);
@@ -982,6 +1029,29 @@ phaseGeneration.push(
             fireState = (fireState + 1) % 2;
             setFireStates();
         },1000);
+
+        spikeTrapState = 0;
+        setSpikeTrapState = () => {
+            if(spikeTrapState == 0)
+            {
+                trapsDeactivation(traps)
+            }
+            else
+            {
+                trapsActivation(traps)
+
+            }
+        }
+
+        setSpikeTrapStateInterval = setInterval(() => {
+            if(sceneProperties.executing)
+            {
+                return;
+            }
+
+            spikeTrapState = (spikeTrapState + 1) % 2;
+            setSpikeTrapState();
+        },1000);
     }
 );
 //Phase 7
@@ -1059,14 +1129,12 @@ phaseGeneration.push(
         scene.add(walls[10]);
 
         traps = [];
-        const trapGeometry = new THREE.BoxGeometry(2,1,2);
-        const trapMaterial = new THREE.MeshLambertMaterial({color: "rgb(255,0,0)"});
-        traps.push(new THREE.Mesh(trapGeometry,trapMaterial));
-        traps.push(new THREE.Mesh(trapGeometry,trapMaterial));
-        traps[0].position.set(gridMapHelper.getGlobalXPositionFromCoord(2),0.5,gridMapHelper.getGlobalZPositionFromCoord(5));
-        traps[1].position.set(gridMapHelper.getGlobalXPositionFromCoord(5),0.5,gridMapHelper.getGlobalZPositionFromCoord(3));
-        gridMapHelper.addTrap(2,5);
-        gridMapHelper.addTrap(5,3);
+        traps.push(new SpikeTrap());
+        traps.push(new SpikeTrap());
+        traps[0].position.set(gridMapHelper.getGlobalXPositionFromCoord(2),0,gridMapHelper.getGlobalZPositionFromCoord(5));
+        traps[1].position.set(gridMapHelper.getGlobalXPositionFromCoord(5),0,gridMapHelper.getGlobalZPositionFromCoord(3));
+        gridMapHelper.addTrap(2,5,traps[0]);
+        gridMapHelper.addTrap(5,3,traps[1]);
         scene.add(traps[0]);
         scene.add(traps[1]);
 
@@ -1179,6 +1247,29 @@ phaseGeneration.push(
             fireState = (fireState + 1) % 2;
             setFireStates();
         },1000);
+
+        spikeTrapState = 0;
+        setSpikeTrapState = () => {
+            if(spikeTrapState == 0)
+            {
+                trapsDeactivation(traps)
+            }
+            else
+            {
+                trapsActivation(traps)
+
+            }
+        }
+
+        setSpikeTrapStateInterval = setInterval(() => {
+            if(sceneProperties.executing)
+            {
+                return;
+            }
+
+            spikeTrapState = (spikeTrapState + 1) % 2;
+            setSpikeTrapState();
+        },1000);
     }
 );
 //Phase 8
@@ -1255,27 +1346,27 @@ phaseGeneration.push(
         traps = [];
         const trapGeometry = new THREE.BoxGeometry(2,1,2)
         const trapMaterial = new THREE.MeshLambertMaterial({color: "rgb(255,0,0)"})
-        traps.push(new THREE.Mesh(trapGeometry,trapMaterial))
-        traps.push(new THREE.Mesh(trapGeometry,trapMaterial))
-        traps.push(new THREE.Mesh(trapGeometry,trapMaterial))
-        traps.push(new THREE.Mesh(trapGeometry,trapMaterial))
-        traps.push(new THREE.Mesh(trapGeometry,trapMaterial))
-        traps.push(new THREE.Mesh(trapGeometry,trapMaterial))
-        traps.push(new THREE.Mesh(trapGeometry,trapMaterial))
-        traps[0].position.set(gridMapHelper.getGlobalXPositionFromCoord(4),0.5,gridMapHelper.getGlobalZPositionFromCoord(7));
-        traps[1].position.set(gridMapHelper.getGlobalXPositionFromCoord(6),0.5,gridMapHelper.getGlobalZPositionFromCoord(7));
-        traps[2].position.set(gridMapHelper.getGlobalXPositionFromCoord(2),0.5,gridMapHelper.getGlobalZPositionFromCoord(5));
-        traps[3].position.set(gridMapHelper.getGlobalXPositionFromCoord(4),0.5,gridMapHelper.getGlobalZPositionFromCoord(5));
-        traps[4].position.set(gridMapHelper.getGlobalXPositionFromCoord(6),0.5,gridMapHelper.getGlobalZPositionFromCoord(5));
-        traps[5].position.set(gridMapHelper.getGlobalXPositionFromCoord(8),0.5,gridMapHelper.getGlobalZPositionFromCoord(5));
-        traps[6].position.set(gridMapHelper.getGlobalXPositionFromCoord(6),0.5,gridMapHelper.getGlobalZPositionFromCoord(0));
-        gridMapHelper.addTrap(4,7);
-        gridMapHelper.addTrap(6,7);
-        gridMapHelper.addTrap(2,5);
-        gridMapHelper.addTrap(4,5);
-        gridMapHelper.addTrap(6,5);
-        gridMapHelper.addTrap(8,5);
-        gridMapHelper.addTrap(6,0);
+        traps.push(new SpikeTrap())
+        traps.push(new SpikeTrap())
+        traps.push(new SpikeTrap())
+        traps.push(new SpikeTrap())
+        traps.push(new SpikeTrap())
+        traps.push(new SpikeTrap())
+        traps.push(new SpikeTrap())
+        traps[0].position.set(gridMapHelper.getGlobalXPositionFromCoord(4),0,gridMapHelper.getGlobalZPositionFromCoord(7));
+        traps[1].position.set(gridMapHelper.getGlobalXPositionFromCoord(6),0,gridMapHelper.getGlobalZPositionFromCoord(7));
+        traps[2].position.set(gridMapHelper.getGlobalXPositionFromCoord(2),0,gridMapHelper.getGlobalZPositionFromCoord(5));
+        traps[3].position.set(gridMapHelper.getGlobalXPositionFromCoord(4),0,gridMapHelper.getGlobalZPositionFromCoord(5));
+        traps[4].position.set(gridMapHelper.getGlobalXPositionFromCoord(6),0,gridMapHelper.getGlobalZPositionFromCoord(5));
+        traps[5].position.set(gridMapHelper.getGlobalXPositionFromCoord(8),0,gridMapHelper.getGlobalZPositionFromCoord(5));
+        traps[6].position.set(gridMapHelper.getGlobalXPositionFromCoord(6),0,gridMapHelper.getGlobalZPositionFromCoord(0));
+        gridMapHelper.addTrap(4,7,traps[0]);
+        gridMapHelper.addTrap(6,7,traps[1]);
+        gridMapHelper.addTrap(2,5,traps[2]);
+        gridMapHelper.addTrap(4,5,traps[3]);
+        gridMapHelper.addTrap(6,5,traps[4]);
+        gridMapHelper.addTrap(8,5,traps[5]);
+        gridMapHelper.addTrap(6,0,traps[6]);
         scene.add(traps[0]);
         scene.add(traps[1]);
         scene.add(traps[2]);
@@ -1402,6 +1493,29 @@ phaseGeneration.push(
             fireState = (fireState + 1) % 2;
             setFireStates();
         },1000);
+
+        spikeTrapState = 0;
+        setSpikeTrapState = () => {
+            if(spikeTrapState == 0)
+            {
+                trapsDeactivation(traps)
+            }
+            else
+            {
+                trapsActivation(traps)
+
+            }
+        }
+
+        setSpikeTrapStateInterval = setInterval(() => {
+            if(sceneProperties.executing)
+            {
+                return;
+            }
+
+            spikeTrapState = (spikeTrapState + 1) % 2;
+            setSpikeTrapState();
+        },1000);
     }
 );
 
@@ -1471,6 +1585,7 @@ window.addEventListener('resize',() => {
 const execBtn = document.getElementById("execBtn")
 execBtn.addEventListener("click",async function() {
     const codeParsed = parseCode(editor.state.doc.toString());
+    trapsDeactivation(traps)
     sceneProperties.cancelExecution = false;
     if(codeParsed != null)
     {

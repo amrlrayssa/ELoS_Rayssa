@@ -13,7 +13,7 @@ import {
 import GridMapHelper from "../three/GridMapHelper";
 import parseCode from "./parser";
 import LaserFence from "../three/LaserFence";
-import SpikeTrap from "../three/SpikeTrap";
+import {SpikeTrap, trapsActivation, trapsDeactivation} from "../three/SpikeTrap";
 
 const sceneProperties = {
     cancelExecution: false,
@@ -49,8 +49,6 @@ let objectives;
 let walls;
 let traps;
 let laserFences
-let requestID
-let alpha2 = 0.1
 
 function changeLaserActiveStatus(index,status)
 {
@@ -92,83 +90,6 @@ function lasersVisualRestart()
     for(let i = 0;i < laserFences.length;i++)
     {
         laserFences[i].active = true;
-    }
-}
-
-let thisTrap = null
-function activateTrap(){
-  if(thisTrap.spikes[4].position.y.toFixed(1) < 1)
-  {
-    alpha2 += 0.05;
-    thisTrap.spikes.forEach(spike => spike.position.lerp(new THREE.Vector3(spike.position.x, 1, spike.position.z), alpha2))
-      requestID = requestAnimationFrame(activateTrap);
-  }
-  else
-  {
-    cancelAnimationFrame(requestID);
-    alpha2 = 0.1
-  }
-}
-
-function deactivateTrap(){
-  if(thisTrap.spikes[4].position.y.toFixed(1) > -1)
-  {
-    //alpha += 0.001;
-    alpha2 += 0.01;
-    thisTrap.spikes.forEach(spike => spike.position.lerp(new THREE.Vector3(spike.position.x, -1, spike.position.z), alpha2))
-    
-    //assetManager['spikeTrap'].spikes[0].position.lerp(new THREE.Vector3(0, -1.5, 0), alpha)
-    requestID = requestAnimationFrame(deactivateTrap);
-  }
-  else
-  {
-    cancelAnimationFrame(requestID);
-    //alpha = 0.01
-    alpha2 = 0.1
-  }
-}
-
-export function checkActiveTrap(){
-    traps.forEach(trap =>{thisTrap = trap; activateTrap()})
-}
-
-function trapsActivation(traps){
-    for(let i = 0; i < traps.length; i++){
-    activateTrap()
-        function activateTrap(){
-            if(traps[i].spikes[4].position.y.toFixed(1) < 1)
-            {
-                alpha2 += 0.01;
-                traps[i].active = true;
-                traps[i].spikes.forEach(spike => spike.position.lerp(new THREE.Vector3(spike.position.x, 1, spike.position.z), alpha2))
-                traps[i].requestID = requestAnimationFrame(activateTrap);
-            }
-            else
-            {
-                cancelAnimationFrame(traps[i].requestID);
-                alpha2 = 0.1
-            }
-        }
-    }
-}
-
-function trapsDeactivation(traps){
-    for(let i = 0; i < traps.length; i++){
-    deactivateTrap()
-        function deactivateTrap(){
-            if(traps[i].spikes[4].position.y.toFixed(1) > -1)
-            {
-                alpha2 += 0.001;
-                traps[i].active = false;
-                traps[i].spikes.forEach(spike => spike.position.lerp(new THREE.Vector3(spike.position.x, -1, spike.position.z), alpha2))
-                traps[i].requestID = requestAnimationFrame(deactivateTrap);
-            }
-            else
-            {
-                cancelAnimationFrame(traps[i].requestID);
-                alpha2 = 0.1
-            }
-        }
     }
 }
 

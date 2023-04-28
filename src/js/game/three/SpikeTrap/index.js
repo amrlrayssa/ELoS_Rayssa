@@ -1,5 +1,7 @@
 import * as THREE from 'three';
 
+let alpha2 = 0.1
+
 class TrapBox extends THREE.Mesh {
     constructor() { 
         super(new THREE.BoxGeometry(2, 2, 2, 16, 16), new THREE.MeshLambertMaterial({color:"black"}));
@@ -30,7 +32,7 @@ class Spike extends THREE.Mesh {
     }
 };
 
-class SpikeTrap extends THREE.Object3D {  
+export class SpikeTrap extends THREE.Object3D {  
    constructor(){
         super();
         this.index = 0
@@ -133,5 +135,45 @@ class SpikeTrap extends THREE.Object3D {
    }
 }
 
-export default SpikeTrap;
+export function trapsActivation(traps){
+    for(let i = 0; i < traps.length; i++){
+    activateTrap()
+        function activateTrap(){
+            if(traps[i].spikes[4].position.y.toFixed(1) < 1)
+            {
+                cancelAnimationFrame(traps[i].requestID);
+                alpha2 += 0.01;
+                traps[i].active = true;
+                traps[i].spikes.forEach(spike => spike.position.lerp(new THREE.Vector3(spike.position.x, 1, spike.position.z), alpha2))
+                traps[i].requestID = requestAnimationFrame(activateTrap);
+            }
+            else
+            {
+                cancelAnimationFrame(traps[i].requestID);
+                alpha2 = 0.01
+            }
+        }
+    }
+}
+
+export function trapsDeactivation(traps){
+    for(let i = 0; i < traps.length; i++){
+    deactivateTrap()
+        function deactivateTrap(){
+            if(traps[i].spikes[4].position.y.toFixed(1) > -1)
+            {
+                cancelAnimationFrame(traps[i].requestID);
+                alpha2 += 0.001;
+                traps[i].active = false;
+                traps[i].spikes.forEach(spike => spike.position.lerp(new THREE.Vector3(spike.position.x, -1, spike.position.z), alpha2))
+                traps[i].requestID = requestAnimationFrame(deactivateTrap);
+            }
+            else
+            {
+                cancelAnimationFrame(traps[i].requestID);
+                alpha2 = 0.01
+            }
+        }
+    }
+}
 
