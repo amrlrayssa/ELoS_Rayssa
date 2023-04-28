@@ -54,6 +54,8 @@ var $4UvU9 = parcelRequire("4UvU9");
 var $c6e6z = parcelRequire("c6e6z");
 
 var $1CqPx = parcelRequire("1CqPx");
+
+var $gSwgq = parcelRequire("gSwgq");
 //Defining Level 1 Scene's Properties
 const sceneProperties = {
     cancelExecution: false,
@@ -75,6 +77,9 @@ const actor = (0, $6mhZf.loadDefaultActor)();
 let objectives;
 let walls;
 let traps;
+let spikeTrapState;
+let setSpikeTrapState;
+let setSpikeTrapStateInterval;
 scene.add(plane);
 scene.add(actor);
 async function andarFrente(amount) {
@@ -368,13 +373,9 @@ phaseGeneration.push(()=>{
     scene.add(walls[2]);
     scene.add(walls[3]);
     traps = [];
-    const trapGeometry = new $49pUz.BoxGeometry(2, 1, 2);
-    const trapMaterial = new $49pUz.MeshLambertMaterial({
-        color: "rgb(255,0,0)"
-    });
-    traps.push(new $49pUz.Mesh(trapGeometry, trapMaterial));
-    traps[0].position.set(gridMapHelper.getGlobalXPositionFromCoord(8), 0.5, gridMapHelper.getGlobalZPositionFromCoord(5));
-    gridMapHelper.addTrap(8, 5);
+    traps.push(new (0, $gSwgq.SpikeTrap)());
+    traps[0].position.set(gridMapHelper.getGlobalXPositionFromCoord(8), 0, gridMapHelper.getGlobalZPositionFromCoord(5));
+    gridMapHelper.addTrap(8, 5, traps[0]);
     scene.add(traps[0]);
     coletarCristal = ()=>{
         if (sceneProperties.cancelExecution) return;
@@ -393,6 +394,16 @@ phaseGeneration.push(()=>{
         if (!objectives[0].visible) return true;
         else return false;
     };
+    spikeTrapState = 0;
+    setSpikeTrapState = ()=>{
+        if (spikeTrapState == 0) (0, $gSwgq.trapsDeactivation)(traps);
+        else (0, $gSwgq.trapsActivation)(traps);
+    };
+    setSpikeTrapStateInterval = setInterval(()=>{
+        if (sceneProperties.executing) return;
+        spikeTrapState = (spikeTrapState + 1) % 2;
+        setSpikeTrapState();
+    }, 1000);
     timerUpadate = setInterval(updateTime, 1000);
 });
 //Phase 8
@@ -430,19 +441,15 @@ phaseGeneration.push(()=>{
     scene.add(walls[1]);
     scene.add(walls[2]);
     traps = [];
-    const trapGeometry = new $49pUz.BoxGeometry(2, 1, 2);
-    const trapMaterial = new $49pUz.MeshLambertMaterial({
-        color: "rgb(255,0,0)"
-    });
-    traps.push(new $49pUz.Mesh(trapGeometry, trapMaterial));
-    traps.push(new $49pUz.Mesh(trapGeometry, trapMaterial));
-    traps.push(new $49pUz.Mesh(trapGeometry, trapMaterial));
-    traps[0].position.set(gridMapHelper.getGlobalXPositionFromCoord(1), 0.5, gridMapHelper.getGlobalZPositionFromCoord(5));
-    traps[1].position.set(gridMapHelper.getGlobalXPositionFromCoord(6), 0.5, gridMapHelper.getGlobalZPositionFromCoord(3));
-    traps[2].position.set(gridMapHelper.getGlobalXPositionFromCoord(5), 0.5, gridMapHelper.getGlobalZPositionFromCoord(8));
-    gridMapHelper.addTrap(1, 5);
-    gridMapHelper.addTrap(6, 3);
-    gridMapHelper.addTrap(5, 8);
+    traps.push(new (0, $gSwgq.SpikeTrap)());
+    traps.push(new (0, $gSwgq.SpikeTrap)());
+    traps.push(new (0, $gSwgq.SpikeTrap)());
+    traps[0].position.set(gridMapHelper.getGlobalXPositionFromCoord(1), 0, gridMapHelper.getGlobalZPositionFromCoord(5));
+    traps[1].position.set(gridMapHelper.getGlobalXPositionFromCoord(6), 0, gridMapHelper.getGlobalZPositionFromCoord(3));
+    traps[2].position.set(gridMapHelper.getGlobalXPositionFromCoord(5), 0, gridMapHelper.getGlobalZPositionFromCoord(8));
+    gridMapHelper.addTrap(1, 5, traps[0]);
+    gridMapHelper.addTrap(6, 3, traps[1]);
+    gridMapHelper.addTrap(5, 8, traps[2]);
     scene.add(traps[0]);
     scene.add(traps[1]);
     scene.add(traps[2]);
@@ -472,6 +479,16 @@ phaseGeneration.push(()=>{
         if (!objectives[0].visible && !objectives[1].visible && !objectives[2].visible) return true;
         else return false;
     };
+    spikeTrapState = 0;
+    setSpikeTrapState = ()=>{
+        if (spikeTrapState == 0) (0, $gSwgq.trapsDeactivation)(traps);
+        else (0, $gSwgq.trapsActivation)(traps);
+    };
+    setSpikeTrapStateInterval = setInterval(()=>{
+        if (sceneProperties.executing) return;
+        spikeTrapState = (spikeTrapState + 1) % 2;
+        setSpikeTrapState();
+    }, 1000);
     document.getElementById("winMessage").innerText = "N\xedvel Conclu\xeddo";
     document.getElementById("advanceBtn").innerText = "Finalizar";
     timerUpadate = setInterval(updateTime, 1000);
@@ -505,8 +522,10 @@ const execBtn = document.getElementById("execBtn");
 execBtn.addEventListener("click", async function() {
     const codeParsed = (0, $4UvU9.default)(editor.state.doc.toString());
     sceneProperties.cancelExecution = false;
+    if (traps != null) (0, $gSwgq.trapsDeactivation)(traps);
     if (codeParsed != null) {
         resetLevel();
+        sceneProperties.executing = true;
         this.disabled = true;
         await eval(codeParsed);
         if (winCondition()) {
@@ -518,7 +537,10 @@ execBtn.addEventListener("click", async function() {
             finishEarlierButton.disabled = true;
             clearInterval(timerUpadate);
             if (sceneProperties.phase == phaseGeneration.length - 1) (0, $c6e6z.configureDataAndUpload)(document.getElementById("name"), document.getElementById("age"), "gender", "prog-exp", document.getElementById("subBtn"), sceneProperties.timer, "../", "N\xedvel 1/Completo");
-        } else this.disabled = false;
+        } else {
+            sceneProperties.executing = false;
+            this.disabled = false;
+        }
     }
 });
 const resetBtn = document.getElementById("resetBtn");
