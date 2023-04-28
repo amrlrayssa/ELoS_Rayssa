@@ -1987,7 +1987,8 @@ execBtn.addEventListener("click",async function() {
     const codeParsed = parseCode(editor.state.doc.toString());
     console.log(codeParsed);
     sceneProperties.cancelExecution = false;
-    trapsDeactivation(traps)
+    if(traps != null)
+        trapsDeactivation(traps)
     if(codeParsed != null)
     {
         resetLevel();

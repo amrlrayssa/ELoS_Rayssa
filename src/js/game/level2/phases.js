@@ -1585,7 +1585,8 @@ window.addEventListener('resize',() => {
 const execBtn = document.getElementById("execBtn")
 execBtn.addEventListener("click",async function() {
     const codeParsed = parseCode(editor.state.doc.toString());
-    trapsDeactivation(traps)
+    if(traps != null)
+        trapsDeactivation(traps)
     sceneProperties.cancelExecution = false;
     if(codeParsed != null)
     {

@@ -14,6 +14,7 @@ import GridMapHelper from "../three/GridMapHelper";
 import parseCode from "./parser";
 import { displayTime, configureDataAndUpload } from "../timer";
 import { Modal } from "bootstrap";
+import {SpikeTrap, trapsActivation, trapsDeactivation} from "../three/SpikeTrap";
 
 //Defining Level 1 Scene's Properties
 
@@ -49,6 +50,12 @@ const actor = loadDefaultActor();
 let objectives;
 let walls;
 let traps;
+
+let spikeTrapState;
+
+let setSpikeTrapState;
+
+let setSpikeTrapStateInterval;
 
 scene.add(plane);
 scene.add(actor);
@@ -522,11 +529,9 @@ phaseGeneration.push(
         scene.add(walls[3]);
 
         traps = [];
-        const trapGeometry = new THREE.BoxGeometry(2,1,2);
-        const trapMaterial = new THREE.MeshLambertMaterial({color: "rgb(255,0,0)"});
-        traps.push(new THREE.Mesh(trapGeometry,trapMaterial));
-        traps[0].position.set(gridMapHelper.getGlobalXPositionFromCoord(8),0.5,gridMapHelper.getGlobalZPositionFromCoord(5));
-        gridMapHelper.addTrap(8,5);
+        traps.push(new SpikeTrap());
+        traps[0].position.set(gridMapHelper.getGlobalXPositionFromCoord(8),0,gridMapHelper.getGlobalZPositionFromCoord(5));
+        gridMapHelper.addTrap(8,5,traps[0]);
         scene.add(traps[0]);
 
         coletarCristal = () => {
@@ -563,6 +568,29 @@ phaseGeneration.push(
                 return false;
             }
         }
+
+        spikeTrapState = 0;
+        setSpikeTrapState = () => {
+            if(spikeTrapState == 0)
+            {
+                trapsDeactivation(traps)
+            }
+            else
+            {
+                trapsActivation(traps)
+
+            }
+        }
+
+        setSpikeTrapStateInterval = setInterval(() => {
+            if(sceneProperties.executing)
+            {
+                return;
+            }
+
+            spikeTrapState = (spikeTrapState + 1) % 2;
+            setSpikeTrapState();
+        },1000);
 
         timerUpadate = setInterval(updateTime,1000);
     }
@@ -607,17 +635,15 @@ phaseGeneration.push(
         scene.add(walls[2]);
 
         traps = [];
-        const trapGeometry = new THREE.BoxGeometry(2,1,2);
-        const trapMaterial = new THREE.MeshLambertMaterial({color: "rgb(255,0,0)"});
-        traps.push(new THREE.Mesh(trapGeometry,trapMaterial));
-        traps.push(new THREE.Mesh(trapGeometry,trapMaterial));
-        traps.push(new THREE.Mesh(trapGeometry,trapMaterial));
-        traps[0].position.set(gridMapHelper.getGlobalXPositionFromCoord(1),0.5,gridMapHelper.getGlobalZPositionFromCoord(5));
-        traps[1].position.set(gridMapHelper.getGlobalXPositionFromCoord(6),0.5,gridMapHelper.getGlobalZPositionFromCoord(3));
-        traps[2].position.set(gridMapHelper.getGlobalXPositionFromCoord(5),0.5,gridMapHelper.getGlobalZPositionFromCoord(8));
-        gridMapHelper.addTrap(1,5);
-        gridMapHelper.addTrap(6,3);
-        gridMapHelper.addTrap(5,8);
+        traps.push(new SpikeTrap());
+        traps.push(new SpikeTrap());
+        traps.push(new SpikeTrap());
+        traps[0].position.set(gridMapHelper.getGlobalXPositionFromCoord(1),0,gridMapHelper.getGlobalZPositionFromCoord(5));
+        traps[1].position.set(gridMapHelper.getGlobalXPositionFromCoord(6),0,gridMapHelper.getGlobalZPositionFromCoord(3));
+        traps[2].position.set(gridMapHelper.getGlobalXPositionFromCoord(5),0,gridMapHelper.getGlobalZPositionFromCoord(8));
+        gridMapHelper.addTrap(1,5,traps[0]);
+        gridMapHelper.addTrap(6,3,traps[1]);
+        gridMapHelper.addTrap(5,8,traps[2]);
         scene.add(traps[0]);
         scene.add(traps[1]);
         scene.add(traps[2]);
@@ -673,6 +699,29 @@ phaseGeneration.push(
                 return false;
             }
         }
+
+        spikeTrapState = 0;
+        setSpikeTrapState = () => {
+            if(spikeTrapState == 0)
+            {
+                trapsDeactivation(traps)
+            }
+            else
+            {
+                trapsActivation(traps)
+
+            }
+        }
+
+        setSpikeTrapStateInterval = setInterval(() => {
+            if(sceneProperties.executing)
+            {
+                return;
+            }
+
+            spikeTrapState = (spikeTrapState + 1) % 2;
+            setSpikeTrapState();
+        },1000);
 
         document.getElementById('winMessage').innerText = "Nível Concluído";
         document.getElementById('advanceBtn').innerText = "Finalizar";
@@ -734,9 +783,12 @@ const execBtn = document.getElementById("execBtn")
 execBtn.addEventListener("click",async function() {
     const codeParsed = parseCode(editor.state.doc.toString());
     sceneProperties.cancelExecution = false;
+    if(traps != null)
+        trapsDeactivation(traps)
     if(codeParsed != null)
     {
         resetLevel();
+        sceneProperties.executing = true;
         this.disabled = true;
         await eval(codeParsed);
         if(winCondition())
@@ -755,6 +807,7 @@ execBtn.addEventListener("click",async function() {
         }
         else
         {
+            sceneProperties.executing = false;
             this.disabled = false;
         }
     }
