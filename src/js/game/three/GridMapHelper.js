@@ -238,7 +238,7 @@ export default class GridMapHelper
                         alpha2 = 0.1
                     }
                 }
-                return true
+                return new THREE.Vector3(this.getGlobalXPositionFromCoord(this.traps[i].x),position.y,this.getGlobalZPositionFromCoord(this.traps[i].z));
             }
             else
             {
@@ -269,7 +269,7 @@ export default class GridMapHelper
         {
             if(this.getXCoordFromGlobalPosition(position.x) == activeFires[i].x && this.getZCoordFromGlobalPosition(position.z) == activeFires[i].z)
             {
-                return true;
+                return new THREE.Vector3(this.getGlobalXPositionFromCoord(activeFires[i].x),position.y,this.getGlobalZPositionFromCoord(activeFires[i].z));
             }
             else
             {
