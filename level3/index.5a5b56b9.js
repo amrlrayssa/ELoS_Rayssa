@@ -55793,6 +55793,16 @@ function $4a12bffc769d698d$export$43ac269cfac29bfc(actor, amount, gridMapHelper,
         if (positionA.x.toFixed(2) == positionB.x.toFixed(2) && positionA.z.toFixed(2) == positionB.z.toFixed(2)) return true;
         else return false;
     }
+    function correctPositionOnCancel(positionToStop) {
+        let corrID;
+        function correct() {
+            if (!positionAlmostEqual(actor.position, positionToStop)) {
+                actor.position.lerp(positionToStop, 0.15);
+                corrID = requestAnimationFrame(correct);
+            } else cancelAnimationFrame(corrID);
+        }
+        corrID = requestAnimationFrame(correct);
+    }
     $4a12bffc769d698d$var$leanMovement(actor.getObjectByName("eve"), modeGo);
     return new Promise(function(resolve) {
         function translate() {
@@ -55804,10 +55814,12 @@ function $4a12bffc769d698d$export$43ac269cfac29bfc(actor, amount, gridMapHelper,
             if (gridMapHelper.trapCollision(actor.position)) {
                 consoleElement.innerText += "Aviso: Rob\xf4 caiu na armadilha.\n";
                 sceneProperties.cancelExecution = true;
+                correctPositionOnCancel(gridMapHelper.trapCollision(actor.position));
             }
             if (gridMapHelper.fireCollision(actor.position)) {
                 consoleElement.innerText += "Aviso: Rob\xf4 foi queimado!\n";
                 sceneProperties.cancelExecution = true;
+                correctPositionOnCancel(gridMapHelper.fireCollision(actor.position));
             }
             if (gridMapHelper.laserCollision(actor.position)) {
                 consoleElement.innerText += "Aviso: Rob\xf4 foi queimado pelo laser!\n";
@@ -60058,7 +60070,7 @@ class $229855a44a9d0678$export$2e2bcd8739ae039 {
                         alpha2 = 0.1;
                     }
                 }
-                return true;
+                return new $49pUz.Vector3(this.getGlobalXPositionFromCoord(this.traps[i].x), position.y, this.getGlobalZPositionFromCoord(this.traps[i].z));
             } else continue;
         }
         return false;
@@ -60075,7 +60087,7 @@ class $229855a44a9d0678$export$2e2bcd8739ae039 {
     fireCollision(position) {
         const activeFires = this.fires.filter((fire)=>fire.active == true);
         for(let i = 0; i < activeFires.length; i++){
-            if (this.getXCoordFromGlobalPosition(position.x) == activeFires[i].x && this.getZCoordFromGlobalPosition(position.z) == activeFires[i].z) return true;
+            if (this.getXCoordFromGlobalPosition(position.x) == activeFires[i].x && this.getZCoordFromGlobalPosition(position.z) == activeFires[i].z) return new $49pUz.Vector3(this.getGlobalXPositionFromCoord(activeFires[i].x), position.y, this.getGlobalZPositionFromCoord(activeFires[i].z));
             else continue;
         }
         return false;
@@ -60295,6 +60307,6 @@ function $c49ab76c1c184985$export$5d4bb8012760247a(traps) {
 
 var $f666847ad5354ece$exports = {};
 
-(parcelRequire("2JpsI")).register(JSON.parse('{"fiIik":"index.695b2163.js","gkOf2":"eve.1d379c98.glb","hpjRp":"crystal.06b47171.jpg","9XNcj":"crystal.b012d479.obj"}'));
+(parcelRequire("2JpsI")).register(JSON.parse('{"fiIik":"index.5a5b56b9.js","gkOf2":"eve.1d379c98.glb","hpjRp":"crystal.06b47171.jpg","9XNcj":"crystal.b012d479.obj"}'));
 
 
