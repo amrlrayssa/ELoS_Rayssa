@@ -35,7 +35,75 @@ function updateTime()
     sceneProperties.timer++;
 }
 
-const editor = generateDefaultEditor(document.getElementById("editorArea"));
+const editor = generateDefaultEditor(document.getElementById("editorArea"), {
+    lineNumbers: true,
+});
+
+const andarFrenteBtn = document.getElementById('andarFrente');
+andarFrenteBtn.addEventListener("click",() => { 
+    var cursor = editor.state.selection.main.head
+    let transaction = editor.state.update({changes: {from: cursor, insert: "andarFrente()\n"}})
+    editor.dispatch(transaction)
+    editor.focus()
+    let actualLine = editor.state.doc.lineAt(cursor).number
+    let tamLinha = editor.state.doc.line(actualLine).text.length
+    //editor.dispatch({selection:{anchor: tamLinha}})
+});
+
+const andarTrasBtn = document.getElementById('andarTras');
+andarTrasBtn.addEventListener("click",() => { 
+    var cursor = editor.state.selection.main.head
+    let transaction = editor.state.update({changes: {from: cursor, insert: "andarTras()\n"}})
+    editor.dispatch(transaction)
+    editor.focus()
+    let actualLine = editor.state.doc.lineAt(cursor).number
+    let tamLinha = editor.state.doc.line(actualLine).text.length
+    //editor.dispatch({selection:{anchor: tamLinha}})
+});
+
+const girarEsquerdaBtn = document.getElementById('girarEsquerda');
+girarEsquerdaBtn.addEventListener("click",() => { 
+    var cursor = editor.state.selection.main.head
+    let transaction = editor.state.update({changes: {from: cursor, insert: "girarEsquerda()\n"}})
+    editor.dispatch(transaction)
+    editor.focus()
+    let actualLine = editor.state.doc.lineAt(cursor).number
+    let tamLinha = editor.state.doc.line(actualLine).text.length
+    //editor.dispatch({selection:{anchor: tamLinha}})
+});
+
+const girarDireitaBtn = document.getElementById('girarDireita');
+girarDireitaBtn.addEventListener("click",() => { 
+    var cursor = editor.state.selection.main.head
+    let transaction = editor.state.update({changes: {from: cursor, insert: "girarDireita()\n"}})
+    editor.dispatch(transaction)
+    editor.focus()
+    let actualLine = editor.state.doc.lineAt(cursor).number
+    let tamLinha = editor.state.doc.line(actualLine).text.length
+    //editor.dispatch({selection:{anchor: tamLinha}})
+});
+
+const darMeiaVoltaBtn = document.getElementById('darMeiaVolta');
+darMeiaVoltaBtn.addEventListener("click",() => { 
+    var cursor = editor.state.selection.main.head
+    let transaction = editor.state.update({changes: {from: cursor, insert: "darMeiaVolta()\n"}})
+    editor.dispatch(transaction)
+    editor.focus()
+    let actualLine = editor.state.doc.lineAt(cursor).number
+    let tamLinha = editor.state.doc.line(actualLine).text.length
+    //editor.dispatch({selection:{anchor: tamLinha}})
+});
+
+const ColetarCristalBtn = document.getElementById('ColetarCristal');
+ColetarCristalBtn.addEventListener("click",() => { 
+    var cursor = editor.state.selection.main.head
+    let transaction = editor.state.update({changes: {from: cursor, insert: "ColetarCristal()\n"}})
+    editor.dispatch(transaction)
+    editor.focus()
+    let actualLine = editor.state.doc.lineAt(cursor).number
+    let tamLinha = editor.state.doc.line(actualLine).text.length
+    //editor.dispatch({selection:{anchor: tamLinha}})
+});
 
 const consoleElement = document.getElementById('consoleArea');
 
