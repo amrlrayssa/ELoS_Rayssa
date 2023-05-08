@@ -318,7 +318,7 @@ export function checkCollision(objectA,objectB,gridMapHelper)
 {
     const vec = new THREE.Vector3();
     objectA.getWorldPosition(vec);
-    if(gridMapHelper.getXCoordFromGlobalPosition(vec.x) == gridMapHelper.getXCoordFromGlobalPosition(objectB.position.x) && gridMapHelper.getZCoordFromGlobalPosition(vec.z) == gridMapHelper.getZCoordFromGlobalPosition(objectB.position.z))
+    if(gridMapHelper.getXCoordFromGlobalPosition(vec.x) == gridMapHelper.getXCoordFromGlobalPosition(objectB.position.x) && gridMapHelper.getZCoordFromGlobalPosition(vec.z) == gridMapHelper.getZCoordFromGlobalPosition(objectB.position.z) && objectB.visible)
     {
         return true;
     }
