@@ -172,6 +172,7 @@ phaseGeneration.push(
 
         objectives = loadDefaultObjectives(1);
         objectives[0].position.set(gridMapHelper.getGlobalXPositionFromCoord(9),0.0,gridMapHelper.getGlobalZPositionFromCoord(5));
+        gridMapHelper.addObstacle(9,9,5,5);
         scene.add(objectives[0]);
 
         walls = [];
@@ -251,6 +252,7 @@ phaseGeneration.push(
 
         objectives = loadDefaultObjectives(1);
         objectives[0].position.set(gridMapHelper.getGlobalXPositionFromCoord(9),0.0,gridMapHelper.getGlobalZPositionFromCoord(5));
+        gridMapHelper.addObstacle(9,9,5,5);
         scene.add(objectives[0]);
 
         walls = [];
@@ -422,6 +424,8 @@ phaseGeneration.push(
         objectives = loadDefaultObjectives(2);
         objectives[0].position.set(gridMapHelper.getGlobalXPositionFromCoord(0),0.0,gridMapHelper.getGlobalZPositionFromCoord(0));
         objectives[1].position.set(gridMapHelper.getGlobalXPositionFromCoord(9),0.0,gridMapHelper.getGlobalZPositionFromCoord(9));
+        gridMapHelper.addObstacle(0,0,0,0);
+        gridMapHelper.addObstacle(9,9,9,9);
         scene.add(objectives[0]);
         scene.add(objectives[1]);
 
@@ -558,6 +562,8 @@ phaseGeneration.push(
         objectives = loadDefaultObjectives(2);
         objectives[0].position.set(gridMapHelper.getGlobalXPositionFromCoord(9),0.0,gridMapHelper.getGlobalZPositionFromCoord(9));
         objectives[1].position.set(gridMapHelper.getGlobalXPositionFromCoord(9),0.0,gridMapHelper.getGlobalZPositionFromCoord(0));
+        gridMapHelper.addObstacle(9,9,9,9);
+        gridMapHelper.addObstacle(9,9,0,0);
         scene.add(objectives[0]);
         scene.add(objectives[1]);
 
@@ -690,6 +696,8 @@ phaseGeneration.push(
         objectives = loadDefaultObjectives(2);
         objectives[0].position.set(gridMapHelper.getGlobalXPositionFromCoord(5),0.0,gridMapHelper.getGlobalZPositionFromCoord(7));
         objectives[1].position.set(gridMapHelper.getGlobalXPositionFromCoord(5),0.0,gridMapHelper.getGlobalZPositionFromCoord(3));
+        gridMapHelper.addObstacle(5,5,7,7);
+        gridMapHelper.addObstacle(5,5,3,3);
         scene.add(objectives[0]);
         scene.add(objectives[1]);
 
@@ -872,6 +880,8 @@ phaseGeneration.push(
         objectives = loadDefaultObjectives(2);
         objectives[0].position.set(gridMapHelper.getGlobalXPositionFromCoord(5),0.0,gridMapHelper.getGlobalZPositionFromCoord(7));
         objectives[1].position.set(gridMapHelper.getGlobalXPositionFromCoord(7),0.0,gridMapHelper.getGlobalZPositionFromCoord(0));
+        gridMapHelper.addObstacle(5,5,7,7);
+        gridMapHelper.addObstacle(7,7,0,0);
         scene.add(objectives[0]);
         scene.add(objectives[1]);
 
@@ -1075,6 +1085,8 @@ phaseGeneration.push(
         objectives = loadDefaultObjectives(2);
         objectives[0].position.set(gridMapHelper.getGlobalXPositionFromCoord(3),0.0,gridMapHelper.getGlobalZPositionFromCoord(5));
         objectives[1].position.set(gridMapHelper.getGlobalXPositionFromCoord(7),0.0,gridMapHelper.getGlobalZPositionFromCoord(3));
+        gridMapHelper.addObstacle(3,3,5,5);
+        gridMapHelper.addObstacle(7,7,3,3);
         scene.add(objectives[0]);
         scene.add(objectives[1]);
 
@@ -1294,6 +1306,9 @@ phaseGeneration.push(
         objectives[0].position.set(gridMapHelper.getGlobalXPositionFromCoord(3),0.0,gridMapHelper.getGlobalZPositionFromCoord(5));
         objectives[1].position.set(gridMapHelper.getGlobalXPositionFromCoord(5),0.0,gridMapHelper.getGlobalZPositionFromCoord(5));
         objectives[2].position.set(gridMapHelper.getGlobalXPositionFromCoord(7),0.0,gridMapHelper.getGlobalZPositionFromCoord(5));
+        gridMapHelper.addObstacle(3,3,5,5);
+        gridMapHelper.addObstacle(5,5,5,5);
+        gridMapHelper.addObstacle(7,7,5,5);
         scene.add(objectives[0]);
         scene.add(objectives[1]);
         scene.add(objectives[2]);
