@@ -62,12 +62,14 @@ scene.add(actor);
 
 async function andarFrente(amount)
 {
-    await translateActor(actor,amount,gridMapHelper,sceneProperties,consoleElement);
+    let correctedAmount = amount > 10 ? 10 : amount;
+    await translateActor(actor,correctedAmount,gridMapHelper,sceneProperties,consoleElement);
 }
 
 async function andarTras(amount)
 {
-    await translateActor(actor,-amount,gridMapHelper,sceneProperties,consoleElement);
+    let correctedAmount = amount > 10 ? 10 : amount;
+    await translateActor(actor,-correctedAmount,gridMapHelper,sceneProperties,consoleElement);
 }
 
 async function girarEsquerda()
