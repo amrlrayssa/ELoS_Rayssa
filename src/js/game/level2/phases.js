@@ -43,6 +43,186 @@ let setSpikeTrapStateInterval;
 
 const editor = generateDefaultEditor(document.getElementById("editorArea"));
 
+const andarFrenteBtn = document.getElementById('andarFrente');
+andarFrenteBtn.addEventListener("click",() => { 
+    let cursorAnchor = editor.state.selection.main.anchor
+    let cursorHead = editor.state.selection.main.head
+    let transaction
+    let actualLine
+    if(cursorAnchor <= cursorHead){
+        transaction = editor.state.update({changes: {from: cursorAnchor, to: cursorHead, insert:  "andarFrente(?)\n"}})
+        actualLine = editor.state.doc.lineAt(cursorAnchor).number
+    }
+    else {
+        transaction = editor.state.update({changes: {from: cursorHead, to: cursorAnchor, insert:  "andarFrente(?)\n"}})
+        actualLine = editor.state.doc.lineAt(cursorHead).number
+    }
+    editor.dispatch(transaction)
+    editor.focus()
+    let nextLinePos = editor.state.doc.line(actualLine+1).to
+    editor.dispatch({selection:{anchor: nextLinePos}})
+});
+
+const andarTrasBtn = document.getElementById('andarTras');
+andarTrasBtn.addEventListener("click",() => { 
+    let cursorAnchor = editor.state.selection.main.anchor
+    let cursorHead = editor.state.selection.main.head
+    let transaction
+    let actualLine
+    if(cursorAnchor <= cursorHead){
+        transaction = editor.state.update({changes: {from: cursorAnchor, to: cursorHead, insert:  "andarTras(?)\n"}})
+        actualLine = editor.state.doc.lineAt(cursorAnchor).number
+    }
+    else {
+        transaction = editor.state.update({changes: {from: cursorHead, to: cursorAnchor, insert:  "andarTras(?)\n"}})
+        actualLine = editor.state.doc.lineAt(cursorHead).number
+    }
+    editor.dispatch(transaction)
+    editor.focus()
+    let nextLinePos = editor.state.doc.line(actualLine+1).to
+    editor.dispatch({selection:{anchor: nextLinePos}})
+});
+
+const girarEsquerdaBtn = document.getElementById('girarEsquerda');
+girarEsquerdaBtn.addEventListener("click",() => { 
+    let cursorAnchor = editor.state.selection.main.anchor
+    let cursorHead = editor.state.selection.main.head
+    let transaction
+    let actualLine
+    if(cursorAnchor <= cursorHead){
+        transaction = editor.state.update({changes: {from: cursorAnchor, to: cursorHead, insert: "girarEsquerda()\n"}})
+        actualLine = editor.state.doc.lineAt(cursorAnchor).number
+    }
+    else {
+        transaction = editor.state.update({changes: {from: cursorHead, to: cursorAnchor, insert: "girarEsquerda()\n"}})
+        actualLine = editor.state.doc.lineAt(cursorHead).number
+    }
+    editor.dispatch(transaction)
+    editor.focus()
+    let nextLinePos = editor.state.doc.line(actualLine+1).to
+    editor.dispatch({selection:{anchor: nextLinePos}})
+});
+
+const girarDireitaBtn = document.getElementById('girarDireita');
+girarDireitaBtn.addEventListener("click",() => { 
+    let cursorAnchor = editor.state.selection.main.anchor
+    let cursorHead = editor.state.selection.main.head
+    let transaction
+    let actualLine
+    if(cursorAnchor <= cursorHead){
+        transaction = editor.state.update({changes: {from: cursorAnchor, to: cursorHead, insert: "girarDireita()\n"}})
+        actualLine = editor.state.doc.lineAt(cursorAnchor).number
+    }
+    else {
+        transaction = editor.state.update({changes: {from: cursorHead, to: cursorAnchor, insert: "girarDireita()\n"}})
+        actualLine = editor.state.doc.lineAt(cursorHead).number
+    }
+    editor.dispatch(transaction)
+    editor.focus()
+    let nextLinePos = editor.state.doc.line(actualLine+1).to
+    editor.dispatch({selection:{anchor: nextLinePos}})
+});
+
+const darMeiaVoltaBtn = document.getElementById('darMeiaVolta');
+darMeiaVoltaBtn.addEventListener("click",() => { 
+    let cursorAnchor = editor.state.selection.main.anchor
+    let cursorHead = editor.state.selection.main.head
+    let transaction
+    let actualLine
+    if(cursorAnchor <= cursorHead){
+        transaction = editor.state.update({changes: {from: cursorAnchor, to: cursorHead, insert: "darMeiaVolta()\n"}})
+        actualLine = editor.state.doc.lineAt(cursorAnchor).number
+    }
+    else {
+        transaction = editor.state.update({changes: {from: cursorHead, to: cursorAnchor, insert: "darMeiaVolta()\n"}})
+        actualLine = editor.state.doc.lineAt(cursorHead).number
+    }
+    editor.dispatch(transaction)
+    editor.focus()
+    let nextLinePos = editor.state.doc.line(actualLine+1).to
+    editor.dispatch({selection:{anchor: nextLinePos}})
+});
+
+const apagarFogoBtn = document.getElementById('apagarFogo');
+apagarFogoBtn.addEventListener("click",() => { 
+    let cursorAnchor = editor.state.selection.main.anchor
+    let cursorHead = editor.state.selection.main.head
+    let transaction
+    let actualLine
+    if(cursorAnchor <= cursorHead){
+        transaction = editor.state.update({changes: {from: cursorAnchor, to: cursorHead, insert: "apagarFogo()\n"}})
+        actualLine = editor.state.doc.lineAt(cursorAnchor).number
+    }
+    else {
+        transaction = editor.state.update({changes: {from: cursorHead, to: cursorAnchor, insert: "apagarFogo()\n"}})
+        actualLine = editor.state.doc.lineAt(cursorHead).number
+    }
+    editor.dispatch(transaction)
+    editor.focus()
+    let nextLinePos = editor.state.doc.line(actualLine+1).to
+    editor.dispatch({selection:{anchor: nextLinePos}})
+});
+
+const coletarCristalBtn = document.getElementById('coletarCristal');
+coletarCristalBtn.addEventListener("click",() => { 
+    let cursorAnchor = editor.state.selection.main.anchor
+    let cursorHead = editor.state.selection.main.head
+    let transaction
+    let actualLine
+    if(cursorAnchor <= cursorHead){
+        transaction = editor.state.update({changes: {from: cursorAnchor, to: cursorHead, insert: "coletarCristal()\n"}})
+        actualLine = editor.state.doc.lineAt(cursorAnchor).number
+    }
+    else {
+        transaction = editor.state.update({changes: {from: cursorHead, to: cursorAnchor, insert: "coletarCristal()\n"}})
+        actualLine = editor.state.doc.lineAt(cursorHead).number
+    }
+    editor.dispatch(transaction)
+    editor.focus()
+    let nextLinePos = editor.state.doc.line(actualLine+1).to
+    editor.dispatch({selection:{anchor: nextLinePos}})
+});
+
+const pegandoFogoBtn = document.getElementById('pegandoFogo');
+pegandoFogoBtn.addEventListener("click",() => { 
+    let cursorAnchor = editor.state.selection.main.anchor
+    let cursorHead = editor.state.selection.main.head
+    let transaction
+    let actualLine
+    if(cursorAnchor <= cursorHead){
+        transaction = editor.state.update({changes: {from: cursorAnchor, to: cursorHead, insert: "pegandoFogo()"}})
+        actualLine = editor.state.doc.lineAt(cursorAnchor).number
+    }
+    else {
+        transaction = editor.state.update({changes: {from: cursorHead, to: cursorAnchor, insert: "pegandoFogo()"}})
+        actualLine = editor.state.doc.lineAt(cursorHead).number
+    }
+    editor.dispatch(transaction)
+    editor.focus()
+    let nextLinePos = editor.state.doc.line(actualLine+1).to
+    editor.dispatch({selection:{anchor: nextLinePos}})
+});
+
+const condicaoBtn = document.getElementById('condicao');
+condicaoBtn.addEventListener("click",() => { 
+    let cursorAnchor = editor.state.selection.main.anchor
+    let cursorHead = editor.state.selection.main.head
+    let transaction
+    let actualLine
+    if(cursorAnchor <= cursorHead){
+        transaction = editor.state.update({changes: {from: cursorAnchor, to: cursorHead, insert: "se(?){\n\n}\n"}})
+        actualLine = editor.state.doc.lineAt(cursorAnchor).number
+    }
+    else {
+        transaction = editor.state.update({changes: {from: cursorHead, to: cursorAnchor, insert: "se(?){\n\n}\n"}})
+        actualLine = editor.state.doc.lineAt(cursorHead).number
+    }
+    editor.dispatch(transaction)
+    editor.focus()
+    let nextLinePos = editor.state.doc.line(actualLine+1).to
+    editor.dispatch({selection:{anchor: nextLinePos}})
+});
+
 const consoleElement = document.getElementById('consoleArea');
 
 const {renderer, scene, camera, controls} = generateDefaultSceneObjects(document.getElementById("phaseView"));

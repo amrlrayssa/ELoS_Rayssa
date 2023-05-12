@@ -42,4 +42,13 @@ $utilities: (
     )
 );
 
+.btn-txt{
+    color: #212529;
+
+    &:hover{
+        color:#d63384;
+        cursor: pointer;
+    }
+}
+
 @import "~bootstrap/scss/bootstrap";
