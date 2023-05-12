@@ -12005,6 +12005,15 @@ textarea.form-control-lg {
   }
 }
 
+.btn-txt {
+  color: #212529;
+}
+
+.btn-txt:hover {
+  color: #d63384;
+  cursor: pointer;
+}
+
 :root {
   --bs-blue: #0d6efd;
   --bs-indigo: #6610f2;

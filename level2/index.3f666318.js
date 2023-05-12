@@ -71,6 +71,312 @@ let spikeTrapState;
 let setSpikeTrapState;
 let setSpikeTrapStateInterval;
 const editor = (0, $jgsti.generateDefaultEditor)(document.getElementById("editorArea"));
+const andarFrenteBtn = document.getElementById("andarFrente");
+andarFrenteBtn.addEventListener("click", ()=>{
+    let cursorAnchor = editor.state.selection.main.anchor;
+    let cursorHead = editor.state.selection.main.head;
+    let transaction;
+    let actualLine;
+    if (cursorAnchor <= cursorHead) {
+        transaction = editor.state.update({
+            changes: {
+                from: cursorAnchor,
+                to: cursorHead,
+                insert: "andarFrente(?)\n"
+            }
+        });
+        actualLine = editor.state.doc.lineAt(cursorAnchor).number;
+    } else {
+        transaction = editor.state.update({
+            changes: {
+                from: cursorHead,
+                to: cursorAnchor,
+                insert: "andarFrente(?)\n"
+            }
+        });
+        actualLine = editor.state.doc.lineAt(cursorHead).number;
+    }
+    editor.dispatch(transaction);
+    editor.focus();
+    let nextLinePos = editor.state.doc.line(actualLine + 1).to;
+    editor.dispatch({
+        selection: {
+            anchor: nextLinePos
+        }
+    });
+});
+const andarTrasBtn = document.getElementById("andarTras");
+andarTrasBtn.addEventListener("click", ()=>{
+    let cursorAnchor = editor.state.selection.main.anchor;
+    let cursorHead = editor.state.selection.main.head;
+    let transaction;
+    let actualLine;
+    if (cursorAnchor <= cursorHead) {
+        transaction = editor.state.update({
+            changes: {
+                from: cursorAnchor,
+                to: cursorHead,
+                insert: "andarTras(?)\n"
+            }
+        });
+        actualLine = editor.state.doc.lineAt(cursorAnchor).number;
+    } else {
+        transaction = editor.state.update({
+            changes: {
+                from: cursorHead,
+                to: cursorAnchor,
+                insert: "andarTras(?)\n"
+            }
+        });
+        actualLine = editor.state.doc.lineAt(cursorHead).number;
+    }
+    editor.dispatch(transaction);
+    editor.focus();
+    let nextLinePos = editor.state.doc.line(actualLine + 1).to;
+    editor.dispatch({
+        selection: {
+            anchor: nextLinePos
+        }
+    });
+});
+const girarEsquerdaBtn = document.getElementById("girarEsquerda");
+girarEsquerdaBtn.addEventListener("click", ()=>{
+    let cursorAnchor = editor.state.selection.main.anchor;
+    let cursorHead = editor.state.selection.main.head;
+    let transaction;
+    let actualLine;
+    if (cursorAnchor <= cursorHead) {
+        transaction = editor.state.update({
+            changes: {
+                from: cursorAnchor,
+                to: cursorHead,
+                insert: "girarEsquerda()\n"
+            }
+        });
+        actualLine = editor.state.doc.lineAt(cursorAnchor).number;
+    } else {
+        transaction = editor.state.update({
+            changes: {
+                from: cursorHead,
+                to: cursorAnchor,
+                insert: "girarEsquerda()\n"
+            }
+        });
+        actualLine = editor.state.doc.lineAt(cursorHead).number;
+    }
+    editor.dispatch(transaction);
+    editor.focus();
+    let nextLinePos = editor.state.doc.line(actualLine + 1).to;
+    editor.dispatch({
+        selection: {
+            anchor: nextLinePos
+        }
+    });
+});
+const girarDireitaBtn = document.getElementById("girarDireita");
+girarDireitaBtn.addEventListener("click", ()=>{
+    let cursorAnchor = editor.state.selection.main.anchor;
+    let cursorHead = editor.state.selection.main.head;
+    let transaction;
+    let actualLine;
+    if (cursorAnchor <= cursorHead) {
+        transaction = editor.state.update({
+            changes: {
+                from: cursorAnchor,
+                to: cursorHead,
+                insert: "girarDireita()\n"
+            }
+        });
+        actualLine = editor.state.doc.lineAt(cursorAnchor).number;
+    } else {
+        transaction = editor.state.update({
+            changes: {
+                from: cursorHead,
+                to: cursorAnchor,
+                insert: "girarDireita()\n"
+            }
+        });
+        actualLine = editor.state.doc.lineAt(cursorHead).number;
+    }
+    editor.dispatch(transaction);
+    editor.focus();
+    let nextLinePos = editor.state.doc.line(actualLine + 1).to;
+    editor.dispatch({
+        selection: {
+            anchor: nextLinePos
+        }
+    });
+});
+const darMeiaVoltaBtn = document.getElementById("darMeiaVolta");
+darMeiaVoltaBtn.addEventListener("click", ()=>{
+    let cursorAnchor = editor.state.selection.main.anchor;
+    let cursorHead = editor.state.selection.main.head;
+    let transaction;
+    let actualLine;
+    if (cursorAnchor <= cursorHead) {
+        transaction = editor.state.update({
+            changes: {
+                from: cursorAnchor,
+                to: cursorHead,
+                insert: "darMeiaVolta()\n"
+            }
+        });
+        actualLine = editor.state.doc.lineAt(cursorAnchor).number;
+    } else {
+        transaction = editor.state.update({
+            changes: {
+                from: cursorHead,
+                to: cursorAnchor,
+                insert: "darMeiaVolta()\n"
+            }
+        });
+        actualLine = editor.state.doc.lineAt(cursorHead).number;
+    }
+    editor.dispatch(transaction);
+    editor.focus();
+    let nextLinePos = editor.state.doc.line(actualLine + 1).to;
+    editor.dispatch({
+        selection: {
+            anchor: nextLinePos
+        }
+    });
+});
+const apagarFogoBtn = document.getElementById("apagarFogo");
+apagarFogoBtn.addEventListener("click", ()=>{
+    let cursorAnchor = editor.state.selection.main.anchor;
+    let cursorHead = editor.state.selection.main.head;
+    let transaction;
+    let actualLine;
+    if (cursorAnchor <= cursorHead) {
+        transaction = editor.state.update({
+            changes: {
+                from: cursorAnchor,
+                to: cursorHead,
+                insert: "apagarFogo()\n"
+            }
+        });
+        actualLine = editor.state.doc.lineAt(cursorAnchor).number;
+    } else {
+        transaction = editor.state.update({
+            changes: {
+                from: cursorHead,
+                to: cursorAnchor,
+                insert: "apagarFogo()\n"
+            }
+        });
+        actualLine = editor.state.doc.lineAt(cursorHead).number;
+    }
+    editor.dispatch(transaction);
+    editor.focus();
+    let nextLinePos = editor.state.doc.line(actualLine + 1).to;
+    editor.dispatch({
+        selection: {
+            anchor: nextLinePos
+        }
+    });
+});
+const coletarCristalBtn = document.getElementById("coletarCristal");
+coletarCristalBtn.addEventListener("click", ()=>{
+    let cursorAnchor = editor.state.selection.main.anchor;
+    let cursorHead = editor.state.selection.main.head;
+    let transaction;
+    let actualLine;
+    if (cursorAnchor <= cursorHead) {
+        transaction = editor.state.update({
+            changes: {
+                from: cursorAnchor,
+                to: cursorHead,
+                insert: "coletarCristal()\n"
+            }
+        });
+        actualLine = editor.state.doc.lineAt(cursorAnchor).number;
+    } else {
+        transaction = editor.state.update({
+            changes: {
+                from: cursorHead,
+                to: cursorAnchor,
+                insert: "coletarCristal()\n"
+            }
+        });
+        actualLine = editor.state.doc.lineAt(cursorHead).number;
+    }
+    editor.dispatch(transaction);
+    editor.focus();
+    let nextLinePos = editor.state.doc.line(actualLine + 1).to;
+    editor.dispatch({
+        selection: {
+            anchor: nextLinePos
+        }
+    });
+});
+const pegandoFogoBtn = document.getElementById("pegandoFogo");
+pegandoFogoBtn.addEventListener("click", ()=>{
+    let cursorAnchor = editor.state.selection.main.anchor;
+    let cursorHead = editor.state.selection.main.head;
+    let transaction;
+    let actualLine;
+    if (cursorAnchor <= cursorHead) {
+        transaction = editor.state.update({
+            changes: {
+                from: cursorAnchor,
+                to: cursorHead,
+                insert: "pegandoFogo()"
+            }
+        });
+        actualLine = editor.state.doc.lineAt(cursorAnchor).number;
+    } else {
+        transaction = editor.state.update({
+            changes: {
+                from: cursorHead,
+                to: cursorAnchor,
+                insert: "pegandoFogo()"
+            }
+        });
+        actualLine = editor.state.doc.lineAt(cursorHead).number;
+    }
+    editor.dispatch(transaction);
+    editor.focus();
+    let nextLinePos = editor.state.doc.line(actualLine + 1).to;
+    editor.dispatch({
+        selection: {
+            anchor: nextLinePos
+        }
+    });
+});
+const condicaoBtn = document.getElementById("condicao");
+condicaoBtn.addEventListener("click", ()=>{
+    let cursorAnchor = editor.state.selection.main.anchor;
+    let cursorHead = editor.state.selection.main.head;
+    let transaction;
+    let actualLine;
+    if (cursorAnchor <= cursorHead) {
+        transaction = editor.state.update({
+            changes: {
+                from: cursorAnchor,
+                to: cursorHead,
+                insert: "se(?){\n\n}\n"
+            }
+        });
+        actualLine = editor.state.doc.lineAt(cursorAnchor).number;
+    } else {
+        transaction = editor.state.update({
+            changes: {
+                from: cursorHead,
+                to: cursorAnchor,
+                insert: "se(?){\n\n}\n"
+            }
+        });
+        actualLine = editor.state.doc.lineAt(cursorHead).number;
+    }
+    editor.dispatch(transaction);
+    editor.focus();
+    let nextLinePos = editor.state.doc.line(actualLine + 1).to;
+    editor.dispatch({
+        selection: {
+            anchor: nextLinePos
+        }
+    });
+});
 const consoleElement = document.getElementById("consoleArea");
 const { renderer , scene , camera , controls  } = (0, $6mhZf.generateDefaultSceneObjects)(document.getElementById("phaseView"));
 const gridMapHelper = new (0, $2Y9dv.default)();
@@ -91,10 +397,12 @@ function firesVisualRestart() {
 scene.add(plane);
 scene.add(actor);
 async function andarFrente(amount) {
-    await (0, $6mhZf.translateActor)(actor, amount, gridMapHelper, sceneProperties, consoleElement);
+    let correctedAmount = amount > 10 ? 10 : amount;
+    await (0, $6mhZf.translateActor)(actor, correctedAmount, gridMapHelper, sceneProperties, consoleElement);
 }
 async function andarTras(amount) {
-    await (0, $6mhZf.translateActor)(actor, -amount, gridMapHelper, sceneProperties, consoleElement);
+    let correctedAmount = amount > 10 ? 10 : amount;
+    await (0, $6mhZf.translateActor)(actor, -correctedAmount, gridMapHelper, sceneProperties, consoleElement);
 }
 async function girarEsquerda() {
     await (0, $6mhZf.rotateActor)(actor, 90, sceneProperties, 1);
@@ -141,6 +449,7 @@ phaseGeneration.push(()=>{
     actor.rotation.set(0, (0, $6mhZf.degreeToRadians)(90), 0);
     objectives = (0, $6mhZf.loadDefaultObjectives)(1);
     objectives[0].position.set(gridMapHelper.getGlobalXPositionFromCoord(9), 0.0, gridMapHelper.getGlobalZPositionFromCoord(5));
+    gridMapHelper.addObstacle(9, 9, 5, 5);
     scene.add(objectives[0]);
     walls = [];
     const boxGeometry = new $49pUz.BoxGeometry(18, 2, 2);
@@ -195,6 +504,7 @@ phaseGeneration.push(()=>{
     actor.rotation.set(0, (0, $6mhZf.degreeToRadians)(90), 0);
     objectives = (0, $6mhZf.loadDefaultObjectives)(1);
     objectives[0].position.set(gridMapHelper.getGlobalXPositionFromCoord(9), 0.0, gridMapHelper.getGlobalZPositionFromCoord(5));
+    gridMapHelper.addObstacle(9, 9, 5, 5);
     scene.add(objectives[0]);
     walls = [];
     const boxGeometry = new $49pUz.BoxGeometry(14, 2, 2);
@@ -317,6 +627,8 @@ phaseGeneration.push(()=>{
     objectives = (0, $6mhZf.loadDefaultObjectives)(2);
     objectives[0].position.set(gridMapHelper.getGlobalXPositionFromCoord(0), 0.0, gridMapHelper.getGlobalZPositionFromCoord(0));
     objectives[1].position.set(gridMapHelper.getGlobalXPositionFromCoord(9), 0.0, gridMapHelper.getGlobalZPositionFromCoord(9));
+    gridMapHelper.addObstacle(0, 0, 0, 0);
+    gridMapHelper.addObstacle(9, 9, 9, 9);
     scene.add(objectives[0]);
     scene.add(objectives[1]);
     walls = [];
@@ -412,6 +724,8 @@ phaseGeneration.push(()=>{
     objectives = (0, $6mhZf.loadDefaultObjectives)(2);
     objectives[0].position.set(gridMapHelper.getGlobalXPositionFromCoord(9), 0.0, gridMapHelper.getGlobalZPositionFromCoord(9));
     objectives[1].position.set(gridMapHelper.getGlobalXPositionFromCoord(9), 0.0, gridMapHelper.getGlobalZPositionFromCoord(0));
+    gridMapHelper.addObstacle(9, 9, 9, 9);
+    gridMapHelper.addObstacle(9, 9, 0, 0);
     scene.add(objectives[0]);
     scene.add(objectives[1]);
     walls = [];
@@ -503,6 +817,8 @@ phaseGeneration.push(()=>{
     objectives = (0, $6mhZf.loadDefaultObjectives)(2);
     objectives[0].position.set(gridMapHelper.getGlobalXPositionFromCoord(5), 0.0, gridMapHelper.getGlobalZPositionFromCoord(7));
     objectives[1].position.set(gridMapHelper.getGlobalXPositionFromCoord(5), 0.0, gridMapHelper.getGlobalZPositionFromCoord(3));
+    gridMapHelper.addObstacle(5, 5, 7, 7);
+    gridMapHelper.addObstacle(5, 5, 3, 3);
     scene.add(objectives[0]);
     scene.add(objectives[1]);
     walls = [];
@@ -631,6 +947,8 @@ phaseGeneration.push(()=>{
     objectives = (0, $6mhZf.loadDefaultObjectives)(2);
     objectives[0].position.set(gridMapHelper.getGlobalXPositionFromCoord(5), 0.0, gridMapHelper.getGlobalZPositionFromCoord(7));
     objectives[1].position.set(gridMapHelper.getGlobalXPositionFromCoord(7), 0.0, gridMapHelper.getGlobalZPositionFromCoord(0));
+    gridMapHelper.addObstacle(5, 5, 7, 7);
+    gridMapHelper.addObstacle(7, 7, 0, 0);
     scene.add(objectives[0]);
     scene.add(objectives[1]);
     walls = [];
@@ -780,6 +1098,8 @@ phaseGeneration.push(()=>{
     objectives = (0, $6mhZf.loadDefaultObjectives)(2);
     objectives[0].position.set(gridMapHelper.getGlobalXPositionFromCoord(3), 0.0, gridMapHelper.getGlobalZPositionFromCoord(5));
     objectives[1].position.set(gridMapHelper.getGlobalXPositionFromCoord(7), 0.0, gridMapHelper.getGlobalZPositionFromCoord(3));
+    gridMapHelper.addObstacle(3, 3, 5, 5);
+    gridMapHelper.addObstacle(7, 7, 3, 3);
     scene.add(objectives[0]);
     scene.add(objectives[1]);
     walls = [];
@@ -945,6 +1265,9 @@ phaseGeneration.push(()=>{
     objectives[0].position.set(gridMapHelper.getGlobalXPositionFromCoord(3), 0.0, gridMapHelper.getGlobalZPositionFromCoord(5));
     objectives[1].position.set(gridMapHelper.getGlobalXPositionFromCoord(5), 0.0, gridMapHelper.getGlobalZPositionFromCoord(5));
     objectives[2].position.set(gridMapHelper.getGlobalXPositionFromCoord(7), 0.0, gridMapHelper.getGlobalZPositionFromCoord(5));
+    gridMapHelper.addObstacle(3, 3, 5, 5);
+    gridMapHelper.addObstacle(5, 5, 5, 5);
+    gridMapHelper.addObstacle(7, 7, 5, 5);
     scene.add(objectives[0]);
     scene.add(objectives[1]);
     scene.add(objectives[2]);
@@ -1520,11 +1843,11 @@ parcelRequire.register("12kOc", function(module, exports) {
 $parcel$export(module.exports, "default", () => $0c161e84c454184c$export$2e2bcd8739ae039);
 const $0c161e84c454184c$var$functionFilter = [
     {
-        filter: new RegExp("^andarFrente(\\s+)?\\((\\s+)?\\d+(\\s+)?\\)(\\s+)?(;)?$"),
+        filter: new RegExp("^andarFrente(\\s+)?\\((\\s+)?(0|[1-9][0-9]*)(\\s+)?\\)(\\s+)?(;)?$"),
         type: "sequential"
     },
     {
-        filter: new RegExp("^andarTras(\\s+)?\\((\\s+)?\\d+(\\s+)?\\)(\\s+)?(;)?$"),
+        filter: new RegExp("^andarTras(\\s+)?\\((\\s+)?(0|[1-9][0-9]*)(\\s+)?\\)(\\s+)?(;)?$"),
         type: "sequential"
     },
     {
@@ -1813,7 +2136,7 @@ function $0c161e84c454184c$export$2e2bcd8739ae039(code, limit = 0) {
 
 var $ebf1e8c8c7d55432$exports = {};
 
-(parcelRequire("2JpsI")).register(JSON.parse('{"gktNi":"index.2ac898ba.js","GGIiK":"fire.e088cc30.png","2x2Z6":"stone.543880d2.jpg","fiIik":"index.5a5b56b9.js","c5VSK":"index.8c12255d.js"}'));
+(parcelRequire("2JpsI")).register(JSON.parse('{"gktNi":"index.3f666318.js","GGIiK":"fire.e088cc30.png","2x2Z6":"stone.543880d2.jpg","fiIik":"index.1cde767c.js","c5VSK":"index.8c12255d.js"}'));
 
 
 parcelRequire("apYFO");

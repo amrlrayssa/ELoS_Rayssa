@@ -55860,7 +55860,7 @@ function $4a12bffc769d698d$export$1f34b7ddb8582c2d(actor, amount, scenePropertie
 function $4a12bffc769d698d$export$65cbfae5bde8bfd2(objectA, objectB, gridMapHelper) {
     const vec = new $49pUz.Vector3();
     objectA.getWorldPosition(vec);
-    if (gridMapHelper.getXCoordFromGlobalPosition(vec.x) == gridMapHelper.getXCoordFromGlobalPosition(objectB.position.x) && gridMapHelper.getZCoordFromGlobalPosition(vec.z) == gridMapHelper.getZCoordFromGlobalPosition(objectB.position.z)) return true;
+    if (gridMapHelper.getXCoordFromGlobalPosition(vec.x) == gridMapHelper.getXCoordFromGlobalPosition(objectB.position.x) && gridMapHelper.getZCoordFromGlobalPosition(vec.z) == gridMapHelper.getZCoordFromGlobalPosition(objectB.position.z) && objectB.visible) return true;
     else return false;
 }
 
@@ -60307,6 +60307,6 @@ function $c49ab76c1c184985$export$5d4bb8012760247a(traps) {
 
 var $f666847ad5354ece$exports = {};
 
-(parcelRequire("2JpsI")).register(JSON.parse('{"fiIik":"index.5a5b56b9.js","gkOf2":"eve.1d379c98.glb","hpjRp":"crystal.06b47171.jpg","9XNcj":"crystal.b012d479.obj"}'));
+(parcelRequire("2JpsI")).register(JSON.parse('{"fiIik":"index.1cde767c.js","gkOf2":"eve.1d379c98.glb","hpjRp":"crystal.06b47171.jpg","9XNcj":"crystal.b012d479.obj"}'));
 
 
