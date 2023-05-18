@@ -383,6 +383,7 @@ phaseGeneration.push(
             {
                 objectives[0].visible = false;
                 consoleElement.innerText += "Cristal coletado com sucesso.\n";
+                gridMapHelper.obstacles[0].active = false;
             }
             else
             {
@@ -395,6 +396,7 @@ phaseGeneration.push(
             actor.rotation.set(0,degreeToRadians(90),0);
             actor.getObjectByName('eve').rotation.set(0,0,0);
             objectives[0].visible = true;
+            gridMapHelper.obstacles[0].active = true;
             gridMapHelper.restartFires();
             fires[0].setFireVisibility(true);
             extinguisherUses = 1;
@@ -520,6 +522,7 @@ phaseGeneration.push(
             {
                 objectives[0].visible = false;
                 consoleElement.innerText += "Cristal coletado com sucesso.\n";
+                gridMapHelper.obstacles[0].active = false;
             }
             else
             {
@@ -532,6 +535,7 @@ phaseGeneration.push(
             actor.rotation.set(0,degreeToRadians(90),0);
             actor.getObjectByName('eve').rotation.set(0,0,0);
             objectives[0].visible = true;
+            gridMapHelper.obstacles[0].active = true;
             gridMapHelper.restartFires();
             firesVisualRestart();
             setFireStates();
@@ -670,11 +674,13 @@ phaseGeneration.push(
             {
                 objectives[0].visible = false;
                 consoleElement.innerText += "Cristal coletado.\n";
+                gridMapHelper.obstacles[0].active = false;
             }
             else if(checkCollision(actor.getObjectByName('interactionReference'),objectives[1],gridMapHelper))
             {
                 objectives[1].visible = false;
                 consoleElement.innerText += "Cristal coletado.\n";
+                gridMapHelper.obstacles[1].active = false;
             }
             else
             {
@@ -693,6 +699,8 @@ phaseGeneration.push(
             actor.getObjectByName('eve').rotation.set(0,0,0);
             objectives[0].visible = true;
             objectives[1].visible = true;
+            gridMapHelper.obstacles[0].active = true;
+            gridMapHelper.obstacles[1].active = true;
             gridMapHelper.restartFires();
             firesVisualRestart();
             setFireStates();
@@ -804,11 +812,13 @@ phaseGeneration.push(
             {
                 objectives[0].visible = false;
                 consoleElement.innerText += "Cristal coletado.\n";
+                gridMapHelper.obstacles[0].active = false;
             }
             else if(checkCollision(actor.getObjectByName('interactionReference'),objectives[1],gridMapHelper))
             {
                 objectives[1].visible = false;
                 consoleElement.innerText += "Cristal coletado.\n";
+                gridMapHelper.obstacles[1].active = false;
             }
             else
             {
@@ -827,6 +837,8 @@ phaseGeneration.push(
             actor.getObjectByName('eve').rotation.set(0,0,0);
             objectives[0].visible = true;
             objectives[1].visible = true;
+            gridMapHelper.obstacles[0].active = true;
+            gridMapHelper.obstacles[1].active = true;
             gridMapHelper.restartFires();
             firesVisualRestart();
             setFireStates();
@@ -966,11 +978,13 @@ phaseGeneration.push(
             {
                 objectives[0].visible = false;
                 consoleElement.innerText += "Cristal coletado.\n";
+                gridMapHelper.obstacles[0].active = false;
             }
             else if(checkCollision(actor.getObjectByName('interactionReference'),objectives[1],gridMapHelper))
             {
                 objectives[1].visible = false;
                 consoleElement.innerText += "Cristal coletado.\n";
+                gridMapHelper.obstacles[1].active = false;
             }
             else
             {
@@ -989,6 +1003,8 @@ phaseGeneration.push(
             actor.getObjectByName('eve').rotation.set(0,0,0);
             objectives[0].visible = true;
             objectives[1].visible = true;
+            gridMapHelper.obstacles[0].active = true;
+            gridMapHelper.obstacles[1].active = true;
             gridMapHelper.restartFires();
             firesVisualRestart();
             setFireStates();
@@ -1171,11 +1187,13 @@ phaseGeneration.push(
             {
                 objectives[0].visible = false;
                 consoleElement.innerText += "Cristal coletado.\n";
+                gridMapHelper.obstacles[0].active = false;
             }
             else if(checkCollision(actor.getObjectByName('interactionReference'),objectives[1],gridMapHelper))
             {
                 objectives[1].visible = false;
                 consoleElement.innerText += "Cristal coletado.\n";
+                gridMapHelper.obstacles[1].active = false;
             }
             else
             {
@@ -1194,6 +1212,8 @@ phaseGeneration.push(
             actor.getObjectByName('eve').rotation.set(0,0,0);
             objectives[0].visible = true;
             objectives[1].visible = true;
+            gridMapHelper.obstacles[0].active = true;
+            gridMapHelper.obstacles[1].active = true;
             gridMapHelper.restartFires();
             firesVisualRestart();
             setFireStates();
@@ -1391,11 +1411,13 @@ phaseGeneration.push(
             {
                 objectives[0].visible = false;
                 consoleElement.innerText += "Cristal coletado.\n";
+                gridMapHelper.obstacles[0].active = false;
             }
             else if(checkCollision(actor.getObjectByName('interactionReference'),objectives[1],gridMapHelper))
             {
                 objectives[1].visible = false;
                 consoleElement.innerText += "Cristal coletado.\n";
+                gridMapHelper.obstacles[1].active = false;
             }
             else
             {
@@ -1414,6 +1436,8 @@ phaseGeneration.push(
             actor.getObjectByName('eve').rotation.set(0,0,0);
             objectives[0].visible = true;
             objectives[1].visible = true;
+            gridMapHelper.obstacles[0].active = true;
+            gridMapHelper.obstacles[1].active = true;
             gridMapHelper.restartFires();
             firesVisualRestart();
             setFireStates();
@@ -1631,16 +1655,19 @@ phaseGeneration.push(
             {
                 objectives[0].visible = false;
                 consoleElement.innerText += "Cristal coletado.\n";
+                gridMapHelper.obstacles[0].active = false;
             }
             else if(checkCollision(actor.getObjectByName('interactionReference'),objectives[1],gridMapHelper))
             {
                 objectives[1].visible = false;
                 consoleElement.innerText += "Cristal coletado.\n";
+                gridMapHelper.obstacles[1].active = false;
             }
             else if(checkCollision(actor.getObjectByName('interactionReference'),objectives[2],gridMapHelper))
             {
                 objectives[2].visible = false;
                 consoleElement.innerText += "Cristal coletado.\n";
+                gridMapHelper.obstacles[2].active = false;
             }
             else
             {
@@ -1660,6 +1687,9 @@ phaseGeneration.push(
             objectives[0].visible = true;
             objectives[1].visible = true;
             objectives[2].visible = true;
+            gridMapHelper.obstacles[0].active = true;
+            gridMapHelper.obstacles[1].active = true;
+            gridMapHelper.obstacles[2].active = true;
             gridMapHelper.restartFires();
             firesVisualRestart();
             setFireStates();

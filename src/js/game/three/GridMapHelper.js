@@ -16,6 +16,7 @@ export default class GridMapHelper
         this.traps = [];
         this.fires = [];
         this.lasers = [];
+        this.crystals = [];
     }
 
     createGridPlane()
@@ -120,7 +121,8 @@ export default class GridMapHelper
                 minX: minX,
                 maxX: maxX,
                 minZ: minZ,
-                maxZ: maxZ
+                maxZ: maxZ,
+                active: true
             }
         );
     }
@@ -177,11 +179,12 @@ export default class GridMapHelper
 
     collisionTests(position,newPosition)
     {
+        let activeObstacles = this.obstacles.filter(obstacle => obstacle.active == true);
         if(!this.borderMapCollision(position,newPosition))
         {
-            for(let i = 0;i < this.obstacles.length;i++)
+            for(let i = 0;i < activeObstacles.length;i++)
             {
-                if(this.obstacleCollision(position,newPosition,this.obstacles[i]))
+                if(this.obstacleCollision(position,newPosition,activeObstacles[i]))
                 {
                     const newPositionUpdate = new THREE.Vector3(this.getGlobalXPositionFromCoord(this.getXCoordFromGlobalPosition(position.x)),newPosition.y,this.getGlobalZPositionFromCoord(this.getZCoordFromGlobalPosition(position.z)));
                     return newPositionUpdate;
