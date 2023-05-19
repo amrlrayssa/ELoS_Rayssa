@@ -59950,6 +59950,7 @@ class $229855a44a9d0678$export$2e2bcd8739ae039 {
         this.traps = [];
         this.fires = [];
         this.lasers = [];
+        this.crystals = [];
     }
     createGridPlane() {
         const planeGeometry = new $49pUz.PlaneGeometry(this.getMultiplier() * this.divisions, this.getMultiplier() * this.divisions, this.divisions, this.divisions);
@@ -60007,7 +60008,8 @@ class $229855a44a9d0678$export$2e2bcd8739ae039 {
             minX: minX,
             maxX: maxX,
             minZ: minZ,
-            maxZ: maxZ
+            maxZ: maxZ,
+            active: true
         });
     }
     clearObstacles() {
@@ -60030,9 +60032,10 @@ class $229855a44a9d0678$export$2e2bcd8739ae039 {
         else return true;
     }
     collisionTests(position, newPosition) {
+        let activeObstacles = this.obstacles.filter((obstacle)=>obstacle.active == true);
         if (!this.borderMapCollision(position, newPosition)) {
-            for(let i = 0; i < this.obstacles.length; i++){
-                if (this.obstacleCollision(position, newPosition, this.obstacles[i])) {
+            for(let i = 0; i < activeObstacles.length; i++){
+                if (this.obstacleCollision(position, newPosition, activeObstacles[i])) {
                     const newPositionUpdate = new $49pUz.Vector3(this.getGlobalXPositionFromCoord(this.getXCoordFromGlobalPosition(position.x)), newPosition.y, this.getGlobalZPositionFromCoord(this.getZCoordFromGlobalPosition(position.z)));
                     return newPositionUpdate;
                 } else continue;
@@ -60307,6 +60310,6 @@ function $c49ab76c1c184985$export$5d4bb8012760247a(traps) {
 
 var $f666847ad5354ece$exports = {};
 
-(parcelRequire("2JpsI")).register(JSON.parse('{"fiIik":"index.1cde767c.js","gkOf2":"eve.1d379c98.glb","hpjRp":"crystal.06b47171.jpg","9XNcj":"crystal.b012d479.obj"}'));
+(parcelRequire("2JpsI")).register(JSON.parse('{"fiIik":"index.ea577561.js","gkOf2":"eve.1d379c98.glb","hpjRp":"crystal.06b47171.jpg","9XNcj":"crystal.b012d479.obj"}'));
 
 

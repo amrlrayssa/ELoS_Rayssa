@@ -598,6 +598,7 @@ phaseGeneration.push(()=>{
         if ((0, $6mhZf.checkCollision)(actor.getObjectByName("interactionReference"), objectives[0], gridMapHelper)) {
             objectives[0].visible = false;
             consoleElement.innerText += "Cristal coletado com sucesso.\n";
+            gridMapHelper.obstacles[0].active = false;
         } else consoleElement.innerText += "Rob\xf4 n\xe3o est\xe1 em frente ao cristal.\n";
     };
     resetLevel = ()=>{
@@ -605,6 +606,7 @@ phaseGeneration.push(()=>{
         actor.rotation.set(0, (0, $6mhZf.degreeToRadians)(90), 0);
         actor.getObjectByName("eve").rotation.set(0, 0, 0);
         objectives[0].visible = true;
+        gridMapHelper.obstacles[0].active = true;
         gridMapHelper.restartLasers();
         lasersVisualRestart();
         setLaserStates();
@@ -622,7 +624,7 @@ phaseGeneration.push(()=>{
 //Phase 2
 phaseGeneration.push(()=>{
     document.getElementById("phaseTitle").innerText = "N\xedvel 3 - Fase 2 de 8";
-    document.getElementById("phaseObjective").innerText = "Fa\xe7a o rob\xf4 chegar ao cristal, ap\xf3s isso, o colete.";
+    document.getElementById("phaseObjective").innerText = "Fa\xe7a o rob\xf4 chegar aos cristais, ap\xf3s isso, os colete.";
     sceneProperties.executing = false;
     camera.position.set(0, 15, 30);
     actor.position.set(gridMapHelper.getGlobalXPositionFromCoord(0), 1.0, gridMapHelper.getGlobalZPositionFromCoord(5));
@@ -715,9 +717,11 @@ phaseGeneration.push(()=>{
         if ((0, $6mhZf.checkCollision)(actor.getObjectByName("interactionReference"), objectives[0], gridMapHelper)) {
             objectives[0].visible = false;
             consoleElement.innerText += "Cristal coletado.\n";
+            gridMapHelper.obstacles[0].active = false;
         } else if ((0, $6mhZf.checkCollision)(actor.getObjectByName("interactionReference"), objectives[1], gridMapHelper)) {
             objectives[1].visible = false;
             consoleElement.innerText += "Cristal coletado.\n";
+            gridMapHelper.obstacles[1].active = false;
         } else consoleElement.innerText += "Rob\xf4 n\xe3o est\xe1 em frente ao cristal.\n";
         if (!objectives[0].visible && !objectives[1].visible) consoleElement.innerText += "Todos os cristais coletados com sucesso!\n";
     };
@@ -727,6 +731,8 @@ phaseGeneration.push(()=>{
         actor.getObjectByName("eve").rotation.set(0, 0, 0);
         objectives[0].visible = true;
         objectives[1].visible = true;
+        gridMapHelper.obstacles[0].active = true;
+        gridMapHelper.obstacles[1].active = true;
         gridMapHelper.restartLasers();
         lasersVisualRestart();
         setLaserStates();
@@ -754,7 +760,7 @@ phaseGeneration.push(()=>{
 //Phase 3
 phaseGeneration.push(()=>{
     document.getElementById("phaseTitle").innerText = "N\xedvel 3 - Fase 3 de 8";
-    document.getElementById("phaseObjective").innerText = "Fa\xe7a o rob\xf4 chegar ao cristal, ap\xf3s isso, o colete.";
+    document.getElementById("phaseObjective").innerText = "Fa\xe7a o rob\xf4 chegar aos cristais, ap\xf3s isso, os colete.";
     sceneProperties.executing = false;
     camera.position.set(0, 15, 30);
     actor.position.set(gridMapHelper.getGlobalXPositionFromCoord(0), 1.0, gridMapHelper.getGlobalZPositionFromCoord(5));
@@ -892,9 +898,11 @@ phaseGeneration.push(()=>{
         if ((0, $6mhZf.checkCollision)(actor.getObjectByName("interactionReference"), objectives[0], gridMapHelper)) {
             objectives[0].visible = false;
             consoleElement.innerText += "Cristal coletado.\n";
+            gridMapHelper.obstacles[0].active = false;
         } else if ((0, $6mhZf.checkCollision)(actor.getObjectByName("interactionReference"), objectives[1], gridMapHelper)) {
             objectives[1].visible = false;
             consoleElement.innerText += "Cristal coletado.\n";
+            gridMapHelper.obstacles[1].active = false;
         } else consoleElement.innerText += "Rob\xf4 n\xe3o est\xe1 em frente ao cristal.\n";
         if (!objectives[0].visible && !objectives[1].visible) consoleElement.innerText += "Todos os cristais coletados com sucesso!\n";
     };
@@ -904,6 +912,8 @@ phaseGeneration.push(()=>{
         actor.getObjectByName("eve").rotation.set(0, 0, 0);
         objectives[0].visible = true;
         objectives[1].visible = true;
+        gridMapHelper.obstacles[0].active = true;
+        gridMapHelper.obstacles[1].active = true;
         gridMapHelper.restartLasers();
         lasersVisualRestart();
         setLaserStates();
@@ -1045,6 +1055,7 @@ phaseGeneration.push(()=>{
         if ((0, $6mhZf.checkCollision)(actor.getObjectByName("interactionReference"), objectives[0], gridMapHelper)) {
             objectives[0].visible = false;
             consoleElement.innerText += "Cristal coletado com sucesso.\n";
+            gridMapHelper.obstacles[0].active = false;
         } else consoleElement.innerText += "Rob\xf4 n\xe3o est\xe1 em frente ao cristal.\n";
     };
     resetLevel = ()=>{
@@ -1052,6 +1063,7 @@ phaseGeneration.push(()=>{
         actor.rotation.set(0, (0, $6mhZf.degreeToRadians)(90), 0);
         actor.getObjectByName("eve").rotation.set(0, 0, 0);
         objectives[0].visible = true;
+        gridMapHelper.obstacles[0].active = true;
         gridMapHelper.restartLasers();
         lasersVisualRestart();
         setLaserStates();
@@ -1079,7 +1091,7 @@ phaseGeneration.push(()=>{
 //Phase 5
 phaseGeneration.push(()=>{
     document.getElementById("phaseTitle").innerText = "N\xedvel 3 - Fase 5 de 8";
-    document.getElementById("phaseObjective").innerText = "Fa\xe7a o rob\xf4 chegar ao cristal, ap\xf3s isso, o colete.";
+    document.getElementById("phaseObjective").innerText = "Fa\xe7a o rob\xf4 chegar aos cristais, ap\xf3s isso, os colete.";
     sceneProperties.executing = false;
     camera.position.set(0, 15, 30);
     actor.position.set(gridMapHelper.getGlobalXPositionFromCoord(0), 1.0, gridMapHelper.getGlobalZPositionFromCoord(5));
@@ -1196,9 +1208,11 @@ phaseGeneration.push(()=>{
         if ((0, $6mhZf.checkCollision)(actor.getObjectByName("interactionReference"), objectives[0], gridMapHelper)) {
             objectives[0].visible = false;
             consoleElement.innerText += "Cristal coletado.\n";
+            gridMapHelper.obstacles[0].active = false;
         } else if ((0, $6mhZf.checkCollision)(actor.getObjectByName("interactionReference"), objectives[1], gridMapHelper)) {
             objectives[1].visible = false;
             consoleElement.innerText += "Cristal coletado.\n";
+            gridMapHelper.obstacles[1].active = false;
         } else consoleElement.innerText += "Rob\xf4 n\xe3o est\xe1 em frente ao cristal.\n";
         if (!objectives[0].visible && !objectives[1].visible) consoleElement.innerText += "Todos os cristais coletados com sucesso!\n";
     };
@@ -1208,6 +1222,8 @@ phaseGeneration.push(()=>{
         actor.getObjectByName("eve").rotation.set(0, 0, 0);
         objectives[0].visible = true;
         objectives[1].visible = true;
+        gridMapHelper.obstacles[0].active = true;
+        gridMapHelper.obstacles[1].active = true;
         gridMapHelper.restartLasers();
         lasersVisualRestart();
         setLaserStates();
@@ -1235,7 +1251,7 @@ phaseGeneration.push(()=>{
 //Phase 6
 phaseGeneration.push(()=>{
     document.getElementById("phaseTitle").innerText = "N\xedvel 3 - Fase 6 de 8";
-    document.getElementById("phaseObjective").innerText = "Fa\xe7a o rob\xf4 chegar ao cristal, ap\xf3s isso, o colete.";
+    document.getElementById("phaseObjective").innerText = "Fa\xe7a o rob\xf4 chegar aos cristais, ap\xf3s isso, os colete.";
     sceneProperties.executing = false;
     camera.position.set(0, 15, 30);
     actor.position.set(gridMapHelper.getGlobalXPositionFromCoord(0), 1.0, gridMapHelper.getGlobalZPositionFromCoord(5));
@@ -1390,9 +1406,11 @@ phaseGeneration.push(()=>{
         if ((0, $6mhZf.checkCollision)(actor.getObjectByName("interactionReference"), objectives[0], gridMapHelper)) {
             objectives[0].visible = false;
             consoleElement.innerText += "Cristal coletado.\n";
+            gridMapHelper.obstacles[0].active = false;
         } else if ((0, $6mhZf.checkCollision)(actor.getObjectByName("interactionReference"), objectives[1], gridMapHelper)) {
             objectives[1].visible = false;
             consoleElement.innerText += "Cristal coletado.\n";
+            gridMapHelper.obstacles[1].active = false;
         } else consoleElement.innerText += "Rob\xf4 n\xe3o est\xe1 em frente ao cristal.\n";
         if (!objectives[0].visible && !objectives[1].visible) consoleElement.innerText += "Todos os cristais coletados com sucesso!\n";
     };
@@ -1402,6 +1420,8 @@ phaseGeneration.push(()=>{
         actor.getObjectByName("eve").rotation.set(0, 0, 0);
         objectives[0].visible = true;
         objectives[1].visible = true;
+        gridMapHelper.obstacles[0].active = true;
+        gridMapHelper.obstacles[1].active = true;
         gridMapHelper.restartLasers();
         lasersVisualRestart();
         setLaserStates();
@@ -1429,7 +1449,7 @@ phaseGeneration.push(()=>{
 //Phase 7
 phaseGeneration.push(()=>{
     document.getElementById("phaseTitle").innerText = "N\xedvel 3 - Fase 7 de 8";
-    document.getElementById("phaseObjective").innerText = "Fa\xe7a o rob\xf4 chegar ao cristal, ap\xf3s isso, o colete.";
+    document.getElementById("phaseObjective").innerText = "Fa\xe7a o rob\xf4 chegar aos cristais, ap\xf3s isso, os colete.";
     sceneProperties.executing = false;
     camera.position.set(0, 15, 30);
     actor.position.set(gridMapHelper.getGlobalXPositionFromCoord(0), 1.0, gridMapHelper.getGlobalZPositionFromCoord(5));
@@ -1563,9 +1583,11 @@ phaseGeneration.push(()=>{
         if ((0, $6mhZf.checkCollision)(actor.getObjectByName("interactionReference"), objectives[0], gridMapHelper)) {
             objectives[0].visible = false;
             consoleElement.innerText += "Cristal coletado.\n";
+            gridMapHelper.obstacles[0].active = false;
         } else if ((0, $6mhZf.checkCollision)(actor.getObjectByName("interactionReference"), objectives[1], gridMapHelper)) {
             objectives[1].visible = false;
             consoleElement.innerText += "Cristal coletado.\n";
+            gridMapHelper.obstacles[1].active = false;
         } else consoleElement.innerText += "Rob\xf4 n\xe3o est\xe1 em frente ao cristal.\n";
         if (!objectives[0].visible && !objectives[1].visible) consoleElement.innerText += "Todos os cristais coletados com sucesso!\n";
     };
@@ -1575,6 +1597,8 @@ phaseGeneration.push(()=>{
         actor.getObjectByName("eve").rotation.set(0, 0, 0);
         objectives[0].visible = true;
         objectives[1].visible = true;
+        gridMapHelper.obstacles[0].active = true;
+        gridMapHelper.obstacles[1].active = true;
         gridMapHelper.restartLasers();
         lasersVisualRestart();
         setLaserStates();
@@ -1602,7 +1626,7 @@ phaseGeneration.push(()=>{
 //Phase 8
 phaseGeneration.push(()=>{
     document.getElementById("phaseTitle").innerText = "N\xedvel 3 - Fase 8 de 8";
-    document.getElementById("phaseObjective").innerText = "Fa\xe7a o rob\xf4 chegar ao cristal, ap\xf3s isso, o colete.";
+    document.getElementById("phaseObjective").innerText = "Fa\xe7a o rob\xf4 chegar aos cristais, ap\xf3s isso, os colete.";
     sceneProperties.executing = false;
     camera.position.set(0, 15, 30);
     actor.position.set(gridMapHelper.getGlobalXPositionFromCoord(0), 1.0, gridMapHelper.getGlobalZPositionFromCoord(5));
@@ -1734,12 +1758,15 @@ phaseGeneration.push(()=>{
         if ((0, $6mhZf.checkCollision)(actor.getObjectByName("interactionReference"), objectives[0], gridMapHelper)) {
             objectives[0].visible = false;
             consoleElement.innerText += "Cristal coletado.\n";
+            gridMapHelper.obstacles[0].active = false;
         } else if ((0, $6mhZf.checkCollision)(actor.getObjectByName("interactionReference"), objectives[1], gridMapHelper)) {
             objectives[1].visible = false;
             consoleElement.innerText += "Cristal coletado.\n";
+            gridMapHelper.obstacles[1].active = false;
         } else if ((0, $6mhZf.checkCollision)(actor.getObjectByName("interactionReference"), objectives[2], gridMapHelper)) {
             objectives[2].visible = false;
             consoleElement.innerText += "Cristal coletado.\n";
+            gridMapHelper.obstacles[2].active = false;
         } else consoleElement.innerText += "Rob\xf4 n\xe3o est\xe1 em frente ao cristal.\n";
         if (!objectives[0].visible && !objectives[1].visible && !objectives[2].visible) consoleElement.innerText += "Todos os cristais coletados com sucesso!\n";
     };
@@ -1750,6 +1777,9 @@ phaseGeneration.push(()=>{
         objectives[0].visible = true;
         objectives[1].visible = true;
         objectives[2].visible = true;
+        gridMapHelper.obstacles[0].active = true;
+        gridMapHelper.obstacles[1].active = true;
+        gridMapHelper.obstacles[2].active = true;
         gridMapHelper.restartLasers();
         lasersVisualRestart();
         setLaserStates();

@@ -474,6 +474,7 @@ phaseGeneration.push(()=>{
         if ((0, $6mhZf.checkCollision)(actor.getObjectByName("interactionReference"), objectives[0], gridMapHelper)) {
             objectives[0].visible = false;
             consoleElement.innerText += "Cristal coletado com sucesso.\n";
+            gridMapHelper.obstacles[0].active = false;
         } else consoleElement.innerText += "Rob\xf4 n\xe3o est\xe1 em frente ao cristal.\n";
     };
     resetLevel = ()=>{
@@ -481,6 +482,7 @@ phaseGeneration.push(()=>{
         actor.rotation.set(0, (0, $6mhZf.degreeToRadians)(90), 0);
         actor.getObjectByName("eve").rotation.set(0, 0, 0);
         objectives[0].visible = true;
+        gridMapHelper.obstacles[0].active = true;
         gridMapHelper.restartFires();
         fires[0].setFireVisibility(true);
         extinguisherUses = 1;
@@ -580,6 +582,7 @@ phaseGeneration.push(()=>{
         if ((0, $6mhZf.checkCollision)(actor.getObjectByName("interactionReference"), objectives[0], gridMapHelper)) {
             objectives[0].visible = false;
             consoleElement.innerText += "Cristal coletado com sucesso.\n";
+            gridMapHelper.obstacles[0].active = false;
         } else consoleElement.innerText += "Rob\xf4 n\xe3o est\xe1 em frente ao cristal.\n";
     };
     resetLevel = ()=>{
@@ -587,6 +590,7 @@ phaseGeneration.push(()=>{
         actor.rotation.set(0, (0, $6mhZf.degreeToRadians)(90), 0);
         actor.getObjectByName("eve").rotation.set(0, 0, 0);
         objectives[0].visible = true;
+        gridMapHelper.obstacles[0].active = true;
         gridMapHelper.restartFires();
         firesVisualRestart();
         setFireStates();
@@ -682,9 +686,11 @@ phaseGeneration.push(()=>{
         if ((0, $6mhZf.checkCollision)(actor.getObjectByName("interactionReference"), objectives[0], gridMapHelper)) {
             objectives[0].visible = false;
             consoleElement.innerText += "Cristal coletado.\n";
+            gridMapHelper.obstacles[0].active = false;
         } else if ((0, $6mhZf.checkCollision)(actor.getObjectByName("interactionReference"), objectives[1], gridMapHelper)) {
             objectives[1].visible = false;
             consoleElement.innerText += "Cristal coletado.\n";
+            gridMapHelper.obstacles[1].active = false;
         } else consoleElement.innerText += "Rob\xf4 n\xe3o est\xe1 em frente ao cristal.\n";
         if (!objectives[0].visible && !objectives[1].visible) consoleElement.innerText += "Todos os cristais coletados com sucesso!\n";
     };
@@ -694,6 +700,8 @@ phaseGeneration.push(()=>{
         actor.getObjectByName("eve").rotation.set(0, 0, 0);
         objectives[0].visible = true;
         objectives[1].visible = true;
+        gridMapHelper.obstacles[0].active = true;
+        gridMapHelper.obstacles[1].active = true;
         gridMapHelper.restartFires();
         firesVisualRestart();
         setFireStates();
@@ -775,9 +783,11 @@ phaseGeneration.push(()=>{
         if ((0, $6mhZf.checkCollision)(actor.getObjectByName("interactionReference"), objectives[0], gridMapHelper)) {
             objectives[0].visible = false;
             consoleElement.innerText += "Cristal coletado.\n";
+            gridMapHelper.obstacles[0].active = false;
         } else if ((0, $6mhZf.checkCollision)(actor.getObjectByName("interactionReference"), objectives[1], gridMapHelper)) {
             objectives[1].visible = false;
             consoleElement.innerText += "Cristal coletado.\n";
+            gridMapHelper.obstacles[1].active = false;
         } else consoleElement.innerText += "Rob\xf4 n\xe3o est\xe1 em frente ao cristal.\n";
         if (!objectives[0].visible && !objectives[1].visible) consoleElement.innerText += "Todos os cristais coletados com sucesso!\n";
     };
@@ -787,6 +797,8 @@ phaseGeneration.push(()=>{
         actor.getObjectByName("eve").rotation.set(0, 0, 0);
         objectives[0].visible = true;
         objectives[1].visible = true;
+        gridMapHelper.obstacles[0].active = true;
+        gridMapHelper.obstacles[1].active = true;
         gridMapHelper.restartFires();
         firesVisualRestart();
         setFireStates();
@@ -895,9 +907,11 @@ phaseGeneration.push(()=>{
         if ((0, $6mhZf.checkCollision)(actor.getObjectByName("interactionReference"), objectives[0], gridMapHelper)) {
             objectives[0].visible = false;
             consoleElement.innerText += "Cristal coletado.\n";
+            gridMapHelper.obstacles[0].active = false;
         } else if ((0, $6mhZf.checkCollision)(actor.getObjectByName("interactionReference"), objectives[1], gridMapHelper)) {
             objectives[1].visible = false;
             consoleElement.innerText += "Cristal coletado.\n";
+            gridMapHelper.obstacles[1].active = false;
         } else consoleElement.innerText += "Rob\xf4 n\xe3o est\xe1 em frente ao cristal.\n";
         if (!objectives[0].visible && !objectives[1].visible) consoleElement.innerText += "Todos os cristais coletados com sucesso!\n";
     };
@@ -907,6 +921,8 @@ phaseGeneration.push(()=>{
         actor.getObjectByName("eve").rotation.set(0, 0, 0);
         objectives[0].visible = true;
         objectives[1].visible = true;
+        gridMapHelper.obstacles[0].active = true;
+        gridMapHelper.obstacles[1].active = true;
         gridMapHelper.restartFires();
         firesVisualRestart();
         setFireStates();
@@ -1046,9 +1062,11 @@ phaseGeneration.push(()=>{
         if ((0, $6mhZf.checkCollision)(actor.getObjectByName("interactionReference"), objectives[0], gridMapHelper)) {
             objectives[0].visible = false;
             consoleElement.innerText += "Cristal coletado.\n";
+            gridMapHelper.obstacles[0].active = false;
         } else if ((0, $6mhZf.checkCollision)(actor.getObjectByName("interactionReference"), objectives[1], gridMapHelper)) {
             objectives[1].visible = false;
             consoleElement.innerText += "Cristal coletado.\n";
+            gridMapHelper.obstacles[1].active = false;
         } else consoleElement.innerText += "Rob\xf4 n\xe3o est\xe1 em frente ao cristal.\n";
         if (!objectives[0].visible && !objectives[1].visible) consoleElement.innerText += "Todos os cristais coletados com sucesso!\n";
     };
@@ -1058,6 +1076,8 @@ phaseGeneration.push(()=>{
         actor.getObjectByName("eve").rotation.set(0, 0, 0);
         objectives[0].visible = true;
         objectives[1].visible = true;
+        gridMapHelper.obstacles[0].active = true;
+        gridMapHelper.obstacles[1].active = true;
         gridMapHelper.restartFires();
         firesVisualRestart();
         setFireStates();
@@ -1212,9 +1232,11 @@ phaseGeneration.push(()=>{
         if ((0, $6mhZf.checkCollision)(actor.getObjectByName("interactionReference"), objectives[0], gridMapHelper)) {
             objectives[0].visible = false;
             consoleElement.innerText += "Cristal coletado.\n";
+            gridMapHelper.obstacles[0].active = false;
         } else if ((0, $6mhZf.checkCollision)(actor.getObjectByName("interactionReference"), objectives[1], gridMapHelper)) {
             objectives[1].visible = false;
             consoleElement.innerText += "Cristal coletado.\n";
+            gridMapHelper.obstacles[1].active = false;
         } else consoleElement.innerText += "Rob\xf4 n\xe3o est\xe1 em frente ao cristal.\n";
         if (!objectives[0].visible && !objectives[1].visible) consoleElement.innerText += "Todos os cristais coletados com sucesso!\n";
     };
@@ -1224,6 +1246,8 @@ phaseGeneration.push(()=>{
         actor.getObjectByName("eve").rotation.set(0, 0, 0);
         objectives[0].visible = true;
         objectives[1].visible = true;
+        gridMapHelper.obstacles[0].active = true;
+        gridMapHelper.obstacles[1].active = true;
         gridMapHelper.restartFires();
         firesVisualRestart();
         setFireStates();
@@ -1400,12 +1424,15 @@ phaseGeneration.push(()=>{
         if ((0, $6mhZf.checkCollision)(actor.getObjectByName("interactionReference"), objectives[0], gridMapHelper)) {
             objectives[0].visible = false;
             consoleElement.innerText += "Cristal coletado.\n";
+            gridMapHelper.obstacles[0].active = false;
         } else if ((0, $6mhZf.checkCollision)(actor.getObjectByName("interactionReference"), objectives[1], gridMapHelper)) {
             objectives[1].visible = false;
             consoleElement.innerText += "Cristal coletado.\n";
+            gridMapHelper.obstacles[1].active = false;
         } else if ((0, $6mhZf.checkCollision)(actor.getObjectByName("interactionReference"), objectives[2], gridMapHelper)) {
             objectives[2].visible = false;
             consoleElement.innerText += "Cristal coletado.\n";
+            gridMapHelper.obstacles[2].active = false;
         } else consoleElement.innerText += "Rob\xf4 n\xe3o est\xe1 em frente ao cristal.\n";
         if (!objectives[0].visible && !objectives[1].visible && !objectives[2].visible) consoleElement.innerText += "Todos os cristais coletados com sucesso!\n";
     };
@@ -1416,6 +1443,9 @@ phaseGeneration.push(()=>{
         objectives[0].visible = true;
         objectives[1].visible = true;
         objectives[2].visible = true;
+        gridMapHelper.obstacles[0].active = true;
+        gridMapHelper.obstacles[1].active = true;
+        gridMapHelper.obstacles[2].active = true;
         gridMapHelper.restartFires();
         firesVisualRestart();
         setFireStates();
@@ -2136,7 +2166,7 @@ function $0c161e84c454184c$export$2e2bcd8739ae039(code, limit = 0) {
 
 var $ebf1e8c8c7d55432$exports = {};
 
-(parcelRequire("2JpsI")).register(JSON.parse('{"gktNi":"index.3f666318.js","GGIiK":"fire.e088cc30.png","2x2Z6":"stone.543880d2.jpg","fiIik":"index.1cde767c.js","c5VSK":"index.8c12255d.js"}'));
+(parcelRequire("2JpsI")).register(JSON.parse('{"gktNi":"index.2e8295fb.js","GGIiK":"fire.e088cc30.png","2x2Z6":"stone.543880d2.jpg","fiIik":"index.ea577561.js","c5VSK":"index.8c12255d.js"}'));
 
 
 parcelRequire("apYFO");
