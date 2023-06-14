@@ -1,1 +1,286 @@
-console.log("Teste");
+import * as THREE from "three";
+import { generateDefaultEditor, readOnlyState, editState } from "../editor";
+import {
+    generateDefaultSceneObjects,
+    resizeCanvasToDisplaySize,
+    loadDefaultActor,
+    loadDefaultObjectives,
+    translateActor,
+    rotateActor,
+    checkCollision,
+    degreeToRadians
+} from "../three/util";
+import GridMapHelper from "../three/GridMapHelper";
+import parseCode from "./parser";
+
+const sceneProperties = {
+    cancelExecution: false,
+    phase: 0
+}
+
+const editor = generateDefaultEditor(document.getElementById("editorArea"));
+
+const consoleElement = document.getElementById('consoleArea');
+
+const {renderer, scene, camera, controls} = generateDefaultSceneObjects(document.getElementById("phaseView"));
+
+const gridMapHelper = new GridMapHelper();
+
+const plane = gridMapHelper.createGridPlane();
+
+const actor = loadDefaultActor();
+
+let objectives;
+let walls;
+let openDoors;
+let doors;
+
+scene.add(plane);
+scene.add(actor);
+
+async function andarFrente(amount)
+{
+    let correctedAmount = amount > 10 ? 10 : amount;
+    await translateActor(actor,correctedAmount,gridMapHelper,sceneProperties,consoleElement);
+}
+
+async function andarTras(amount)
+{
+    let correctedAmount = amount > 10 ? 10 : amount;
+    await translateActor(actor,-correctedAmount,gridMapHelper,sceneProperties,consoleElement);
+}
+
+async function girarEsquerda()
+{
+    await rotateActor(actor,90,sceneProperties,1);
+}
+
+async function girarDireita()
+{
+    await rotateActor(actor,90,sceneProperties,-1);
+}
+
+async function darMeiaVolta()
+{
+    await rotateActor(actor,180,sceneProperties,1);
+}
+
+let girarManivela;
+
+let portaAberta;
+
+let coletarCristal;
+
+let resetLevel;
+
+let winCondition;
+
+const phaseGeneration = [];
+
+phaseGeneration.push(
+    () => {
+        document.getElementById('phaseTitle').innerText = "Nível 4 - Fase de Testes";
+        document.getElementById('phaseObjective').innerText = "Abra a porta, faça o robô chegar ao cristal, após isso, o colete.";
+        
+        camera.position.set(0,15,30);
+
+        actor.position.set(gridMapHelper.getGlobalXPositionFromCoord(0),1.0,gridMapHelper.getGlobalZPositionFromCoord(5));
+        actor.rotation.set(0,degreeToRadians(90),0);
+
+        objectives = loadDefaultObjectives(1);
+        objectives[0].position.set(gridMapHelper.getGlobalXPositionFromCoord(9),0.0,gridMapHelper.getGlobalZPositionFromCoord(5));
+        gridMapHelper.addObstacle(9,9,5,5);
+        scene.add(objectives[0]);
+
+        const doorCrank = new THREE.Mesh(new THREE.BoxGeometry(0.5,0.5,1),new THREE.MeshLambertMaterial({color: "rgb(255,0,255)"}));
+        doorCrank.position.set(gridMapHelper.getGlobalXPositionFromCoord(4),1,gridMapHelper.getGlobalZPositionFromCoord(4.6));
+        scene.add(doorCrank);
+        
+        openDoors = [];
+        doors = [];
+        doors.push(new THREE.Mesh(new THREE.BoxGeometry(2,2,2),new THREE.MeshLambertMaterial({color: "rgb(255,0,255)"})));
+        doors[0].position.set(gridMapHelper.getGlobalXPositionFromCoord(5),1,gridMapHelper.getGlobalZPositionFromCoord(5));
+        gridMapHelper.addObstacle(5,5,5,5);
+        scene.add(doors[0]);
+        openDoors.push(false);
+
+        walls = [];
+        const boxGeometry = new THREE.BoxGeometry(18,2,2);
+        const boxMaterial = new THREE.MeshLambertMaterial({color: "rgb(0,255,0)"});
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls[0].position.set(gridMapHelper.getGlobalXPositionFromCoord(5),1,gridMapHelper.getGlobalZPositionFromCoord(4));
+        walls[1].position.set(gridMapHelper.getGlobalXPositionFromCoord(5),1,gridMapHelper.getGlobalZPositionFromCoord(6));
+        scene.add(walls[0]);
+        scene.add(walls[1]);
+        gridMapHelper.addObstacle(1,9,4,4);
+        gridMapHelper.addObstacle(1,9,6,6);
+
+        portaFechada = () => {
+            if(sceneProperties.cancelExecution)
+            {
+                return false;
+            }
+
+            if(checkCollision(actor.getObjectByName("interactionReference"),doors[0],gridMapHelper))
+            {
+                return !openDoors[0];
+            }
+            else
+            {
+                consoleElement.innerText += "É preciso estar perto de uma porta para usar este comando.\n";
+                return false;
+            }
+        }
+
+        girarManivela = async () => {
+            
+            if(sceneProperties.cancelExecution)
+            {
+                return;
+            }
+
+            if(checkCollision(actor.getObjectByName("interactionReference"),doors[0],gridMapHelper))
+            {
+                doors[0].translateY(0.1);
+                if(doors[0].position.y == 2)
+                {
+                    openDoors[0] = true;
+                    gridMapHelper.obstacles[1].active = false;
+                }   
+            }
+        }
+
+        coletarCristal = () => {
+            if(sceneProperties.cancelExecution)
+            {
+                return;
+            }
+
+            if(checkCollision(actor.getObjectByName('interactionReference'),objectives[0],gridMapHelper))
+            {
+                objectives[0].visible = false;
+                consoleElement.innerText += "Cristal coletado com sucesso.\n";
+                gridMapHelper.obstacles[0].active = false;
+            }
+            else
+            {
+                consoleElement.innerText += "Robô não está em frente ao cristal.\n";
+            }
+        }
+
+        resetLevel = () =>{
+            actor.position.set(gridMapHelper.getGlobalXPositionFromCoord(0),1.0,gridMapHelper.getGlobalZPositionFromCoord(5));
+            actor.rotation.set(0,degreeToRadians(90),0);
+            actor.getObjectByName('eve').rotation.set(0,0,0);
+            objectives[0].visible = true;
+            gridMapHelper.obstacles[0].active = true;
+            gridMapHelper.obstacles[1].active = true;
+        }
+
+        winCondition = () =>{
+            if(!objectives[0].visible)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+    }
+);
+
+function removeObjects(crystals, walls)
+{
+    if(crystals != undefined)
+    {
+        for(let i = 0; i < crystals.length; i++)
+        {
+            scene.remove(crystals[i]);
+        }
+    }
+
+    if(walls != undefined)
+    {
+        for(let i = 0; i < walls.length; i++)
+        {
+            scene.remove(walls[i]);
+        }
+        gridMapHelper.clearObstacles();   
+    }
+
+    crystals = undefined;
+    walls = undefined;
+    traps = undefined;
+    lasers = undefined;
+}
+
+function animate()
+{
+    renderer.render(scene,camera);
+    controls.update();
+    requestAnimationFrame(animate);
+}
+
+window.addEventListener('resize',() => {
+    resizeCanvasToDisplaySize(renderer,camera);
+});
+
+const execBtn = document.getElementById("execBtn")
+execBtn.addEventListener("click",async function() {
+    const codeParsed = parseCode(editor.state.doc.toString());
+    console.log(codeParsed);
+    sceneProperties.cancelExecution = false;
+
+    if(codeParsed != null)
+    {
+        resetLevel();
+        this.disabled = true;
+        await eval(codeParsed);
+        if(winCondition())
+        {
+            readOnlyState.doc = editor.state.doc;
+            editor.setState(readOnlyState);
+            document.getElementById('winMessage').classList.remove('invisible');
+            document.getElementById('advanceBtn').classList.remove('invisible');
+            document.getElementById("resetBtn").disabled = true;
+        }
+        else
+        {
+            sceneProperties.executing = false;
+            this.disabled = false;
+        }
+    }
+});
+
+const resetBtn = document.getElementById("resetBtn");
+resetBtn.addEventListener("click",() => {
+    sceneProperties.cancelExecution = true;
+    resetLevel();
+});
+
+const advanceBtn = document.getElementById('advanceBtn');
+advanceBtn.addEventListener('click',(e) => {
+    sceneProperties.phase++;
+    if(sceneProperties.phase < phaseGeneration.length)
+    {
+        removeObjects(objectives,walls);
+        phaseGeneration[sceneProperties.phase]();
+        editor.setState(editState);
+        consoleElement.innerText = null;
+        document.getElementById('winMessage').classList.add('invisible');
+        document.getElementById('advanceBtn').classList.add('invisible');
+        execBtn.disabled = false;
+        resetBtn.disabled = false;
+    }
+    else
+    {
+        sceneProperties.phase = sceneProperties.phase > phaseGeneration.length ? phaseGeneration.length : sceneProperties.phase;
+        window.location.href = "../";
+    }
+});
+
+resizeCanvasToDisplaySize(renderer,camera);
+phaseGeneration[sceneProperties.phase]();
+animate();
