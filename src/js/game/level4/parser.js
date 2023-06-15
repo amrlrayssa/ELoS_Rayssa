@@ -63,6 +63,10 @@ const functionFilter = [
         filter: new RegExp('^enquanto(\\s+)?\\((\\s+)?.+\\)(\\s+)?{$'),
         type: 'loop&&blockValidation'
     },
+    {
+        filter: new RegExp('^girarManivela(\\s+)?\\((\\s+)?\\)(\\s+)?(;)?$'),
+        type: 'sequential'
+    },
 ];
 
 const conditionalParameters = [
@@ -70,7 +74,7 @@ const conditionalParameters = [
     new RegExp('false'),
     new RegExp('^laserAzulAtivo(\\s+)?\\((\\s+)?\\)(\\s+)?$'),
     new RegExp('^laserVermelhoAtivo(\\s+)?\\((\\s+)?\\)(\\s+)?$'),
-    new RegExp('^portaAberta(\\s+)?\\((\\s+)?\\)(\\s+)?$')
+    new RegExp('^portaFechada(\\s+)?\\((\\s+)?\\)(\\s+)?$')
 ]
 
 function ifValidation(line)

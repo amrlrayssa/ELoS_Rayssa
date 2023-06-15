@@ -133,22 +133,35 @@ phaseGeneration.push(
             }
         }
 
-        girarManivela = async () => {
+        girarManivela = () => {
             
-            if(sceneProperties.cancelExecution)
-            {
-                return;
-            }
+            return new Promise((resolve) =>{
 
-            if(checkCollision(actor.getObjectByName("interactionReference"),doors[0],gridMapHelper))
-            {
-                doors[0].translateY(0.1);
-                if(doors[0].position.y == 2)
+                if(sceneProperties.cancelExecution)
                 {
-                    openDoors[0] = true;
-                    gridMapHelper.obstacles[1].active = false;
-                }   
-            }
+                    resolve();
+                }
+
+                if(checkCollision(actor.getObjectByName("interactionReference"),doors[0],gridMapHelper))
+                {
+                    function translateDoor()
+                    {
+                        doors[0].translateY(0.1);
+                        resolve();
+                    }
+
+                    if(doors[0].position.y >= 3)
+                    {
+                        openDoors[0] = true;
+                        gridMapHelper.obstacles[1].active = false;
+                        resolve();
+                    }
+                    else
+                    {
+                        requestAnimationFrame(translateDoor);
+                    } 
+                }
+            });
         }
 
         coletarCristal = () => {
@@ -174,6 +187,7 @@ phaseGeneration.push(
             actor.rotation.set(0,degreeToRadians(90),0);
             actor.getObjectByName('eve').rotation.set(0,0,0);
             objectives[0].visible = true;
+            doors[0].position.set(gridMapHelper.getGlobalXPositionFromCoord(5),1,gridMapHelper.getGlobalZPositionFromCoord(5));
             gridMapHelper.obstacles[0].active = true;
             gridMapHelper.obstacles[1].active = true;
         }
