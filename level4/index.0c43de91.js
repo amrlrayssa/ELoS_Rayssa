@@ -84,7 +84,7 @@ async function darMeiaVolta() {
     await (0, $6mhZf.rotateActor)(actor, 180, sceneProperties, 1);
 }
 let girarManivela;
-let portaAberta;
+let portaFechada;
 let coletarCristal;
 let resetLevel;
 let winCondition;
