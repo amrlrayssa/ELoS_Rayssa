@@ -1,1 +1,119 @@
-<!DOCTYPE html><html lang="pt-BR"><head><script type="module" src="https://avrgroup.github.io/ELoS/level4/index.21f842dc.js"></script><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="icon shortcut" href="https://avrgroup.github.io/ELoS/favicon.ae8f28de.ico" type="image/x-icon"><link rel="stylesheet" href="https://avrgroup.github.io/ELoS/level1/index.eec1d0a0.css"><title>ELoS (Versão de Teste) - Nível 4</title></head><body> <div class="container-fluid"> <div class="row"> <div class="col-md-6 col-sm-12 vh-50 vh-md-100"> <canvas id="phaseView" style="width:100%;height:100%"> </canvas> <div class="ms-3 position-absolute start-0 top-0"> <h2 id="phaseTitle" class="bg-warning mb-0">Nível 4 - Fase x de X</h2> <p id="phaseObjective" class="bg-info mb-0 mt-0">Faça algo</p> <h2 id="winMessage" class="bg-success invisible mt-0">Fase Concluída</h2> <button id="advanceBtn" type="button" class="btn btn-primary invisible">Avançar</button> </div> </div> <div class="col-md-6 col-sm-12"> <div class="row"> <div class="col-12 order-last order-md-first py-1"> <div class="card"> <div class="card-header"> <h5 class="card-title">Funções Disponíveis:</h5> </div> <div class="collapse" id="collapseFunctions"> <div class="card-body"> <code> <div class="row"> <div class="col-5"> <span><b>Ações:</b></span> </div> <div class="col-3 text-primary"> <span><b>Verificadores:</b></span> </div> <div class="col-4 text-success"> <span><b>Estruturas:</b></span> </div> </div> <div class="row"> <div class="col-5"> <p id="andarFrente" class="btn-txt">andarFrente(quantidade)</p> <p id="andarTras" class="btn-txt">andarTras(quantidade)</p> <p id="girarEsquerda" class="btn-txt">girarEsquerda()</p> <p id="girarDireita" class="btn-txt">girarDireita()</p> <p id="darMeiaVolta" class="btn-txt">darMeiaVolta()</p> <p id="desativarLaserAzul" class="btn-txt">desativarLaserAzul()</p> <p id="desativarLaserVermelho" class="btn-txt">desativarLaserVermelho()</p> <p id="girarManivela" class="btn-txt">girarManivela()</p> <p id="coletarCristal" class="btn-txt">coletarCristal()</p> </div> <div class="col-3 text-primary"> <p id="laserAzulAtivo" class="btn-txt">laserAzulAtivo()</p> <p id="laserVermelhoAtivo" class="btn-txt">laserVermelhoAtivo()</p> <p id="portaFechada" class="btn-txt">portaFechada()</p> </div> <div class="col-4 text-success"> <p id="condicaoFull" class="btn-txt"> se(condição){<br>&nbsp;ação()<br>}<br> senão{<br>&nbsp;ação()<br>} </p> <p id="loop" class="btn-txt"> enquanto(condição){<br>&nbsp;ação()<br>}<br> </p> </div> </div> </code> </div> </div> <div class="card-footer"> <button id="collapseBtn" class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFunctions" aria-expanded="false" aria-controls="collapseFunctions"> Abrir </button> </div> </div> </div> <div class="col-12 order-first order-md-2 py-1"> <div class="card max-vh-25 max-vh-md-40 min-vh-md-30"> <div class="card-header"> <h5 class="card-title">Digite seu código aqui:</h5> </div> <div id="editorArea" class="card-body overflow-auto"> </div> <div class="card-footer"> <button id="execBtn" type="button" class="btn btn-primary">Executar</button> <button id="resetBtn" type="button" class="btn btn-secondary">Reset</button> </div> </div> </div> <div class="col-12 order-2 order-md-last py-1"> <div class="card max-vh-24 max-vh-md-40"> <div class="card-header"> <h5 class="card-title">Console:</h5> </div> <div class="card-body overflow-auto"> <code id="consoleArea"> </code> </div> <div class="card-footer"> <button id="clsConsole" type="button" class="btn btn-secondary">Limpar Console</button> </div> </div> </div> </div> </div> </div> </div> </body><script type="module" src="https://avrgroup.github.io/ELoS/level1/index.7694bde9.js"></script><script type="module" src="https://avrgroup.github.io/ELoS/level4/index.977ca56e.js"></script></html>
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head><script type="module" src="https://avrgroup.github.io/ELoS_test/level4/index.4b671e19.js"></script>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" href="https://avrgroup.github.io/ELoS_test/favicon.ae8f28de.ico" type="image/x-icon">
+        <link rel="stylesheet" href="https://avrgroup.github.io/ELoS_test/level1/index.1855c30f.css">
+        <title>ELoS (Versão de Teste) - Nível 4</title>
+    </head>
+    <body>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-12 col-md-6 vh-50 vh-md-100">
+                    <canvas id="phaseView" style="width: 100%; height: 100%">
+
+                    </canvas>
+                    <div class="position-absolute top-0 start-0 ms-3">
+                        <h2 id="phaseTitle" class="bg-warning mb-0">Nível 4 - Fase x de X</h2>
+                        <p id="phaseObjective" class="bg-info mt-0 mb-0">Faça algo</p>
+                        <h2 id="winMessage" class="bg-success mt-0 invisible">Fase Concluída</h2>
+                        <button id="advanceBtn" type="button" class="btn btn-primary invisible">Avançar</button>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <div class="row">
+                        <div class="col-12 order-last order-md-first py-1">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="card-title">Funções Disponíveis:</h5>
+                                </div>
+                                <div class="collapse" id="collapseFunctions">
+                                    <div class="card-body">
+                                        <code>
+                                            <div class="row">
+                                                <div class="col-5">
+                                                    <span><b>Ações:</b></span>
+                                                </div>
+                                                <div class="col-3 text-primary">
+                                                    <span><b>Verificadores:</b></span>
+                                                </div>
+                                                <div class="col-4 text-success">
+                                                    <span><b>Estruturas:</b></span>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-5">
+                                                    <p id="andarFrente" class="btn-txt">andarFrente(quantidade)</p>
+                                                    <p id="andarTras" class="btn-txt">andarTras(quantidade)</p>
+                                                    <p id="girarEsquerda" class="btn-txt">girarEsquerda()</p>
+                                                    <p id="girarDireita" class="btn-txt">girarDireita()</p>
+                                                    <p id="darMeiaVolta" class="btn-txt">darMeiaVolta()</p>
+                                                    <p id="desativarLaserAzul" class="btn-txt">desativarLaserAzul()</p>
+                                                    <p id="desativarLaserVermelho" class="btn-txt">desativarLaserVermelho()</p>
+                                                    <p id="girarManivela" class="btn-txt">girarManivela()</p>
+                                                    <p id="coletarCristal" class="btn-txt">coletarCristal()</p>
+                                                </div>
+                                                <div class="col-3 text-primary">
+                                                    <p id="laserAzulAtivo" class="btn-txt">laserAzulAtivo()</p>
+                                                    <p id="laserVermelhoAtivo" class="btn-txt">laserVermelhoAtivo()</p>
+                                                    <p id="portaFechada" class="btn-txt">portaFechada()</p>
+                                                </div>
+                                                <div class="col-4 text-success">
+                                                    <p id="condicaoFull" class="btn-txt">
+                                                        se(condição){<br>&nbsp;ação()<br>}<br>
+                                                        senão{<br>&nbsp;ação()<br>}
+                                                    </p>
+                                                    <p id="loop" class="btn-txt">
+                                                        enquanto(condição){<br>&nbsp;ação()<br>}<br>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </code>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <button id="collapseBtn" class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFunctions" aria-expanded="false" aria-controls="collapseFunctions">
+                                        Abrir
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 order-first order-md-2 py-1">
+                            <div class="card min-vh-md-30 max-vh-25 max-vh-md-40">
+                                <div class="card-header">
+                                    <h5 class="card-title">Digite seu código aqui:</h5>
+                                </div>
+                                <div id="editorArea" class="card-body overflow-auto">
+
+                                </div>
+                                <div class="card-footer">
+                                    <button id="execBtn" type="button" class="btn btn-primary">Executar</button>
+                                    <button id="resetBtn" type="button" class="btn btn-secondary">Reset</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 order-2 order-md-last py-1">
+                            <div class="card max-vh-24 max-vh-md-40">
+                                <div class="card-header">
+                                    <h5 class="card-title">Console:</h5>
+                                </div>
+                                <div class="card-body overflow-auto">
+                                    <code id="consoleArea">
+
+                                    </code>
+                                </div>
+                                <div class="card-footer">
+                                    <button id="clsConsole" type="button" class="btn btn-secondary">Limpar Console</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>        
+    </body>
+    <script type="module" src="https://avrgroup.github.io/ELoS_test/level1/index.b73fbb5b.js"></script>
+    <script type="module" src="https://avrgroup.github.io/ELoS_test/level4/index.479e2429.js"></script>
+</html>
