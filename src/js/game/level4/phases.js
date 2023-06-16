@@ -67,7 +67,7 @@ async function darMeiaVolta()
 
 let girarManivela;
 
-let portaAberta;
+let portaFechada;
 
 let coletarCristal;
 
