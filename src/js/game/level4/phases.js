@@ -94,6 +94,9 @@ phaseGeneration.push(
 
         const doorCrank = new THREE.Mesh(new THREE.BoxGeometry(0.5,0.5,1),new THREE.MeshLambertMaterial({color: "rgb(255,0,255)"}));
         doorCrank.position.set(gridMapHelper.getGlobalXPositionFromCoord(4),1,gridMapHelper.getGlobalZPositionFromCoord(4.6));
+        const doorInteractionReference = new THREE.Object3D();
+        doorInteractionReference.position.set(gridMapHelper.getGlobalXPositionFromCoord(4),1,gridMapHelper.getGlobalZPositionFromCoord(4));
+        doorCrank.add(doorInteractionReference);
         scene.add(doorCrank);
         
         openDoors = [];
@@ -122,13 +125,13 @@ phaseGeneration.push(
                 return false;
             }
 
-            if(checkCollision(actor.getObjectByName("interactionReference"),doors[0],gridMapHelper))
+            if(checkCollision(actor.getObjectByName("interactionReference"),doorInteractionReference,gridMapHelper))
             {
                 return !openDoors[0];
             }
             else
             {
-                consoleElement.innerText += "É preciso estar perto de uma porta para usar este comando.\n";
+                consoleElement.innerText += "É preciso estar de frente de uma manivela para usar este comando.\n";
                 return false;
             }
         }
@@ -142,7 +145,7 @@ phaseGeneration.push(
                     resolve();
                 }
 
-                if(checkCollision(actor.getObjectByName("interactionReference"),doors[0],gridMapHelper))
+                if(checkCollision(actor.getObjectByName("interactionReference"),doorInteractionReference,gridMapHelper))
                 {
                     function translateDoor()
                     {
@@ -160,6 +163,11 @@ phaseGeneration.push(
                     {
                         requestAnimationFrame(translateDoor);
                     } 
+                }
+                else
+                {
+                    consoleElement.innerText += "É preciso estar de frente de uma manivela para usar este comando.\n";
+                    resolve();   
                 }
             });
         }
