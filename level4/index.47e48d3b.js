@@ -103,6 +103,9 @@ phaseGeneration.push(()=>{
         color: "rgb(255,0,255)"
     }));
     doorCrank.position.set(gridMapHelper.getGlobalXPositionFromCoord(4), 1, gridMapHelper.getGlobalZPositionFromCoord(4.6));
+    const doorInteractionReference = new $49pUz.Object3D();
+    doorInteractionReference.position.set(gridMapHelper.getGlobalXPositionFromCoord(4), 1, gridMapHelper.getGlobalZPositionFromCoord(4));
+    doorCrank.add(doorInteractionReference);
     scene.add(doorCrank);
     openDoors = [];
     doors = [];
@@ -128,16 +131,16 @@ phaseGeneration.push(()=>{
     gridMapHelper.addObstacle(1, 9, 6, 6);
     portaFechada = ()=>{
         if (sceneProperties.cancelExecution) return false;
-        if ((0, $6mhZf.checkCollision)(actor.getObjectByName("interactionReference"), doors[0], gridMapHelper)) return !openDoors[0];
+        if ((0, $6mhZf.checkCollision)(actor.getObjectByName("interactionReference"), doorInteractionReference, gridMapHelper)) return !openDoors[0];
         else {
-            consoleElement.innerText += "\xc9 preciso estar perto de uma porta para usar este comando.\n";
+            consoleElement.innerText += "\xc9 preciso estar de frente de uma manivela para usar este comando.\n";
             return false;
         }
     };
     girarManivela = ()=>{
         return new Promise((resolve)=>{
             if (sceneProperties.cancelExecution) resolve();
-            if ((0, $6mhZf.checkCollision)(actor.getObjectByName("interactionReference"), doors[0], gridMapHelper)) {
+            if ((0, $6mhZf.checkCollision)(actor.getObjectByName("interactionReference"), doorInteractionReference, gridMapHelper)) {
                 function translateDoor() {
                     doors[0].translateY(0.1);
                     resolve();
@@ -147,6 +150,9 @@ phaseGeneration.push(()=>{
                     gridMapHelper.obstacles[1].active = false;
                     resolve();
                 } else requestAnimationFrame(translateDoor);
+            } else {
+                consoleElement.innerText += "\xc9 preciso estar de frente de uma manivela para usar este comando.\n";
+                resolve();
             }
         });
     };
