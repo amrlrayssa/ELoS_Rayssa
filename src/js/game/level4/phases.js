@@ -153,7 +153,6 @@ phaseGeneration.push(
                         doors[0].rotateCranckZ(degreeToRadians(-5));
                         resolve();
                     }
-                    console.log(doors[0].getDoorY().toFixed(1))
                     if(doors[0].getDoorY().toFixed(1) == -2)
                     {
                         openDoors[0] = true;
