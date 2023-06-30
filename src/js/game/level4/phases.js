@@ -11,6 +11,7 @@ import {
     degreeToRadians
 } from "../three/util";
 import GridMapHelper from "../three/GridMapHelper";
+import CranckDoor from "../three/CranckDoor";
 import parseCode from "./parser";
 
 const sceneProperties = {
@@ -92,16 +93,16 @@ phaseGeneration.push(
         gridMapHelper.addObstacle(9,9,5,5);
         scene.add(objectives[0]);
 
-        const doorCrank = new THREE.Mesh(new THREE.BoxGeometry(0.5,0.5,1),new THREE.MeshLambertMaterial({color: "rgb(255,0,255)"}));
-        doorCrank.position.set(gridMapHelper.getGlobalXPositionFromCoord(4),1,gridMapHelper.getGlobalZPositionFromCoord(4.6));
+        //const doorCrank = new THREE.Mesh(new THREE.BoxGeometry(0.5,0.5,1),new THREE.MeshLambertMaterial({color: "rgb(255,0,255)"}));
+        //doorCrank.position.set(gridMapHelper.getGlobalXPositionFromCoord(4),1,gridMapHelper.getGlobalZPositionFromCoord(4.6));
         const doorInteractionReference = new THREE.Object3D();
         doorInteractionReference.position.set(gridMapHelper.getGlobalXPositionFromCoord(4),1,gridMapHelper.getGlobalZPositionFromCoord(4));
-        doorCrank.add(doorInteractionReference);
-        scene.add(doorCrank);
+        //doorCrank.add(doorInteractionReference);
+        //scene.add(doorCrank);
         
         openDoors = [];
         doors = [];
-        doors.push(new THREE.Mesh(new THREE.BoxGeometry(2,2,2),new THREE.MeshLambertMaterial({color: "rgb(255,0,255)"})));
+        doors.push(new CranckDoor());
         doors[0].position.set(gridMapHelper.getGlobalXPositionFromCoord(5),1,gridMapHelper.getGlobalZPositionFromCoord(5));
         gridMapHelper.addObstacle(5,5,5,5);
         scene.add(doors[0]);
@@ -144,16 +145,16 @@ phaseGeneration.push(
                 {
                     resolve();
                 }
-
                 if(checkCollision(actor.getObjectByName("interactionReference"),doorInteractionReference,gridMapHelper))
                 {
                     function translateDoor()
                     {
-                        doors[0].translateY(0.1);
+                        doors[0].lerpDoor(0, -2)
+                        doors[0].rotateCranckZ(degreeToRadians(-5));
                         resolve();
                     }
-
-                    if(doors[0].position.y >= 3)
+                    console.log(doors[0].getDoorY().toFixed(1))
+                    if(doors[0].getDoorY().toFixed(1) == -2)
                     {
                         openDoors[0] = true;
                         gridMapHelper.obstacles[1].active = false;
@@ -195,7 +196,8 @@ phaseGeneration.push(
             actor.rotation.set(0,degreeToRadians(90),0);
             actor.getObjectByName('eve').rotation.set(0,0,0);
             objectives[0].visible = true;
-            doors[0].position.set(gridMapHelper.getGlobalXPositionFromCoord(5),1,gridMapHelper.getGlobalZPositionFromCoord(5));
+            openDoors.forEach(door => door = false)
+            doors.forEach(door => door.resetPos());
             gridMapHelper.obstacles[0].active = true;
             gridMapHelper.obstacles[1].active = true;
         }
