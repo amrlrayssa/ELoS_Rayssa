@@ -12006,32 +12006,11 @@ textarea.form-control-lg {
 }
 
 .btn-txt {
-  color: #d63384;
-  margin: 0%;
+  color: #212529;
 }
 
 .btn-txt:hover {
-  color: #212529;
-  cursor: pointer;
-}
-
-.btn-txt-verificator {
-  color: #0d6efd;
-  margin: 0%;
-}
-
-.btn-txt-verificator:hover {
-  color: #212529;
-  cursor: pointer;
-}
-
-.btn-txt-structure {
-  color: #198754;
-  margin: 0%;
-}
-
-.btn-txt-structure:hover {
-  color: #212529;
+  color: #d63384;
   cursor: pointer;
 }
 
