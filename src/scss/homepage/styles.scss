@@ -3,45 +3,64 @@ body {
 }
 
 .page {
+  width: 100%;
   position: relative;
+}
+
+.page img {
+  width: 85%;
 }
 
 .robot {
   position: absolute;
-  left: 800px;
-  top: 0px;
+  right: 1;
+  top: 0;
+}
+
+.robot img {
+  width: 60%;
 }
 
 .bottonlvl1 {
+  width: 8%;
   position:absolute;
-  top: 533px;
-  left: 67px;
+  top: 374px;
+  left: 49px;
 }
 
 .bottonlvl2 {
+  width: 8%;
   position:absolute;
-  top: 670px;
-  left: 67px;
+  top: 474px;
+  left: 49px;
 }
 
 .bottonlvl3 { 
+  width: 8%;
   position:absolute;
-  top: 825px;
-  left: 67px;
+  top: 374px;
+  left: 505px;
+}
+
+.bottonlvl4 {
+  width: 8%;
+  position:absolute;
+  top: 474px;
+  left: 501px;
 }
 
 .virtus {
   position:absolute;
-  right: 20px;
-  top:15px;
+  right: 1px;
+  top:1px;
 }
 
 #myBtn {
   position: absolute;
-  width:185px;
-  height:185px;
-  left: 486px;
-  top: 132px;
+  width:135px;
+  height:135px;
+  left: 340px;
+  top: 91px;
   background-color: transparent;
   background-repeat:no-repeat;
   border: none;
