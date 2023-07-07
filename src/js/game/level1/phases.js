@@ -166,6 +166,12 @@ const {renderer, scene, camera, controls} = generateDefaultSceneObjects(document
 const gridMapHelper = new GridMapHelper();
 
 const plane = gridMapHelper.createGridPlane();
+const plane2 = gridMapHelper.createGridPlane2();
+const plane3 = gridMapHelper.createGridPlane3();
+const plane4 = gridMapHelper.createGridPlane4();
+const plane5 = gridMapHelper.createGridPlane5();
+const plane6 = gridMapHelper.createGridPlane6();
+const plane7 = gridMapHelper.createGridPlane7();
 
 const actor = loadDefaultActor();
 
@@ -179,7 +185,6 @@ let setSpikeTrapState;
 
 let setSpikeTrapStateInterval;
 
-scene.add(plane);
 scene.add(actor);
 
 async function andarFrente(amount)
@@ -222,18 +227,83 @@ const phaseGeneration = [];
 //Phase 1
 phaseGeneration.push(
     () => {
-        document.getElementById('phaseTitle').innerText = "Nível 1 - Fase 1 de 8";
+        scene.add(plane7);
+        document.getElementById('phaseTitle').innerText = "Teste 1";
         document.getElementById('phaseObjective').innerText = "Faça o robô chegar ao cristal, após isso, o colete.";
 
         camera.position.set(0,15,30);
+        camera.rotation.set(0,0,0);
 
         actor.position.set(gridMapHelper.getGlobalXPositionFromCoord(0),1.0,gridMapHelper.getGlobalZPositionFromCoord(5));
         actor.rotation.set(0,degreeToRadians(90),0);
 
         objectives = loadDefaultObjectives(1);
-        objectives[0].position.set(gridMapHelper.getGlobalXPositionFromCoord(9),0.0,gridMapHelper.getGlobalZPositionFromCoord(5));
-        gridMapHelper.addObstacle(9,9,5,5);
+        objectives[0].position.set(gridMapHelper.getGlobalXPositionFromCoord(8),0.0,gridMapHelper.getGlobalZPositionFromCoord(0));
+        gridMapHelper.addObstacle(8,8,0,0);
         scene.add(objectives[0]);
+
+        walls = [];
+        const boxGeometry = new THREE.BoxGeometry(2,2,2);
+        var aux = new URL('../../../assets/textures/stone_wall7.jpg',import.meta.url).toString();
+        var textureParede = new THREE.TextureLoader().load(aux);
+        const boxMaterial = new THREE.MeshBasicMaterial({map: textureParede});
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls[0].position.set(gridMapHelper.getGlobalXPositionFromCoord(2),1.0,gridMapHelper.getGlobalZPositionFromCoord(2));
+        walls[1].position.set(gridMapHelper.getGlobalXPositionFromCoord(3),1.0,gridMapHelper.getGlobalZPositionFromCoord(2));
+        walls[2].position.set(gridMapHelper.getGlobalXPositionFromCoord(4),1.0,gridMapHelper.getGlobalZPositionFromCoord(2));
+        walls[3].position.set(gridMapHelper.getGlobalXPositionFromCoord(5),1.0,gridMapHelper.getGlobalZPositionFromCoord(2));
+        walls[4].position.set(gridMapHelper.getGlobalXPositionFromCoord(6),1.0,gridMapHelper.getGlobalZPositionFromCoord(2));
+        walls[5].position.set(gridMapHelper.getGlobalXPositionFromCoord(7),1.0,gridMapHelper.getGlobalZPositionFromCoord(2));
+        walls[6].position.set(gridMapHelper.getGlobalXPositionFromCoord(8),1.0,gridMapHelper.getGlobalZPositionFromCoord(2));
+        walls[7].position.set(gridMapHelper.getGlobalXPositionFromCoord(2),1.0,gridMapHelper.getGlobalZPositionFromCoord(4));
+        walls[8].position.set(gridMapHelper.getGlobalXPositionFromCoord(3),1.0,gridMapHelper.getGlobalZPositionFromCoord(4));
+        walls[9].position.set(gridMapHelper.getGlobalXPositionFromCoord(4),1.0,gridMapHelper.getGlobalZPositionFromCoord(4));
+        walls[10].position.set(gridMapHelper.getGlobalXPositionFromCoord(5),1.0,gridMapHelper.getGlobalZPositionFromCoord(4));
+        walls[11].position.set(gridMapHelper.getGlobalXPositionFromCoord(6),1.0,gridMapHelper.getGlobalZPositionFromCoord(4));
+        walls[12].position.set(gridMapHelper.getGlobalXPositionFromCoord(7),1.0,gridMapHelper.getGlobalZPositionFromCoord(4));
+        walls[13].position.set(gridMapHelper.getGlobalXPositionFromCoord(8),1.0,gridMapHelper.getGlobalZPositionFromCoord(4));
+        walls[14].position.set(gridMapHelper.getGlobalXPositionFromCoord(9),1.0,gridMapHelper.getGlobalZPositionFromCoord(4));
+        walls[15].position.set(gridMapHelper.getGlobalXPositionFromCoord(7),1.0,gridMapHelper.getGlobalZPositionFromCoord(0));
+        walls[16].position.set(gridMapHelper.getGlobalXPositionFromCoord(7),1.0,gridMapHelper.getGlobalZPositionFromCoord(0));
+        walls[17].position.set(gridMapHelper.getGlobalXPositionFromCoord(7),1.0,gridMapHelper.getGlobalZPositionFromCoord(1));
+        gridMapHelper.addObstacle(2,8,2,2);
+        gridMapHelper.addObstacle(2,9,4,4);
+        gridMapHelper.addObstacle(7,7,0,1);
+        scene.add(walls[0]);
+        scene.add(walls[1]);
+        scene.add(walls[2]);
+        scene.add(walls[3]);
+        scene.add(walls[4]);
+        scene.add(walls[5]);
+        scene.add(walls[6]);
+        scene.add(walls[7]);
+        scene.add(walls[8]);
+        scene.add(walls[9]);
+        scene.add(walls[10]);
+        scene.add(walls[11]);
+        scene.add(walls[12]);
+        scene.add(walls[13]);
+        scene.add(walls[14]);
+        scene.add(walls[15]);
+        scene.add(walls[16]);
+        scene.add(walls[17]);
 
         coletarCristal = () => {
             if(sceneProperties.cancelExecution)
@@ -279,7 +349,9 @@ phaseGeneration.push(
 //Phase 2
 phaseGeneration.push(
     () => {
-        document.getElementById('phaseTitle').innerText = "Nível 1 - Fase 2 de 8";
+        scene.remove(plane7);
+        scene.add(plane6);
+        document.getElementById('phaseTitle').innerText = "Teste 2";
         document.getElementById('phaseObjective').innerText = "Faça o robô chegar ao cristal, após isso, o colete.";
 
         camera.position.set(0,15,30);
@@ -289,9 +361,72 @@ phaseGeneration.push(
         actor.rotation.set(0,degreeToRadians(90),0);
 
         objectives = loadDefaultObjectives(1);
-        objectives[0].position.set(gridMapHelper.getGlobalXPositionFromCoord(8),0.0,gridMapHelper.getGlobalZPositionFromCoord(2));
-        gridMapHelper.addObstacle(8,8,2,2);
+        objectives[0].position.set(gridMapHelper.getGlobalXPositionFromCoord(8),0.0,gridMapHelper.getGlobalZPositionFromCoord(0));
+        gridMapHelper.addObstacle(8,8,0,0);
         scene.add(objectives[0]);
+
+        walls = [];
+        const boxGeometry = new THREE.BoxGeometry(2,2,2);
+        var aux = new URL('../../../assets/textures/stone_wall6.jpg',import.meta.url).toString();
+        var textureParede = new THREE.TextureLoader().load(aux);
+        const boxMaterial = new THREE.MeshBasicMaterial({map: textureParede});
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls[0].position.set(gridMapHelper.getGlobalXPositionFromCoord(2),1.0,gridMapHelper.getGlobalZPositionFromCoord(2));
+        walls[1].position.set(gridMapHelper.getGlobalXPositionFromCoord(3),1.0,gridMapHelper.getGlobalZPositionFromCoord(2));
+        walls[2].position.set(gridMapHelper.getGlobalXPositionFromCoord(4),1.0,gridMapHelper.getGlobalZPositionFromCoord(2));
+        walls[3].position.set(gridMapHelper.getGlobalXPositionFromCoord(5),1.0,gridMapHelper.getGlobalZPositionFromCoord(2));
+        walls[4].position.set(gridMapHelper.getGlobalXPositionFromCoord(6),1.0,gridMapHelper.getGlobalZPositionFromCoord(2));
+        walls[5].position.set(gridMapHelper.getGlobalXPositionFromCoord(7),1.0,gridMapHelper.getGlobalZPositionFromCoord(2));
+        walls[6].position.set(gridMapHelper.getGlobalXPositionFromCoord(8),1.0,gridMapHelper.getGlobalZPositionFromCoord(2));
+        walls[7].position.set(gridMapHelper.getGlobalXPositionFromCoord(2),1.0,gridMapHelper.getGlobalZPositionFromCoord(4));
+        walls[8].position.set(gridMapHelper.getGlobalXPositionFromCoord(3),1.0,gridMapHelper.getGlobalZPositionFromCoord(4));
+        walls[9].position.set(gridMapHelper.getGlobalXPositionFromCoord(4),1.0,gridMapHelper.getGlobalZPositionFromCoord(4));
+        walls[10].position.set(gridMapHelper.getGlobalXPositionFromCoord(5),1.0,gridMapHelper.getGlobalZPositionFromCoord(4));
+        walls[11].position.set(gridMapHelper.getGlobalXPositionFromCoord(6),1.0,gridMapHelper.getGlobalZPositionFromCoord(4));
+        walls[12].position.set(gridMapHelper.getGlobalXPositionFromCoord(7),1.0,gridMapHelper.getGlobalZPositionFromCoord(4));
+        walls[13].position.set(gridMapHelper.getGlobalXPositionFromCoord(8),1.0,gridMapHelper.getGlobalZPositionFromCoord(4));
+        walls[14].position.set(gridMapHelper.getGlobalXPositionFromCoord(9),1.0,gridMapHelper.getGlobalZPositionFromCoord(4));
+        walls[15].position.set(gridMapHelper.getGlobalXPositionFromCoord(7),1.0,gridMapHelper.getGlobalZPositionFromCoord(0));
+        walls[16].position.set(gridMapHelper.getGlobalXPositionFromCoord(7),1.0,gridMapHelper.getGlobalZPositionFromCoord(0));
+        walls[17].position.set(gridMapHelper.getGlobalXPositionFromCoord(7),1.0,gridMapHelper.getGlobalZPositionFromCoord(1));
+        gridMapHelper.addObstacle(2,8,2,2);
+        gridMapHelper.addObstacle(2,9,4,4);
+        gridMapHelper.addObstacle(7,7,0,1);
+        scene.add(walls[0]);
+        scene.add(walls[1]);
+        scene.add(walls[2]);
+        scene.add(walls[3]);
+        scene.add(walls[4]);
+        scene.add(walls[5]);
+        scene.add(walls[6]);
+        scene.add(walls[7]);
+        scene.add(walls[8]);
+        scene.add(walls[9]);
+        scene.add(walls[10]);
+        scene.add(walls[11]);
+        scene.add(walls[12]);
+        scene.add(walls[13]);
+        scene.add(walls[14]);
+        scene.add(walls[15]);
+        scene.add(walls[16]);
+        scene.add(walls[17]);
 
         coletarCristal = () => {
             if(sceneProperties.cancelExecution)
@@ -337,22 +472,84 @@ phaseGeneration.push(
 //Phase 3
 phaseGeneration.push(
     () => {
-        document.getElementById('phaseTitle').innerText = "Nível 1 - Fase 3 de 8";
-        document.getElementById('phaseObjective').innerText = "Faça o robô chegar aos cristais, após isso, os colete.";
+        scene.remove(plane6);
+        scene.add(plane5);
+        document.getElementById('phaseTitle').innerText = "Teste 3";
+        document.getElementById('phaseObjective').innerText = "Faça o robô chegar ao cristal, após isso, o colete.";
 
         camera.position.set(0,15,30);
         camera.rotation.set(0,0,0);
 
-        actor.position.set(gridMapHelper.getGlobalXPositionFromCoord(0),1.0,gridMapHelper.getGlobalZPositionFromCoord(2));
+        actor.position.set(gridMapHelper.getGlobalXPositionFromCoord(0),1.0,gridMapHelper.getGlobalZPositionFromCoord(5));
         actor.rotation.set(0,degreeToRadians(90),0);
 
-        objectives = loadDefaultObjectives(2);
-        objectives[0].position.set(gridMapHelper.getGlobalXPositionFromCoord(2),0.0,gridMapHelper.getGlobalZPositionFromCoord(6));
-        objectives[1].position.set(gridMapHelper.getGlobalXPositionFromCoord(7),0.0,gridMapHelper.getGlobalZPositionFromCoord(1));
-        gridMapHelper.addObstacle(2,2,6,6);
-        gridMapHelper.addObstacle(7,7,1,1);
+        objectives = loadDefaultObjectives(1);
+        objectives[0].position.set(gridMapHelper.getGlobalXPositionFromCoord(8),0.0,gridMapHelper.getGlobalZPositionFromCoord(0));
+        gridMapHelper.addObstacle(8,8,0,0);
         scene.add(objectives[0]);
-        scene.add(objectives[1]);
+
+        walls = [];
+        const boxGeometry = new THREE.BoxGeometry(2,2,2);
+        var aux = new URL('../../../assets/textures/stone_wall5.jpg',import.meta.url).toString();
+        var textureParede = new THREE.TextureLoader().load(aux);
+        const boxMaterial = new THREE.MeshBasicMaterial({map: textureParede});
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls[0].position.set(gridMapHelper.getGlobalXPositionFromCoord(2),1.0,gridMapHelper.getGlobalZPositionFromCoord(2));
+        walls[1].position.set(gridMapHelper.getGlobalXPositionFromCoord(3),1.0,gridMapHelper.getGlobalZPositionFromCoord(2));
+        walls[2].position.set(gridMapHelper.getGlobalXPositionFromCoord(4),1.0,gridMapHelper.getGlobalZPositionFromCoord(2));
+        walls[3].position.set(gridMapHelper.getGlobalXPositionFromCoord(5),1.0,gridMapHelper.getGlobalZPositionFromCoord(2));
+        walls[4].position.set(gridMapHelper.getGlobalXPositionFromCoord(6),1.0,gridMapHelper.getGlobalZPositionFromCoord(2));
+        walls[5].position.set(gridMapHelper.getGlobalXPositionFromCoord(7),1.0,gridMapHelper.getGlobalZPositionFromCoord(2));
+        walls[6].position.set(gridMapHelper.getGlobalXPositionFromCoord(8),1.0,gridMapHelper.getGlobalZPositionFromCoord(2));
+        walls[7].position.set(gridMapHelper.getGlobalXPositionFromCoord(2),1.0,gridMapHelper.getGlobalZPositionFromCoord(4));
+        walls[8].position.set(gridMapHelper.getGlobalXPositionFromCoord(3),1.0,gridMapHelper.getGlobalZPositionFromCoord(4));
+        walls[9].position.set(gridMapHelper.getGlobalXPositionFromCoord(4),1.0,gridMapHelper.getGlobalZPositionFromCoord(4));
+        walls[10].position.set(gridMapHelper.getGlobalXPositionFromCoord(5),1.0,gridMapHelper.getGlobalZPositionFromCoord(4));
+        walls[11].position.set(gridMapHelper.getGlobalXPositionFromCoord(6),1.0,gridMapHelper.getGlobalZPositionFromCoord(4));
+        walls[12].position.set(gridMapHelper.getGlobalXPositionFromCoord(7),1.0,gridMapHelper.getGlobalZPositionFromCoord(4));
+        walls[13].position.set(gridMapHelper.getGlobalXPositionFromCoord(8),1.0,gridMapHelper.getGlobalZPositionFromCoord(4));
+        walls[14].position.set(gridMapHelper.getGlobalXPositionFromCoord(9),1.0,gridMapHelper.getGlobalZPositionFromCoord(4));
+        walls[15].position.set(gridMapHelper.getGlobalXPositionFromCoord(7),1.0,gridMapHelper.getGlobalZPositionFromCoord(0));
+        walls[16].position.set(gridMapHelper.getGlobalXPositionFromCoord(7),1.0,gridMapHelper.getGlobalZPositionFromCoord(0));
+        walls[17].position.set(gridMapHelper.getGlobalXPositionFromCoord(7),1.0,gridMapHelper.getGlobalZPositionFromCoord(1));
+        gridMapHelper.addObstacle(2,8,2,2);
+        gridMapHelper.addObstacle(2,9,4,4);
+        gridMapHelper.addObstacle(7,7,0,1);
+        scene.add(walls[0]);
+        scene.add(walls[1]);
+        scene.add(walls[2]);
+        scene.add(walls[3]);
+        scene.add(walls[4]);
+        scene.add(walls[5]);
+        scene.add(walls[6]);
+        scene.add(walls[7]);
+        scene.add(walls[8]);
+        scene.add(walls[9]);
+        scene.add(walls[10]);
+        scene.add(walls[11]);
+        scene.add(walls[12]);
+        scene.add(walls[13]);
+        scene.add(walls[14]);
+        scene.add(walls[15]);
+        scene.add(walls[16]);
+        scene.add(walls[17]);
 
         coletarCristal = () => {
             if(sceneProperties.cancelExecution)
@@ -363,38 +560,25 @@ phaseGeneration.push(
             if(checkCollision(actor.getObjectByName('interactionReference'),objectives[0],gridMapHelper))
             {
                 objectives[0].visible = false;
-                consoleElement.innerText += "Cristal coletado.\n";
+                consoleElement.innerText += "Cristal coletado com sucesso.\n";
                 gridMapHelper.obstacles[0].active = false;
-            }
-            else if(checkCollision(actor.getObjectByName('interactionReference'),objectives[1],gridMapHelper))
-            {
-                objectives[1].visible = false;
-                consoleElement.innerText += "Cristal coletado.\n";
-                gridMapHelper.obstacles[1].active = false;
             }
             else
             {
                 consoleElement.innerText += "Robô não está em frente ao cristal.\n";
             }
-
-            if(!objectives[0].visible && !objectives[1].visible)
-            {
-                consoleElement.innerText += "Todos os cristais coletados com sucesso!\n";
-            }
         }
 
         resetLevel = () =>{
-            actor.position.set(gridMapHelper.getGlobalXPositionFromCoord(0),1.0,gridMapHelper.getGlobalZPositionFromCoord(2));
+            actor.position.set(gridMapHelper.getGlobalXPositionFromCoord(0),1.0,gridMapHelper.getGlobalZPositionFromCoord(5));
             actor.rotation.set(0,degreeToRadians(90),0);
             actor.getObjectByName('eve').rotation.set(0,0,0);
             objectives[0].visible = true;
-            objectives[1].visible = true;
             gridMapHelper.obstacles[0].active = true;
-            gridMapHelper.obstacles[1].active = true;
         }
 
         winCondition = () =>{
-            if(!objectives[0].visible && !objectives[1].visible)
+            if(!objectives[0].visible)
             {
                 return true;
             }
@@ -411,7 +595,9 @@ phaseGeneration.push(
 //Phase 4
 phaseGeneration.push(
     () => {
-        document.getElementById('phaseTitle').innerText = "Nível 1 - Fase 4 de 8";
+        scene.remove(plane5);
+        scene.add(plane4);
+        document.getElementById('phaseTitle').innerText = "Teste 4";
         document.getElementById('phaseObjective').innerText = "Faça o robô chegar ao cristal, após isso, o colete.";
 
         camera.position.set(0,15,30);
@@ -421,17 +607,72 @@ phaseGeneration.push(
         actor.rotation.set(0,degreeToRadians(90),0);
 
         objectives = loadDefaultObjectives(1);
-        objectives[0].position.set(gridMapHelper.getGlobalXPositionFromCoord(9),0.0,gridMapHelper.getGlobalZPositionFromCoord(5));
-        gridMapHelper.addObstacle(9,9,5,5);
+        objectives[0].position.set(gridMapHelper.getGlobalXPositionFromCoord(8),0.0,gridMapHelper.getGlobalZPositionFromCoord(0));
+        gridMapHelper.addObstacle(8,8,0,0);
         scene.add(objectives[0]);
 
         walls = [];
         const boxGeometry = new THREE.BoxGeometry(2,2,2);
-        const boxMaterial = new THREE.MeshLambertMaterial({color: "rgb(0,255,0)"});
+        var aux = new URL('../../../assets/textures/stone_wall4.jpg',import.meta.url).toString();
+        var textureParede = new THREE.TextureLoader().load(aux);
+        const boxMaterial = new THREE.MeshBasicMaterial({map: textureParede});
         walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
-        walls[0].position.set(gridMapHelper.getGlobalXPositionFromCoord(7),1.0,gridMapHelper.getGlobalXPositionFromCoord(5));
-        gridMapHelper.addObstacle(7,7,5,5);
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls[0].position.set(gridMapHelper.getGlobalXPositionFromCoord(2),1.0,gridMapHelper.getGlobalZPositionFromCoord(2));
+        walls[1].position.set(gridMapHelper.getGlobalXPositionFromCoord(3),1.0,gridMapHelper.getGlobalZPositionFromCoord(2));
+        walls[2].position.set(gridMapHelper.getGlobalXPositionFromCoord(4),1.0,gridMapHelper.getGlobalZPositionFromCoord(2));
+        walls[3].position.set(gridMapHelper.getGlobalXPositionFromCoord(5),1.0,gridMapHelper.getGlobalZPositionFromCoord(2));
+        walls[4].position.set(gridMapHelper.getGlobalXPositionFromCoord(6),1.0,gridMapHelper.getGlobalZPositionFromCoord(2));
+        walls[5].position.set(gridMapHelper.getGlobalXPositionFromCoord(7),1.0,gridMapHelper.getGlobalZPositionFromCoord(2));
+        walls[6].position.set(gridMapHelper.getGlobalXPositionFromCoord(8),1.0,gridMapHelper.getGlobalZPositionFromCoord(2));
+        walls[7].position.set(gridMapHelper.getGlobalXPositionFromCoord(2),1.0,gridMapHelper.getGlobalZPositionFromCoord(4));
+        walls[8].position.set(gridMapHelper.getGlobalXPositionFromCoord(3),1.0,gridMapHelper.getGlobalZPositionFromCoord(4));
+        walls[9].position.set(gridMapHelper.getGlobalXPositionFromCoord(4),1.0,gridMapHelper.getGlobalZPositionFromCoord(4));
+        walls[10].position.set(gridMapHelper.getGlobalXPositionFromCoord(5),1.0,gridMapHelper.getGlobalZPositionFromCoord(4));
+        walls[11].position.set(gridMapHelper.getGlobalXPositionFromCoord(6),1.0,gridMapHelper.getGlobalZPositionFromCoord(4));
+        walls[12].position.set(gridMapHelper.getGlobalXPositionFromCoord(7),1.0,gridMapHelper.getGlobalZPositionFromCoord(4));
+        walls[13].position.set(gridMapHelper.getGlobalXPositionFromCoord(8),1.0,gridMapHelper.getGlobalZPositionFromCoord(4));
+        walls[14].position.set(gridMapHelper.getGlobalXPositionFromCoord(9),1.0,gridMapHelper.getGlobalZPositionFromCoord(4));
+        walls[15].position.set(gridMapHelper.getGlobalXPositionFromCoord(7),1.0,gridMapHelper.getGlobalZPositionFromCoord(0));
+        walls[16].position.set(gridMapHelper.getGlobalXPositionFromCoord(7),1.0,gridMapHelper.getGlobalZPositionFromCoord(0));
+        walls[17].position.set(gridMapHelper.getGlobalXPositionFromCoord(7),1.0,gridMapHelper.getGlobalZPositionFromCoord(1));
+        gridMapHelper.addObstacle(2,8,2,2);
+        gridMapHelper.addObstacle(2,9,4,4);
+        gridMapHelper.addObstacle(7,7,0,1);
         scene.add(walls[0]);
+        scene.add(walls[1]);
+        scene.add(walls[2]);
+        scene.add(walls[3]);
+        scene.add(walls[4]);
+        scene.add(walls[5]);
+        scene.add(walls[6]);
+        scene.add(walls[7]);
+        scene.add(walls[8]);
+        scene.add(walls[9]);
+        scene.add(walls[10]);
+        scene.add(walls[11]);
+        scene.add(walls[12]);
+        scene.add(walls[13]);
+        scene.add(walls[14]);
+        scene.add(walls[15]);
+        scene.add(walls[16]);
+        scene.add(walls[17]);
 
         coletarCristal = () => {
             if(sceneProperties.cancelExecution)
@@ -477,36 +718,84 @@ phaseGeneration.push(
 //Phase 5
 phaseGeneration.push(
     () => {
-        document.getElementById('phaseTitle').innerText = "Nível 1 - Fase 5 de 8";
-        document.getElementById('phaseObjective').innerText = "Faça o robô chegar aos cristais, após isso, os colete.";
+        scene.remove(plane4);
+        scene.add(plane3);
+        document.getElementById('phaseTitle').innerText = "Teste 5";
+        document.getElementById('phaseObjective').innerText = "Faça o robô chegar ao cristal, após isso, o colete.";
 
         camera.position.set(0,15,30);
         camera.rotation.set(0,0,0);
 
-        actor.position.set(gridMapHelper.getGlobalXPositionFromCoord(0),1.0,gridMapHelper.getGlobalZPositionFromCoord(2));
+        actor.position.set(gridMapHelper.getGlobalXPositionFromCoord(0),1.0,gridMapHelper.getGlobalZPositionFromCoord(5));
         actor.rotation.set(0,degreeToRadians(90),0);
 
-        objectives = loadDefaultObjectives(2);
-        objectives[0].position.set(gridMapHelper.getGlobalXPositionFromCoord(6),0.0,gridMapHelper.getGlobalZPositionFromCoord(2));
-        objectives[1].position.set(gridMapHelper.getGlobalXPositionFromCoord(7),0.0,gridMapHelper.getGlobalZPositionFromCoord(8));
-        gridMapHelper.addObstacle(6,6,2,2);
-        gridMapHelper.addObstacle(7,7,8,8);
+        objectives = loadDefaultObjectives(1);
+        objectives[0].position.set(gridMapHelper.getGlobalXPositionFromCoord(8),0.0,gridMapHelper.getGlobalZPositionFromCoord(0));
+        gridMapHelper.addObstacle(8,8,0,0);
         scene.add(objectives[0]);
-        scene.add(objectives[1]);
 
         walls = [];
-        const boxGeometry = new THREE.BoxGeometry(6,2,2);
-        const boxGeometry2 = new THREE.BoxGeometry(4,2,2);
-        const boxMaterial = new THREE.MeshLambertMaterial({color: "rgb(0,255,0)"});
+        const boxGeometry = new THREE.BoxGeometry(2,2,2);
+        var aux = new URL('../../../assets/textures/stone_wall3.jpg',import.meta.url).toString();
+        var textureParede = new THREE.TextureLoader().load(aux);
+        const boxMaterial = new THREE.MeshBasicMaterial({map: textureParede});
         walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
-        walls.push(new THREE.Mesh(boxGeometry2,boxMaterial));
-        walls[0].position.set(gridMapHelper.getGlobalXPositionFromCoord(6),1.0,gridMapHelper.getGlobalXPositionFromCoord(7));
-        walls[1].rotateY(degreeToRadians(90));
-        walls[1].position.set(gridMapHelper.getGlobalXPositionFromCoord(5),1.0,gridMapHelper.getGlobalXPositionFromCoord(2.5));
-        gridMapHelper.addObstacle(5,7,7,7);
-        gridMapHelper.addObstacle(5,5,2,3);
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls[0].position.set(gridMapHelper.getGlobalXPositionFromCoord(2),1.0,gridMapHelper.getGlobalZPositionFromCoord(2));
+        walls[1].position.set(gridMapHelper.getGlobalXPositionFromCoord(3),1.0,gridMapHelper.getGlobalZPositionFromCoord(2));
+        walls[2].position.set(gridMapHelper.getGlobalXPositionFromCoord(4),1.0,gridMapHelper.getGlobalZPositionFromCoord(2));
+        walls[3].position.set(gridMapHelper.getGlobalXPositionFromCoord(5),1.0,gridMapHelper.getGlobalZPositionFromCoord(2));
+        walls[4].position.set(gridMapHelper.getGlobalXPositionFromCoord(6),1.0,gridMapHelper.getGlobalZPositionFromCoord(2));
+        walls[5].position.set(gridMapHelper.getGlobalXPositionFromCoord(7),1.0,gridMapHelper.getGlobalZPositionFromCoord(2));
+        walls[6].position.set(gridMapHelper.getGlobalXPositionFromCoord(8),1.0,gridMapHelper.getGlobalZPositionFromCoord(2));
+        walls[7].position.set(gridMapHelper.getGlobalXPositionFromCoord(2),1.0,gridMapHelper.getGlobalZPositionFromCoord(4));
+        walls[8].position.set(gridMapHelper.getGlobalXPositionFromCoord(3),1.0,gridMapHelper.getGlobalZPositionFromCoord(4));
+        walls[9].position.set(gridMapHelper.getGlobalXPositionFromCoord(4),1.0,gridMapHelper.getGlobalZPositionFromCoord(4));
+        walls[10].position.set(gridMapHelper.getGlobalXPositionFromCoord(5),1.0,gridMapHelper.getGlobalZPositionFromCoord(4));
+        walls[11].position.set(gridMapHelper.getGlobalXPositionFromCoord(6),1.0,gridMapHelper.getGlobalZPositionFromCoord(4));
+        walls[12].position.set(gridMapHelper.getGlobalXPositionFromCoord(7),1.0,gridMapHelper.getGlobalZPositionFromCoord(4));
+        walls[13].position.set(gridMapHelper.getGlobalXPositionFromCoord(8),1.0,gridMapHelper.getGlobalZPositionFromCoord(4));
+        walls[14].position.set(gridMapHelper.getGlobalXPositionFromCoord(9),1.0,gridMapHelper.getGlobalZPositionFromCoord(4));
+        walls[15].position.set(gridMapHelper.getGlobalXPositionFromCoord(7),1.0,gridMapHelper.getGlobalZPositionFromCoord(0));
+        walls[16].position.set(gridMapHelper.getGlobalXPositionFromCoord(7),1.0,gridMapHelper.getGlobalZPositionFromCoord(0));
+        walls[17].position.set(gridMapHelper.getGlobalXPositionFromCoord(7),1.0,gridMapHelper.getGlobalZPositionFromCoord(1));
+        gridMapHelper.addObstacle(2,8,2,2);
+        gridMapHelper.addObstacle(2,9,4,4);
+        gridMapHelper.addObstacle(7,7,0,1);
         scene.add(walls[0]);
         scene.add(walls[1]);
+        scene.add(walls[2]);
+        scene.add(walls[3]);
+        scene.add(walls[4]);
+        scene.add(walls[5]);
+        scene.add(walls[6]);
+        scene.add(walls[7]);
+        scene.add(walls[8]);
+        scene.add(walls[9]);
+        scene.add(walls[10]);
+        scene.add(walls[11]);
+        scene.add(walls[12]);
+        scene.add(walls[13]);
+        scene.add(walls[14]);
+        scene.add(walls[15]);
+        scene.add(walls[16]);
+        scene.add(walls[17]);
 
         coletarCristal = () => {
             if(sceneProperties.cancelExecution)
@@ -517,38 +806,25 @@ phaseGeneration.push(
             if(checkCollision(actor.getObjectByName('interactionReference'),objectives[0],gridMapHelper))
             {
                 objectives[0].visible = false;
-                consoleElement.innerText += "Cristal coletado.\n";
+                consoleElement.innerText += "Cristal coletado com sucesso.\n";
                 gridMapHelper.obstacles[0].active = false;
-            }
-            else if(checkCollision(actor.getObjectByName('interactionReference'),objectives[1],gridMapHelper))
-            {
-                objectives[1].visible = false;
-                consoleElement.innerText += "Cristal coletado.\n";
-                gridMapHelper.obstacles[1].active = false;
             }
             else
             {
                 consoleElement.innerText += "Robô não está em frente ao cristal.\n";
             }
-
-            if(!objectives[0].visible && !objectives[1].visible)
-            {
-                consoleElement.innerText += "Todos os cristais coletados com sucesso!\n";
-            }
         }
 
         resetLevel = () =>{
-            actor.position.set(gridMapHelper.getGlobalXPositionFromCoord(0),1.0,gridMapHelper.getGlobalZPositionFromCoord(2));
+            actor.position.set(gridMapHelper.getGlobalXPositionFromCoord(0),1.0,gridMapHelper.getGlobalZPositionFromCoord(5));
             actor.rotation.set(0,degreeToRadians(90),0);
             actor.getObjectByName('eve').rotation.set(0,0,0);
             objectives[0].visible = true;
-            objectives[1].visible = true;
             gridMapHelper.obstacles[0].active = true;
-            gridMapHelper.obstacles[1].active = true;
         }
 
         winCondition = () =>{
-            if(!objectives[0].visible && !objectives[1].visible)
+            if(!objectives[0].visible)
             {
                 return true;
             }
@@ -565,7 +841,9 @@ phaseGeneration.push(
 //Phase 6
 phaseGeneration.push(
     () => {
-        document.getElementById('phaseTitle').innerText = "Nível 1 - Fase 6 de 8";
+        scene.remove(plane3);
+        scene.add(plane2);
+        document.getElementById('phaseTitle').innerText = "Teste 6";
         document.getElementById('phaseObjective').innerText = "Faça o robô chegar ao cristal, após isso, o colete.";
 
         camera.position.set(0,15,30);
@@ -580,22 +858,67 @@ phaseGeneration.push(
         scene.add(objectives[0]);
 
         walls = [];
-        const boxGeometry1 = new THREE.BoxGeometry(14,2,2);
-        const boxGeometry2 = new THREE.BoxGeometry(16,2,2);
-        const boxGeometry3 = new THREE.BoxGeometry(2,2,4);
-        const boxMaterial = new THREE.MeshLambertMaterial({color: "rgb(0,255,0)"});
-        walls.push(new THREE.Mesh(boxGeometry1,boxMaterial));
-        walls.push(new THREE.Mesh(boxGeometry2,boxMaterial));
-        walls.push(new THREE.Mesh(boxGeometry3,boxMaterial));
-        walls[0].position.set(gridMapHelper.getGlobalXPositionFromCoord(5),1.0,gridMapHelper.getGlobalZPositionFromCoord(2));
-        walls[1].position.set(gridMapHelper.getGlobalXPositionFromCoord(5.5),1.0,gridMapHelper.getGlobalZPositionFromCoord(4));
-        walls[2].position.set(gridMapHelper.getGlobalXPositionFromCoord(7),1.0,gridMapHelper.getGlobalZPositionFromCoord(0.5));
+        const boxGeometry = new THREE.BoxGeometry(2,2,2);
+        var aux = new URL('../../../assets/textures/wall.jpg',import.meta.url).toString();
+        var textureParede = new THREE.TextureLoader().load(aux);
+        const boxMaterial = new THREE.MeshBasicMaterial({map: textureParede});
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls[0].position.set(gridMapHelper.getGlobalXPositionFromCoord(2),1.0,gridMapHelper.getGlobalZPositionFromCoord(2));
+        walls[1].position.set(gridMapHelper.getGlobalXPositionFromCoord(3),1.0,gridMapHelper.getGlobalZPositionFromCoord(2));
+        walls[2].position.set(gridMapHelper.getGlobalXPositionFromCoord(4),1.0,gridMapHelper.getGlobalZPositionFromCoord(2));
+        walls[3].position.set(gridMapHelper.getGlobalXPositionFromCoord(5),1.0,gridMapHelper.getGlobalZPositionFromCoord(2));
+        walls[4].position.set(gridMapHelper.getGlobalXPositionFromCoord(6),1.0,gridMapHelper.getGlobalZPositionFromCoord(2));
+        walls[5].position.set(gridMapHelper.getGlobalXPositionFromCoord(7),1.0,gridMapHelper.getGlobalZPositionFromCoord(2));
+        walls[6].position.set(gridMapHelper.getGlobalXPositionFromCoord(8),1.0,gridMapHelper.getGlobalZPositionFromCoord(2));
+        walls[7].position.set(gridMapHelper.getGlobalXPositionFromCoord(2),1.0,gridMapHelper.getGlobalZPositionFromCoord(4));
+        walls[8].position.set(gridMapHelper.getGlobalXPositionFromCoord(3),1.0,gridMapHelper.getGlobalZPositionFromCoord(4));
+        walls[9].position.set(gridMapHelper.getGlobalXPositionFromCoord(4),1.0,gridMapHelper.getGlobalZPositionFromCoord(4));
+        walls[10].position.set(gridMapHelper.getGlobalXPositionFromCoord(5),1.0,gridMapHelper.getGlobalZPositionFromCoord(4));
+        walls[11].position.set(gridMapHelper.getGlobalXPositionFromCoord(6),1.0,gridMapHelper.getGlobalZPositionFromCoord(4));
+        walls[12].position.set(gridMapHelper.getGlobalXPositionFromCoord(7),1.0,gridMapHelper.getGlobalZPositionFromCoord(4));
+        walls[13].position.set(gridMapHelper.getGlobalXPositionFromCoord(8),1.0,gridMapHelper.getGlobalZPositionFromCoord(4));
+        walls[14].position.set(gridMapHelper.getGlobalXPositionFromCoord(9),1.0,gridMapHelper.getGlobalZPositionFromCoord(4));
+        walls[15].position.set(gridMapHelper.getGlobalXPositionFromCoord(7),1.0,gridMapHelper.getGlobalZPositionFromCoord(0));
+        walls[16].position.set(gridMapHelper.getGlobalXPositionFromCoord(7),1.0,gridMapHelper.getGlobalZPositionFromCoord(0));
+        walls[17].position.set(gridMapHelper.getGlobalXPositionFromCoord(7),1.0,gridMapHelper.getGlobalZPositionFromCoord(1));
         gridMapHelper.addObstacle(2,8,2,2);
         gridMapHelper.addObstacle(2,9,4,4);
         gridMapHelper.addObstacle(7,7,0,1);
         scene.add(walls[0]);
         scene.add(walls[1]);
         scene.add(walls[2]);
+        scene.add(walls[3]);
+        scene.add(walls[4]);
+        scene.add(walls[5]);
+        scene.add(walls[6]);
+        scene.add(walls[7]);
+        scene.add(walls[8]);
+        scene.add(walls[9]);
+        scene.add(walls[10]);
+        scene.add(walls[11]);
+        scene.add(walls[12]);
+        scene.add(walls[13]);
+        scene.add(walls[14]);
+        scene.add(walls[15]);
+        scene.add(walls[16]);
+        scene.add(walls[17]);
 
         coletarCristal = () => {
             if(sceneProperties.cancelExecution)
@@ -641,7 +964,9 @@ phaseGeneration.push(
 //Phase 7
 phaseGeneration.push(
     () => {
-        document.getElementById('phaseTitle').innerText = "Nível 1 - Fase 7 de 8";
+        scene.remove(plane2);
+        scene.add(plane);
+        document.getElementById('phaseTitle').innerText = "Teste 7";
         document.getElementById('phaseObjective').innerText = "Faça o robô chegar ao cristal, após isso, o colete.";
 
         camera.position.set(0,15,30);
@@ -651,37 +976,72 @@ phaseGeneration.push(
         actor.rotation.set(0,degreeToRadians(90),0);
 
         objectives = loadDefaultObjectives(1);
-        objectives[0].position.set(gridMapHelper.getGlobalXPositionFromCoord(9),0.0,gridMapHelper.getGlobalZPositionFromCoord(0));
-        gridMapHelper.addObstacle(9,9,0,0);
+        objectives[0].position.set(gridMapHelper.getGlobalXPositionFromCoord(8),0.0,gridMapHelper.getGlobalZPositionFromCoord(0));
+        gridMapHelper.addObstacle(8,8,0,0);
         scene.add(objectives[0]);
 
         walls = [];
-        const boxGeometry1 = new THREE.BoxGeometry(14,2,2);
-        const boxGeometry2 = new THREE.BoxGeometry(16,2,2);
-        const boxGeometry3 = new THREE.BoxGeometry(2,2,8);
-        const boxMaterial = new THREE.MeshLambertMaterial({color: "rgb(0,255,0)"});
-        walls.push(new THREE.Mesh(boxGeometry1,boxMaterial));
-        walls.push(new THREE.Mesh(boxGeometry2,boxMaterial));
-        walls.push(new THREE.Mesh(boxGeometry3,boxMaterial));
-        walls.push(new THREE.Mesh(boxGeometry1,boxMaterial));
-        walls[0].position.set(gridMapHelper.getGlobalXPositionFromCoord(5),1.0,gridMapHelper.getGlobalZPositionFromCoord(4));
-        walls[1].position.set(gridMapHelper.getGlobalXPositionFromCoord(5.5),1.0,gridMapHelper.getGlobalZPositionFromCoord(8));
-        walls[2].position.set(gridMapHelper.getGlobalXPositionFromCoord(8),1.0,gridMapHelper.getGlobalZPositionFromCoord(1.5));
-        walls[3].position.set(gridMapHelper.getGlobalXPositionFromCoord(5),1.0,gridMapHelper.getGlobalZPositionFromCoord(6));
-        gridMapHelper.addObstacle(2,8,4,4);
-        gridMapHelper.addObstacle(2,8,6,6);
-        gridMapHelper.addObstacle(8,8,0,3);
-        gridMapHelper.addObstacle(2,9,8,8);
+        const boxGeometry = new THREE.BoxGeometry(2,2,2);
+        var aux = new URL('../../../assets/textures/stone_wall2.jpg',import.meta.url).toString();
+        var textureParede = new THREE.TextureLoader().load(aux);
+        const boxMaterial = new THREE.MeshBasicMaterial({map: textureParede});
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls[0].position.set(gridMapHelper.getGlobalXPositionFromCoord(2),1.0,gridMapHelper.getGlobalZPositionFromCoord(2));
+        walls[1].position.set(gridMapHelper.getGlobalXPositionFromCoord(3),1.0,gridMapHelper.getGlobalZPositionFromCoord(2));
+        walls[2].position.set(gridMapHelper.getGlobalXPositionFromCoord(4),1.0,gridMapHelper.getGlobalZPositionFromCoord(2));
+        walls[3].position.set(gridMapHelper.getGlobalXPositionFromCoord(5),1.0,gridMapHelper.getGlobalZPositionFromCoord(2));
+        walls[4].position.set(gridMapHelper.getGlobalXPositionFromCoord(6),1.0,gridMapHelper.getGlobalZPositionFromCoord(2));
+        walls[5].position.set(gridMapHelper.getGlobalXPositionFromCoord(7),1.0,gridMapHelper.getGlobalZPositionFromCoord(2));
+        walls[6].position.set(gridMapHelper.getGlobalXPositionFromCoord(8),1.0,gridMapHelper.getGlobalZPositionFromCoord(2));
+        walls[7].position.set(gridMapHelper.getGlobalXPositionFromCoord(2),1.0,gridMapHelper.getGlobalZPositionFromCoord(4));
+        walls[8].position.set(gridMapHelper.getGlobalXPositionFromCoord(3),1.0,gridMapHelper.getGlobalZPositionFromCoord(4));
+        walls[9].position.set(gridMapHelper.getGlobalXPositionFromCoord(4),1.0,gridMapHelper.getGlobalZPositionFromCoord(4));
+        walls[10].position.set(gridMapHelper.getGlobalXPositionFromCoord(5),1.0,gridMapHelper.getGlobalZPositionFromCoord(4));
+        walls[11].position.set(gridMapHelper.getGlobalXPositionFromCoord(6),1.0,gridMapHelper.getGlobalZPositionFromCoord(4));
+        walls[12].position.set(gridMapHelper.getGlobalXPositionFromCoord(7),1.0,gridMapHelper.getGlobalZPositionFromCoord(4));
+        walls[13].position.set(gridMapHelper.getGlobalXPositionFromCoord(8),1.0,gridMapHelper.getGlobalZPositionFromCoord(4));
+        walls[14].position.set(gridMapHelper.getGlobalXPositionFromCoord(9),1.0,gridMapHelper.getGlobalZPositionFromCoord(4));
+        walls[15].position.set(gridMapHelper.getGlobalXPositionFromCoord(7),1.0,gridMapHelper.getGlobalZPositionFromCoord(0));
+        walls[16].position.set(gridMapHelper.getGlobalXPositionFromCoord(7),1.0,gridMapHelper.getGlobalZPositionFromCoord(0));
+        walls[17].position.set(gridMapHelper.getGlobalXPositionFromCoord(7),1.0,gridMapHelper.getGlobalZPositionFromCoord(1));
+        gridMapHelper.addObstacle(2,8,2,2);
+        gridMapHelper.addObstacle(2,9,4,4);
+        gridMapHelper.addObstacle(7,7,0,1);
         scene.add(walls[0]);
         scene.add(walls[1]);
         scene.add(walls[2]);
         scene.add(walls[3]);
-
-        traps = [];
-        traps.push(new SpikeTrap());
-        traps[0].position.set(gridMapHelper.getGlobalXPositionFromCoord(8),0,gridMapHelper.getGlobalZPositionFromCoord(5));
-        gridMapHelper.addTrap(8,5,traps[0]);
-        scene.add(traps[0]);
+        scene.add(walls[4]);
+        scene.add(walls[5]);
+        scene.add(walls[6]);
+        scene.add(walls[7]);
+        scene.add(walls[8]);
+        scene.add(walls[9]);
+        scene.add(walls[10]);
+        scene.add(walls[11]);
+        scene.add(walls[12]);
+        scene.add(walls[13]);
+        scene.add(walls[14]);
+        scene.add(walls[15]);
+        scene.add(walls[16]);
+        scene.add(walls[17]);
 
         coletarCristal = () => {
             if(sceneProperties.cancelExecution)
@@ -720,29 +1080,6 @@ phaseGeneration.push(
             }
         }
 
-        spikeTrapState = 0;
-        setSpikeTrapState = () => {
-            if(spikeTrapState == 0)
-            {
-                trapsDeactivation(traps)
-            }
-            else
-            {
-                trapsActivation(traps)
-
-            }
-        }
-
-        setSpikeTrapStateInterval = setInterval(() => {
-            if(sceneProperties.executing)
-            {
-                return;
-            }
-
-            spikeTrapState = (spikeTrapState + 1) % 2;
-            setSpikeTrapState();
-        },1000);
-
         timerUpadate = setInterval(updateTime,1000);
     }
 );
@@ -750,57 +1087,84 @@ phaseGeneration.push(
 //Phase 8
 phaseGeneration.push(
     () => {
-        document.getElementById('phaseTitle').innerText = "Nível 1 - Fase 8 de 8";
-        document.getElementById('phaseObjective').innerText = "Faça o robô chegar aos cristais, após isso, os colete.";
+        scene.remove(plane2);
+        scene.add(plane);
+        document.getElementById('phaseTitle').innerText = "Teste 8";
+        document.getElementById('phaseObjective').innerText = "Faça o robô chegar ao cristal, após isso, o colete.";
 
         camera.position.set(0,15,30);
         camera.rotation.set(0,0,0);
 
-        actor.position.set(gridMapHelper.getGlobalXPositionFromCoord(0),1.0,gridMapHelper.getGlobalZPositionFromCoord(2));
+        actor.position.set(gridMapHelper.getGlobalXPositionFromCoord(0),1.0,gridMapHelper.getGlobalZPositionFromCoord(5));
         actor.rotation.set(0,degreeToRadians(90),0);
 
-        objectives = loadDefaultObjectives(3);
-        objectives[0].position.set(gridMapHelper.getGlobalXPositionFromCoord(6),0.0,gridMapHelper.getGlobalZPositionFromCoord(2));
-        objectives[1].position.set(gridMapHelper.getGlobalXPositionFromCoord(7),0.0,gridMapHelper.getGlobalZPositionFromCoord(8));
-        objectives[2].position.set(gridMapHelper.getGlobalXPositionFromCoord(2),0.0,gridMapHelper.getGlobalZPositionFromCoord(5));
-        gridMapHelper.addObstacle(6,6,2,2);
-        gridMapHelper.addObstacle(7,7,8,8);
-        gridMapHelper.addObstacle(2,2,5,5);
+        objectives = loadDefaultObjectives(1);
+        objectives[0].position.set(gridMapHelper.getGlobalXPositionFromCoord(8),0.0,gridMapHelper.getGlobalZPositionFromCoord(0));
+        gridMapHelper.addObstacle(8,8,0,0);
         scene.add(objectives[0]);
-        scene.add(objectives[1]);
-        scene.add(objectives[2]);
 
         walls = [];
-        const boxGeometry = new THREE.BoxGeometry(6,2,2);
-        const boxGeometry2 = new THREE.BoxGeometry(4,2,2);
-        const boxMaterial = new THREE.MeshLambertMaterial({color: "rgb(0,255,0)"});
+        const boxGeometry = new THREE.BoxGeometry(2,2,2);
+        var aux = new URL('../../../assets/textures/stone_wall.jpg',import.meta.url).toString();
+        var textureParede = new THREE.TextureLoader().load(aux);
+        const boxMaterial = new THREE.MeshBasicMaterial({map: textureParede});
         walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
-        walls.push(new THREE.Mesh(boxGeometry2,boxMaterial));
         walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
-        walls[0].position.set(gridMapHelper.getGlobalXPositionFromCoord(6),1.0,gridMapHelper.getGlobalXPositionFromCoord(7));
-        walls[1].rotateY(degreeToRadians(90));
-        walls[1].position.set(gridMapHelper.getGlobalXPositionFromCoord(5),1.0,gridMapHelper.getGlobalZPositionFromCoord(2.5));
-        walls[2].position.set(gridMapHelper.getGlobalXPositionFromCoord(2),1.0,gridMapHelper.getGlobalZPositionFromCoord(4));
-        gridMapHelper.addObstacle(5,7,7,7);
-        gridMapHelper.addObstacle(5,5,2,3);
-        gridMapHelper.addObstacle(1,3,4,4);
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls.push(new THREE.Mesh(boxGeometry,boxMaterial));
+        walls[0].position.set(gridMapHelper.getGlobalXPositionFromCoord(2),1.0,gridMapHelper.getGlobalZPositionFromCoord(2));
+        walls[1].position.set(gridMapHelper.getGlobalXPositionFromCoord(3),1.0,gridMapHelper.getGlobalZPositionFromCoord(2));
+        walls[2].position.set(gridMapHelper.getGlobalXPositionFromCoord(4),1.0,gridMapHelper.getGlobalZPositionFromCoord(2));
+        walls[3].position.set(gridMapHelper.getGlobalXPositionFromCoord(5),1.0,gridMapHelper.getGlobalZPositionFromCoord(2));
+        walls[4].position.set(gridMapHelper.getGlobalXPositionFromCoord(6),1.0,gridMapHelper.getGlobalZPositionFromCoord(2));
+        walls[5].position.set(gridMapHelper.getGlobalXPositionFromCoord(7),1.0,gridMapHelper.getGlobalZPositionFromCoord(2));
+        walls[6].position.set(gridMapHelper.getGlobalXPositionFromCoord(8),1.0,gridMapHelper.getGlobalZPositionFromCoord(2));
+        walls[7].position.set(gridMapHelper.getGlobalXPositionFromCoord(2),1.0,gridMapHelper.getGlobalZPositionFromCoord(4));
+        walls[8].position.set(gridMapHelper.getGlobalXPositionFromCoord(3),1.0,gridMapHelper.getGlobalZPositionFromCoord(4));
+        walls[9].position.set(gridMapHelper.getGlobalXPositionFromCoord(4),1.0,gridMapHelper.getGlobalZPositionFromCoord(4));
+        walls[10].position.set(gridMapHelper.getGlobalXPositionFromCoord(5),1.0,gridMapHelper.getGlobalZPositionFromCoord(4));
+        walls[11].position.set(gridMapHelper.getGlobalXPositionFromCoord(6),1.0,gridMapHelper.getGlobalZPositionFromCoord(4));
+        walls[12].position.set(gridMapHelper.getGlobalXPositionFromCoord(7),1.0,gridMapHelper.getGlobalZPositionFromCoord(4));
+        walls[13].position.set(gridMapHelper.getGlobalXPositionFromCoord(8),1.0,gridMapHelper.getGlobalZPositionFromCoord(4));
+        walls[14].position.set(gridMapHelper.getGlobalXPositionFromCoord(9),1.0,gridMapHelper.getGlobalZPositionFromCoord(4));
+        walls[15].position.set(gridMapHelper.getGlobalXPositionFromCoord(7),1.0,gridMapHelper.getGlobalZPositionFromCoord(0));
+        walls[16].position.set(gridMapHelper.getGlobalXPositionFromCoord(7),1.0,gridMapHelper.getGlobalZPositionFromCoord(0));
+        walls[17].position.set(gridMapHelper.getGlobalXPositionFromCoord(7),1.0,gridMapHelper.getGlobalZPositionFromCoord(1));
+        gridMapHelper.addObstacle(2,8,2,2);
+        gridMapHelper.addObstacle(2,9,4,4);
+        gridMapHelper.addObstacle(7,7,0,1);
         scene.add(walls[0]);
         scene.add(walls[1]);
         scene.add(walls[2]);
-
-        traps = [];
-        traps.push(new SpikeTrap());
-        traps.push(new SpikeTrap());
-        traps.push(new SpikeTrap());
-        traps[0].position.set(gridMapHelper.getGlobalXPositionFromCoord(1),0,gridMapHelper.getGlobalZPositionFromCoord(5));
-        traps[1].position.set(gridMapHelper.getGlobalXPositionFromCoord(6),0,gridMapHelper.getGlobalZPositionFromCoord(3));
-        traps[2].position.set(gridMapHelper.getGlobalXPositionFromCoord(5),0,gridMapHelper.getGlobalZPositionFromCoord(8));
-        gridMapHelper.addTrap(1,5,traps[0]);
-        gridMapHelper.addTrap(6,3,traps[1]);
-        gridMapHelper.addTrap(5,8,traps[2]);
-        scene.add(traps[0]);
-        scene.add(traps[1]);
-        scene.add(traps[2]);
+        scene.add(walls[3]);
+        scene.add(walls[4]);
+        scene.add(walls[5]);
+        scene.add(walls[6]);
+        scene.add(walls[7]);
+        scene.add(walls[8]);
+        scene.add(walls[9]);
+        scene.add(walls[10]);
+        scene.add(walls[11]);
+        scene.add(walls[12]);
+        scene.add(walls[13]);
+        scene.add(walls[14]);
+        scene.add(walls[15]);
+        scene.add(walls[16]);
+        scene.add(walls[17]);
 
         coletarCristal = () => {
             if(sceneProperties.cancelExecution)
@@ -811,46 +1175,25 @@ phaseGeneration.push(
             if(checkCollision(actor.getObjectByName('interactionReference'),objectives[0],gridMapHelper))
             {
                 objectives[0].visible = false;
-                consoleElement.innerText += "Cristal coletado.\n";
+                consoleElement.innerText += "Cristal coletado com sucesso.\n";
                 gridMapHelper.obstacles[0].active = false;
-            }
-            else if(checkCollision(actor.getObjectByName('interactionReference'),objectives[1],gridMapHelper))
-            {
-                objectives[1].visible = false;
-                consoleElement.innerText += "Cristal coletado.\n";
-                gridMapHelper.obstacles[1].active = false;
-            }
-            else if(checkCollision(actor.getObjectByName('interactionReference'),objectives[2],gridMapHelper))
-            {
-                objectives[2].visible = false;
-                consoleElement.innerText += "Cristal coletado.\n";
-                gridMapHelper.obstacles[2].active = false;
             }
             else
             {
                 consoleElement.innerText += "Robô não está em frente ao cristal.\n";
             }
-
-            if(!objectives[0].visible && !objectives[1].visible && !objectives[2].visible)
-            {
-                consoleElement.innerText += "Todos os cristais coletados com sucesso!\n";
-            }
         }
 
         resetLevel = () =>{
-            actor.position.set(gridMapHelper.getGlobalXPositionFromCoord(0),1.0,gridMapHelper.getGlobalZPositionFromCoord(2));
+            actor.position.set(gridMapHelper.getGlobalXPositionFromCoord(0),1.0,gridMapHelper.getGlobalZPositionFromCoord(5));
             actor.rotation.set(0,degreeToRadians(90),0);
             actor.getObjectByName('eve').rotation.set(0,0,0);
             objectives[0].visible = true;
-            objectives[1].visible = true;
-            objectives[2].visible = true;
             gridMapHelper.obstacles[0].active = true;
-            gridMapHelper.obstacles[1].active = true;
-            gridMapHelper.obstacles[2].active = true;
         }
 
         winCondition = () =>{
-            if(!objectives[0].visible && !objectives[1].visible && !objectives[2].visible)
+            if(!objectives[0].visible)
             {
                 return true;
             }
@@ -860,35 +1203,10 @@ phaseGeneration.push(
             }
         }
 
-        spikeTrapState = 0;
-        setSpikeTrapState = () => {
-            if(spikeTrapState == 0)
-            {
-                trapsDeactivation(traps)
-            }
-            else
-            {
-                trapsActivation(traps)
-
-            }
-        }
-
-        setSpikeTrapStateInterval = setInterval(() => {
-            if(sceneProperties.executing)
-            {
-                return;
-            }
-
-            spikeTrapState = (spikeTrapState + 1) % 2;
-            setSpikeTrapState();
-        },1000);
-
-        document.getElementById('winMessage').innerText = "Nível Concluído";
-        document.getElementById('advanceBtn').innerText = "Finalizar";
-
         timerUpadate = setInterval(updateTime,1000);
     }
 );
+
 
 //Defining function that remove objects, scene render and button's functions
 

@@ -1,13 +1,33 @@
 import * as THREE from "three";
 import { degreeToRadians } from "./util";
 
+var aux = new URL('../../../assets/textures/ground.jpg',import.meta.url).toString();
+var textureGround = new THREE.TextureLoader().load(aux);
+
+var aux2 = new URL('../../../assets/textures/ground2.jpg',import.meta.url).toString();
+var textureGround2 = new THREE.TextureLoader().load(aux2);
+
+var aux3 = new URL('../../../assets/textures/ground3.jpg',import.meta.url).toString();
+var textureGround3 = new THREE.TextureLoader().load(aux3);
+
+var aux4 = new URL('../../../assets/textures/ground4.jpg',import.meta.url).toString();
+var textureGround4 = new THREE.TextureLoader().load(aux4);
+
+var aux5 = new URL('../../../assets/textures/ground5.jpg',import.meta.url).toString();
+var textureGround5 = new THREE.TextureLoader().load(aux5);
+
+var aux6 = new URL('../../../assets/textures/ground6.jpg',import.meta.url).toString();
+var textureGround6 = new THREE.TextureLoader().load(aux6);
+
+var aux7 = new URL('../../../assets/textures/ground7.jpg',import.meta.url).toString();
+var textureGround7 = new THREE.TextureLoader().load(aux7);
+
 export default class GridMapHelper 
 {
-    constructor(divisions = 10, divisionsColor = "rgb(0,0,0)", planeColor = "rgb(200,200,200)")
+    constructor(divisions = 10, divisionsColor = "rgb(255,255,255)")
     {
         this.divisions = divisions;
         this.divisionsColor = divisionsColor;
-        this.planeColor = planeColor;
         this.initialX = (divisions - 1) * -1;
         this.initialZ = (divisions - 1) * -1;
         this.endX = divisions - 1;
@@ -27,7 +47,115 @@ export default class GridMapHelper
         grid.rotateX(degreeToRadians(90));
         grid.translateY(0.02);
 
-        const planeMaterial = new THREE.MeshLambertMaterial({color: this.planeColor, side: THREE.DoubleSide});
+        const planeMaterial = new THREE.MeshLambertMaterial({map: textureGround, side: THREE.DoubleSide});
+
+        const plane = new THREE.Mesh(planeGeometry,planeMaterial);
+        plane.add(grid);
+        plane.receiveShadow = true;
+        plane.rotateX(degreeToRadians(-90));
+
+        return plane;
+    }
+
+    createGridPlane2()
+    {
+        const planeGeometry = new THREE.PlaneGeometry(this.getMultiplier()*this.divisions,this.getMultiplier()*this.divisions,this.divisions,this.divisions);
+
+        const grid = new THREE.GridHelper(this.getMultiplier()*this.divisions,this.divisions,this.divisionsColor,this.divisionsColor);
+        grid.rotateX(degreeToRadians(90));
+        grid.translateY(0.02);
+
+        const planeMaterial = new THREE.MeshLambertMaterial({map: textureGround2, side: THREE.DoubleSide});
+
+        const plane = new THREE.Mesh(planeGeometry,planeMaterial);
+        plane.add(grid);
+        plane.receiveShadow = true;
+        plane.rotateX(degreeToRadians(-90));
+
+        return plane;
+    }
+
+    createGridPlane3()
+    {
+        const planeGeometry = new THREE.PlaneGeometry(this.getMultiplier()*this.divisions,this.getMultiplier()*this.divisions,this.divisions,this.divisions);
+
+        const grid = new THREE.GridHelper(this.getMultiplier()*this.divisions,this.divisions,this.divisionsColor,this.divisionsColor);
+        grid.rotateX(degreeToRadians(90));
+        grid.translateY(0.02);
+
+        const planeMaterial = new THREE.MeshLambertMaterial({map: textureGround3, side: THREE.DoubleSide});
+
+        const plane = new THREE.Mesh(planeGeometry,planeMaterial);
+        plane.add(grid);
+        plane.receiveShadow = true;
+        plane.rotateX(degreeToRadians(-90));
+
+        return plane;
+    }
+
+    createGridPlane4()
+    {
+        const planeGeometry = new THREE.PlaneGeometry(this.getMultiplier()*this.divisions,this.getMultiplier()*this.divisions,this.divisions,this.divisions);
+
+        const grid = new THREE.GridHelper(this.getMultiplier()*this.divisions,this.divisions,this.divisionsColor,this.divisionsColor);
+        grid.rotateX(degreeToRadians(90));
+        grid.translateY(0.02);
+
+        const planeMaterial = new THREE.MeshLambertMaterial({map: textureGround4, side: THREE.DoubleSide});
+
+        const plane = new THREE.Mesh(planeGeometry,planeMaterial);
+        plane.add(grid);
+        plane.receiveShadow = true;
+        plane.rotateX(degreeToRadians(-90));
+
+        return plane;
+    }
+
+    createGridPlane5()
+    {
+        const planeGeometry = new THREE.PlaneGeometry(this.getMultiplier()*this.divisions,this.getMultiplier()*this.divisions,this.divisions,this.divisions);
+
+        const grid = new THREE.GridHelper(this.getMultiplier()*this.divisions,this.divisions,this.divisionsColor,this.divisionsColor);
+        grid.rotateX(degreeToRadians(90));
+        grid.translateY(0.02);
+
+        const planeMaterial = new THREE.MeshLambertMaterial({map: textureGround5, side: THREE.DoubleSide});
+
+        const plane = new THREE.Mesh(planeGeometry,planeMaterial);
+        plane.add(grid);
+        plane.receiveShadow = true;
+        plane.rotateX(degreeToRadians(-90));
+
+        return plane;
+    }
+
+    createGridPlane6()
+    {
+        const planeGeometry = new THREE.PlaneGeometry(this.getMultiplier()*this.divisions,this.getMultiplier()*this.divisions,this.divisions,this.divisions);
+
+        const grid = new THREE.GridHelper(this.getMultiplier()*this.divisions,this.divisions,this.divisionsColor,this.divisionsColor);
+        grid.rotateX(degreeToRadians(90));
+        grid.translateY(0.02);
+
+        const planeMaterial = new THREE.MeshLambertMaterial({map: textureGround6, side: THREE.DoubleSide});
+
+        const plane = new THREE.Mesh(planeGeometry,planeMaterial);
+        plane.add(grid);
+        plane.receiveShadow = true;
+        plane.rotateX(degreeToRadians(-90));
+
+        return plane;
+    }
+
+    createGridPlane7()
+    {
+        const planeGeometry = new THREE.PlaneGeometry(this.getMultiplier()*this.divisions,this.getMultiplier()*this.divisions,this.divisions,this.divisions);
+
+        const grid = new THREE.GridHelper(this.getMultiplier()*this.divisions,this.divisions,this.divisionsColor,this.divisionsColor);
+        grid.rotateX(degreeToRadians(90));
+        grid.translateY(0.02);
+
+        const planeMaterial = new THREE.MeshLambertMaterial({map: textureGround7, side: THREE.DoubleSide});
 
         const plane = new THREE.Mesh(planeGeometry,planeMaterial);
         plane.add(grid);
